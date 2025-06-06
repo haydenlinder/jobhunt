@@ -169,7 +169,6 @@ interval = '1m'
 
 [postgres]
 version = '14.15-20250311-1'
-port = 5433
 
 [postgres.resources]
 [postgres.resources.storage]
