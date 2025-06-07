@@ -1,13 +1,15 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SignInResponse, SignUpResponse } from '@nhost/nhost-js';
+import { NhostSession, SignInResponse, SignUpResponse } from '@nhost/nhost-js';
 import { nhost } from '@/lib/nhost-client';
+
+type User = NhostSession['user'] | null;
 
 // Auth context type
 interface AuthContextType {
   isAuthenticated: boolean;
-  user: any | null;
+  user: User;
   loading: boolean;
   login: (email: string, password: string) => Promise<SignInResponse>;
   signUp: (formData: SignUpFormData) => Promise<SignUpResponse>;
@@ -32,7 +34,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Auth provider component
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<User>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   // Initialize authentication state on mount
@@ -127,7 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Refresh token
   const refreshToken = async () => {
-    const { session, error } = await nhost.auth.refreshSession();
+    const { error } = await nhost.auth.refreshSession();
 
     if (error) {
       throw new Error(error.message);

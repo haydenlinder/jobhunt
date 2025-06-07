@@ -1,33 +1,9 @@
 'use client';
 
-import { GetFeaturedJobsQuery, GetJobsQuery } from '@/gql/graphql';
+import { GetFeaturedJobsQuery } from '@/gql/graphql';
 import Link from 'next/link';
 
 export default function JobCard({ job }: { job: GetFeaturedJobsQuery['jobs'][0] }) {
-  // Helper function to format dates
-  const formatDate = (dateString: string): string => {
-    if (!dateString) return '';
-
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 0) {
-      return 'Today';
-    } else if (diffDays === 1) {
-      return 'Yesterday';
-    } else if (diffDays < 7) {
-      return `${diffDays} days ago`;
-    } else if (diffDays < 30) {
-      const weeks = Math.floor(diffDays / 7);
-      return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
-    } else {
-      const months = Math.floor(diffDays / 30);
-      return `${months} ${months === 1 ? 'month' : 'months'} ago`;
-    }
-  };
-
   // Get company name based on structure
   const companyName = job.company?.name;
 

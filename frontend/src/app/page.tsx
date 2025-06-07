@@ -15,7 +15,7 @@ export default function Home() {
             Find Your Dream Job
           </h1>
           <p className="mt-6 text-xl max-w-2xl mx-auto">
-            Connect with top companies and opportunities. Whether you're looking for your next
+            Connect with top companies and opportunities. Whether you&apos;re looking for your next
             career move or hiring talent, JobHunt has you covered.
           </p>
           <div className="mt-10 flex justify-center gap-4">

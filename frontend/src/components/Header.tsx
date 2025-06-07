@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import Image from 'next/image';
 import { useAuth } from '@/components/AuthContext';
 import { OrganizationCreation } from '@/components/OrganizationCreation';
 

@@ -17,6 +17,7 @@ export async function graphqlRequest<TData, TVariables = Record<string, unknown>
 ): Promise<TData> {
   try {
     // Pass the query string directly as the first argument, and variables as the second
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data, error } = await nhost.graphql.request<TData>(query, variables as any);
 
     if (error) {

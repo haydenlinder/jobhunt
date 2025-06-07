@@ -70,7 +70,7 @@ export default function OrganizationsPage() {
           ) : (
             <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6 text-center">
               <p className="text-gray-500 dark:text-gray-400 mb-4">
-                You don't have any organizations yet.
+                You don&apos;t have any organizations yet.
               </p>
               <button
                 onClick={() => setIsModalOpen(true)}

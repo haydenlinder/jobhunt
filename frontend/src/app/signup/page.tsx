@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthContext';
 
 export default function SignupPage() {
   const router = useRouter();
   const { signUp, isAuthenticated } = useAuth();
-  const searchParams = useSearchParams();
 
   // Redirect to dashboard if already authenticated
   useEffect(() => {

@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { nhost, graphqlRequest } from '@/lib/nhost-client';
+import { graphqlRequest } from '@/lib/nhost-client';
 import JobCard from './JobCard';
 import { GET_FEATURED_JOBS } from '@/graphql/queries/getFeaturedJobs';
 import { GetFeaturedJobsQuery } from '@/gql/graphql';
