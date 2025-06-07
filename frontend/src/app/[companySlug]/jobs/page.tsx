@@ -2,7 +2,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 // This is a server component, allowing us to fetch data on the server for SEO
-export default async function CompanyJobsPage({ params }: { params: { companySlug: string } }) {
+export default async function CompanyJobsPage({
+  params,
+}: {
+  params: { companySlug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const { companySlug } = params;
 
   // In a real application, we would fetch this data from our backend API
@@ -239,7 +244,12 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: { params: { companySlug: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { companySlug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const { companySlug } = params;
 
   // In a real application, fetch this from your API/database
