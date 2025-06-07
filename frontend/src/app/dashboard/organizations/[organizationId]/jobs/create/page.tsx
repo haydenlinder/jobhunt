@@ -4,14 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-export default function CreateJobPostingPage({
-  params,
-}: {
-  params: { organizationId: string };
-}) {
+export default function CreateJobPostingPage({ params }: { params: { organizationId: string } }) {
   const router = useRouter();
   const { organizationId } = params;
-  
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -23,94 +19,95 @@ export default function CreateJobPostingPage({
     contactEmail: '',
     isActive: true,
   });
-  
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // In a real app, we would fetch the organization details here
-  const organizationName = "TechCorp"; // Mock data
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    const val = (e.target as HTMLInputElement).type === 'checkbox' 
-      ? (e.target as HTMLInputElement).checked 
-      : value;
-    
+  const organizationName = 'TechCorp'; // Mock data
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const val =
+      (e.target as HTMLInputElement).type === 'checkbox'
+        ? (e.target as HTMLInputElement).checked
+        : value;
+
     setFormData(prev => ({
       ...prev,
-      [name]: val
+      [name]: val,
     }));
   };
-  
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!formData.title.trim()) {
       newErrors.title = 'Job title is required';
     }
-    
+
     if (!formData.description.trim()) {
       newErrors.description = 'Job description is required';
     }
-    
+
     if (!formData.location.trim()) {
       newErrors.location = 'Location is required (can be "Remote")';
     }
-    
+
     if (!formData.requirements.trim()) {
       newErrors.requirements = 'Job requirements are required';
     }
-    
+
     if (!formData.responsibilities.trim()) {
       newErrors.responsibilities = 'Job responsibilities are required';
     }
-    
+
     if (!formData.contactEmail.trim()) {
       newErrors.contactEmail = 'Contact email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.contactEmail)) {
       newErrors.contactEmail = 'Email is invalid';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // In a real application, this would be an API call to create the job posting
       console.log('Job posting data:', { ...formData, organizationId });
-      
+
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Redirect to job postings list
       router.push(`/dashboard/organizations/${organizationId}/jobs`);
     } catch (error) {
       console.error('Error creating job posting:', error);
       setErrors({
-        form: 'An error occurred while creating the job posting. Please try again.'
+        form: 'An error occurred while creating the job posting. Please try again.',
       });
     } finally {
       setIsSubmitting(false);
     }
   };
-  
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create Job Posting</h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            for {organizationName}
-          </p>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">for {organizationName}</p>
         </div>
         <Link
           href={`/dashboard/organizations/${organizationId}/jobs`}
@@ -119,11 +116,14 @@ export default function CreateJobPostingPage({
           Cancel
         </Link>
       </div>
-      
+
       <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Job Title *
             </label>
             <input
@@ -138,10 +138,13 @@ export default function CreateJobPostingPage({
               <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.title}</p>
             )}
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="location"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Location *
               </label>
               <input
@@ -157,9 +160,12 @@ export default function CreateJobPostingPage({
                 <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.location}</p>
               )}
             </div>
-            
+
             <div>
-              <label htmlFor="jobType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="jobType"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Job Type *
               </label>
               <select
@@ -177,9 +183,12 @@ export default function CreateJobPostingPage({
               </select>
             </div>
           </div>
-          
+
           <div>
-            <label htmlFor="salaryRange" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="salaryRange"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Salary Range
             </label>
             <input
@@ -192,9 +201,12 @@ export default function CreateJobPostingPage({
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white"
             />
           </div>
-          
+
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Job Description *
             </label>
             <textarea
@@ -209,9 +221,12 @@ export default function CreateJobPostingPage({
               <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.description}</p>
             )}
           </div>
-          
+
           <div>
-            <label htmlFor="responsibilities" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="responsibilities"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Responsibilities *
             </label>
             <textarea
@@ -224,12 +239,17 @@ export default function CreateJobPostingPage({
               className={`w-full px-3 py-2 border ${errors.responsibilities ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md dark:bg-gray-700 dark:text-white`}
             />
             {errors.responsibilities && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.responsibilities}</p>
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.responsibilities}
+              </p>
             )}
           </div>
-          
+
           <div>
-            <label htmlFor="requirements" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="requirements"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Requirements *
             </label>
             <textarea
@@ -245,9 +265,12 @@ export default function CreateJobPostingPage({
               <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.requirements}</p>
             )}
           </div>
-          
+
           <div>
-            <label htmlFor="contactEmail" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="contactEmail"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Contact Email *
             </label>
             <input
@@ -262,7 +285,7 @@ export default function CreateJobPostingPage({
               <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.contactEmail}</p>
             )}
           </div>
-          
+
           <div className="flex items-center">
             <input
               id="isActive"
@@ -272,17 +295,20 @@ export default function CreateJobPostingPage({
               onChange={handleChange}
               className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
             />
-            <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+            <label
+              htmlFor="isActive"
+              className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+            >
               Make this job posting active immediately
             </label>
           </div>
-          
+
           {errors.form && (
             <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-3">
               <p className="text-sm text-red-600 dark:text-red-400">{errors.form}</p>
             </div>
           )}
-          
+
           <div className="flex justify-end">
             <button
               type="submit"

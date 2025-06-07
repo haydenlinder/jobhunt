@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_JOB_BY_ID = gql`
   query getJobById($id: uuid!) {

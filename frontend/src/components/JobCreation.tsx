@@ -7,7 +7,11 @@ import { GET_USER_COMPANIES } from '@/graphql/queries/getCompanies';
 import { useAuth } from '@/components/AuthContext';
 import { graphqlRequest } from '@/lib/nhost-client';
 import { DocumentNode } from 'graphql';
-import { CreateCompanyMutationVariables, CreateJobMutation, CreateJobMutationVariables, GetUserCompaniesQuery } from '@/gql/graphql';
+import {
+  CreateJobMutation,
+  CreateJobMutationVariables,
+  GetUserCompaniesQuery,
+} from '@/gql/graphql';
 
 interface JobCreationProps {
   isOpen: boolean;
@@ -34,7 +38,7 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
   // Fetch user's companies
   const { data: companiesData } = useQuery({
     queryKey: ['userCompanies', authUser?.id],
-    queryFn: () => 
+    queryFn: () =>
       graphqlRequest<GetUserCompaniesQuery>(
         (GET_USER_COMPANIES as unknown as DocumentNode).loc?.source.body || '',
         { id: authUser?.id }
@@ -46,11 +50,11 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
   useEffect(() => {
     if (companiesData?.user?.company_users) {
       const formattedCompanies = companiesData.user.company_users.map(cu => ({
-        id: cu.company?.id || "",
-        name: cu.company?.name || ""
+        id: cu.company?.id || '',
+        name: cu.company?.name || '',
       }));
       setCompanies(formattedCompanies);
-      
+
       // Set default company if available and not already set
       if (formattedCompanies.length > 0 && !companyId) {
         setCompanyId(formattedCompanies[0].id);
@@ -60,19 +64,19 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
 
   // Define job creation mutation
   const createJobMutation = useMutation({
-    mutationFn: (jobData: CreateJobMutationVariables) => 
+    mutationFn: (jobData: CreateJobMutationVariables) =>
       graphqlRequest<CreateJobMutation, CreateJobMutationVariables>(
         CREATE_JOB.loc?.source.body || '',
         jobData
       ),
   });
-  
+
   // Function to handle job creation
   const handleCreateJob = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
-    
+
     try {
       // Create the job
       await createJobMutation.mutateAsync({
@@ -80,16 +84,16 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
         description,
         location,
         title,
-        user_id: authUser?.id || ''
+        user_id: authUser?.id || '',
       });
-      
+
       setSuccessMessage(`Job "${title}" created successfully!`);
-      
+
       // Reset form
       setTitle('');
       setDescription('');
       setLocation('');
-      
+
       // Close modal after a delay
       setTimeout(() => {
         onClose();
@@ -99,13 +103,9 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
         }
       }, 2000);
     } catch (err) {
-      setError(
-        err instanceof Error 
-          ? err.message 
-          : 'An error occurred while creating the job'
-      );
+      setError(err instanceof Error ? err.message : 'An error occurred while creating the job');
     }
-    
+
     setIsSubmitting(false);
   };
 
@@ -120,18 +120,19 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
       <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full p-6 z-10">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white">Create Job Posting</h3>
-          <button
-            type="button"
-            className="text-gray-400 hover:text-gray-500"
-            onClick={onClose}
-          >
+          <button type="button" className="text-gray-400 hover:text-gray-500" onClick={onClose}>
             <span className="sr-only">Close</span>
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
-        
+
         {successMessage ? (
           <div className="mb-4 p-4 bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-400 rounded">
             {successMessage}
@@ -143,15 +144,18 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
                 {error}
               </div>
             )}
-            
+
             <div className="mb-4">
-              <label htmlFor="companySelect" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="companySelect"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Company
               </label>
               <select
                 id="companySelect"
                 value={companyId}
-                onChange={(e) => setCompanyId(e.target.value)}
+                onChange={e => setCompanyId(e.target.value)}
                 className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                 required
               >
@@ -163,52 +167,61 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
                 ))}
               </select>
             </div>
-            
+
             <div className="mb-4">
-              <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="jobTitle"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Job Title
               </label>
               <input
                 type="text"
                 id="jobTitle"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={e => setTitle(e.target.value)}
                 className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                 placeholder="Enter job title"
                 required
               />
             </div>
-            
+
             <div className="mb-4">
-              <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="location"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Location
               </label>
               <input
                 type="text"
                 id="location"
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                onChange={e => setLocation(e.target.value)}
                 className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                 placeholder="Enter job location"
                 required
               />
             </div>
-            
+
             <div className="mb-4">
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Description
               </label>
               <textarea
                 id="description"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={e => setDescription(e.target.value)}
                 rows={4}
                 className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md"
                 placeholder="Enter job description"
                 required
               />
             </div>
-            
+
             <div className="mt-5 sm:mt-6 flex justify-end space-x-3">
               <button
                 type="button"
@@ -221,7 +234,9 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
                 type="submit"
                 disabled={isSubmitting || !title || !companyId || !location}
                 className={`inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
-                  (isSubmitting || !title || !companyId || !location) ? 'opacity-50 cursor-not-allowed' : ''
+                  isSubmitting || !title || !companyId || !location
+                    ? 'opacity-50 cursor-not-allowed'
+                    : ''
                 }`}
               >
                 {isSubmitting ? 'Creating...' : 'Create Job'}

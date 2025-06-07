@@ -14,30 +14,41 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n    mutation createCompany($name: String = \"\") {\n        insert_companies_one(object: {name: $name}) {\n            id\n            name\n        }\n    }\n": typeof types.CreateCompanyDocument,
-    "\n    mutation createCompanyUser($company_id: uuid = \"\", $user_id: uuid = \"\") {\n        insert_company_users_one(object: {company_id: $company_id, user_id: $user_id}) {\n            id\n        }\n    }\n": typeof types.CreateCompanyUserDocument,
-    "\n    mutation createJob($company_id: uuid = \"\", $description: String = \"\", $location: String = \"\", $title: String = \"\", $user_id: uuid = \"\") {\n        insert_jobs_one(object: {company_id: $company_id, description: $description, location: $location, title: $title, user_id: $user_id}) {\n            id\n        }\n    }\n": typeof types.CreateJobDocument,
-    "\n  query getAllCompanies {\n    companies {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n": typeof types.GetAllCompaniesDocument,
-    "\nquery getUserCompanies($id: uuid = \"\") {\n  user(id: $id) {\n    company_users {\n      company {\n        name\n        id\n      }\n    }\n  }\n}": typeof types.GetUserCompaniesDocument,
-    "\n  query GetFeaturedCompanies {\n    companies(order_by: { created_at: desc }, limit: 3) {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n": typeof types.GetFeaturedCompaniesDocument,
-    "\n  query GetFeaturedJobs {\n    jobs(order_by: { created_at: desc }, limit: 3) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n": typeof types.GetFeaturedJobsDocument,
-    "\n  query getJobById($id: uuid!) {\n    jobs_by_pk(id: $id) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n": typeof types.GetJobByIdDocument,
-    "\n  query getJobs($company_id: uuid_comparison_exp = {}) {\n    jobs(where: {company_id: $company_id}) {\n      location\n      title\n      user_id\n      created_at\n      description\n      id\n    }\n  }\n": typeof types.GetJobsDocument,
-    "\n  query GetUserProfile($userId: uuid!) {\n    # Get companies where the user is associated\n    company_users(where: { user_id: { _eq: $userId } }) {\n      id\n      company {\n        id\n        name\n        created_at\n        jobs_aggregate {\n          aggregate {\n            count\n          }\n        }\n      }\n    }\n    \n    # Get jobs created by companies the user is associated with\n    # This would be useful for employers\n    jobs(where: { company: { company_users: { user_id: { _eq: $userId } } } }) {\n      id\n      title\n      location\n      created_at\n      company {\n        id\n        name\n      }\n    }\n    \n    # Note: In a real application, you would also have a table for job applications\n    # For now, we'll simulate this with the available data\n  }\n": typeof types.GetUserProfileDocument,
-    "\n  query searchJobs($title: String = \"\", $location: String = \"\") {\n  jobs(where: {_and: { title: {_iregex: $title}, location: {_iregex: $location}}}) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n": typeof types.SearchJobsDocument,
+  '\n    mutation createCompany($name: String = "") {\n        insert_companies_one(object: {name: $name}) {\n            id\n            name\n        }\n    }\n': typeof types.CreateCompanyDocument;
+  '\n    mutation createCompanyUser($company_id: uuid = "", $user_id: uuid = "") {\n        insert_company_users_one(object: {company_id: $company_id, user_id: $user_id}) {\n            id\n        }\n    }\n': typeof types.CreateCompanyUserDocument;
+  '\n    mutation createJob($company_id: uuid = "", $description: String = "", $location: String = "", $title: String = "", $user_id: uuid = "") {\n        insert_jobs_one(object: {company_id: $company_id, description: $description, location: $location, title: $title, user_id: $user_id}) {\n            id\n        }\n    }\n': typeof types.CreateJobDocument;
+  '\n  query getAllCompanies {\n    companies {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n': typeof types.GetAllCompaniesDocument;
+  '\nquery getUserCompanies($id: uuid = "") {\n  user(id: $id) {\n    company_users {\n      company {\n        name\n        id\n      }\n    }\n  }\n}': typeof types.GetUserCompaniesDocument;
+  '\n  query GetFeaturedCompanies {\n    companies(order_by: { created_at: desc }, limit: 3) {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n': typeof types.GetFeaturedCompaniesDocument;
+  '\n  query GetFeaturedJobs {\n    jobs(order_by: { created_at: desc }, limit: 3) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n': typeof types.GetFeaturedJobsDocument;
+  '\n  query getJobById($id: uuid!) {\n    jobs_by_pk(id: $id) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n': typeof types.GetJobByIdDocument;
+  '\n  query getJobs($company_id: uuid_comparison_exp = {}) {\n    jobs(where: {company_id: $company_id}) {\n      location\n      title\n      user_id\n      created_at\n      description\n      id\n    }\n  }\n': typeof types.GetJobsDocument;
+  "\n  query GetUserProfile($userId: uuid!) {\n    # Get companies where the user is associated\n    company_users(where: { user_id: { _eq: $userId } }) {\n      id\n      company {\n        id\n        name\n        created_at\n        jobs_aggregate {\n          aggregate {\n            count\n          }\n        }\n      }\n    }\n    \n    # Get jobs created by companies the user is associated with\n    # This would be useful for employers\n    jobs(where: { company: { company_users: { user_id: { _eq: $userId } } } }) {\n      id\n      title\n      location\n      created_at\n      company {\n        id\n        name\n      }\n    }\n    \n    # Note: In a real application, you would also have a table for job applications\n    # For now, we'll simulate this with the available data\n  }\n": typeof types.GetUserProfileDocument;
+  '\n  query searchJobs($title: String = "", $location: String = "") {\n  jobs(where: {_and: { title: {_iregex: $title}, location: {_iregex: $location}}}) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n': typeof types.SearchJobsDocument;
 };
 const documents: Documents = {
-    "\n    mutation createCompany($name: String = \"\") {\n        insert_companies_one(object: {name: $name}) {\n            id\n            name\n        }\n    }\n": types.CreateCompanyDocument,
-    "\n    mutation createCompanyUser($company_id: uuid = \"\", $user_id: uuid = \"\") {\n        insert_company_users_one(object: {company_id: $company_id, user_id: $user_id}) {\n            id\n        }\n    }\n": types.CreateCompanyUserDocument,
-    "\n    mutation createJob($company_id: uuid = \"\", $description: String = \"\", $location: String = \"\", $title: String = \"\", $user_id: uuid = \"\") {\n        insert_jobs_one(object: {company_id: $company_id, description: $description, location: $location, title: $title, user_id: $user_id}) {\n            id\n        }\n    }\n": types.CreateJobDocument,
-    "\n  query getAllCompanies {\n    companies {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n": types.GetAllCompaniesDocument,
-    "\nquery getUserCompanies($id: uuid = \"\") {\n  user(id: $id) {\n    company_users {\n      company {\n        name\n        id\n      }\n    }\n  }\n}": types.GetUserCompaniesDocument,
-    "\n  query GetFeaturedCompanies {\n    companies(order_by: { created_at: desc }, limit: 3) {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n": types.GetFeaturedCompaniesDocument,
-    "\n  query GetFeaturedJobs {\n    jobs(order_by: { created_at: desc }, limit: 3) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n": types.GetFeaturedJobsDocument,
-    "\n  query getJobById($id: uuid!) {\n    jobs_by_pk(id: $id) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n": types.GetJobByIdDocument,
-    "\n  query getJobs($company_id: uuid_comparison_exp = {}) {\n    jobs(where: {company_id: $company_id}) {\n      location\n      title\n      user_id\n      created_at\n      description\n      id\n    }\n  }\n": types.GetJobsDocument,
-    "\n  query GetUserProfile($userId: uuid!) {\n    # Get companies where the user is associated\n    company_users(where: { user_id: { _eq: $userId } }) {\n      id\n      company {\n        id\n        name\n        created_at\n        jobs_aggregate {\n          aggregate {\n            count\n          }\n        }\n      }\n    }\n    \n    # Get jobs created by companies the user is associated with\n    # This would be useful for employers\n    jobs(where: { company: { company_users: { user_id: { _eq: $userId } } } }) {\n      id\n      title\n      location\n      created_at\n      company {\n        id\n        name\n      }\n    }\n    \n    # Note: In a real application, you would also have a table for job applications\n    # For now, we'll simulate this with the available data\n  }\n": types.GetUserProfileDocument,
-    "\n  query searchJobs($title: String = \"\", $location: String = \"\") {\n  jobs(where: {_and: { title: {_iregex: $title}, location: {_iregex: $location}}}) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n": types.SearchJobsDocument,
+  '\n    mutation createCompany($name: String = "") {\n        insert_companies_one(object: {name: $name}) {\n            id\n            name\n        }\n    }\n':
+    types.CreateCompanyDocument,
+  '\n    mutation createCompanyUser($company_id: uuid = "", $user_id: uuid = "") {\n        insert_company_users_one(object: {company_id: $company_id, user_id: $user_id}) {\n            id\n        }\n    }\n':
+    types.CreateCompanyUserDocument,
+  '\n    mutation createJob($company_id: uuid = "", $description: String = "", $location: String = "", $title: String = "", $user_id: uuid = "") {\n        insert_jobs_one(object: {company_id: $company_id, description: $description, location: $location, title: $title, user_id: $user_id}) {\n            id\n        }\n    }\n':
+    types.CreateJobDocument,
+  '\n  query getAllCompanies {\n    companies {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n':
+    types.GetAllCompaniesDocument,
+  '\nquery getUserCompanies($id: uuid = "") {\n  user(id: $id) {\n    company_users {\n      company {\n        name\n        id\n      }\n    }\n  }\n}':
+    types.GetUserCompaniesDocument,
+  '\n  query GetFeaturedCompanies {\n    companies(order_by: { created_at: desc }, limit: 3) {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n':
+    types.GetFeaturedCompaniesDocument,
+  '\n  query GetFeaturedJobs {\n    jobs(order_by: { created_at: desc }, limit: 3) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n':
+    types.GetFeaturedJobsDocument,
+  '\n  query getJobById($id: uuid!) {\n    jobs_by_pk(id: $id) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n':
+    types.GetJobByIdDocument,
+  '\n  query getJobs($company_id: uuid_comparison_exp = {}) {\n    jobs(where: {company_id: $company_id}) {\n      location\n      title\n      user_id\n      created_at\n      description\n      id\n    }\n  }\n':
+    types.GetJobsDocument,
+  "\n  query GetUserProfile($userId: uuid!) {\n    # Get companies where the user is associated\n    company_users(where: { user_id: { _eq: $userId } }) {\n      id\n      company {\n        id\n        name\n        created_at\n        jobs_aggregate {\n          aggregate {\n            count\n          }\n        }\n      }\n    }\n    \n    # Get jobs created by companies the user is associated with\n    # This would be useful for employers\n    jobs(where: { company: { company_users: { user_id: { _eq: $userId } } } }) {\n      id\n      title\n      location\n      created_at\n      company {\n        id\n        name\n      }\n    }\n    \n    # Note: In a real application, you would also have a table for job applications\n    # For now, we'll simulate this with the available data\n  }\n":
+    types.GetUserProfileDocument,
+  '\n  query searchJobs($title: String = "", $location: String = "") {\n  jobs(where: {_and: { title: {_iregex: $title}, location: {_iregex: $location}}}) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n':
+    types.SearchJobsDocument,
 };
 
 /**
@@ -57,50 +68,73 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation createCompany($name: String = \"\") {\n        insert_companies_one(object: {name: $name}) {\n            id\n            name\n        }\n    }\n"): (typeof documents)["\n    mutation createCompany($name: String = \"\") {\n        insert_companies_one(object: {name: $name}) {\n            id\n            name\n        }\n    }\n"];
+export function graphql(
+  source: '\n    mutation createCompany($name: String = "") {\n        insert_companies_one(object: {name: $name}) {\n            id\n            name\n        }\n    }\n'
+): (typeof documents)['\n    mutation createCompany($name: String = "") {\n        insert_companies_one(object: {name: $name}) {\n            id\n            name\n        }\n    }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation createCompanyUser($company_id: uuid = \"\", $user_id: uuid = \"\") {\n        insert_company_users_one(object: {company_id: $company_id, user_id: $user_id}) {\n            id\n        }\n    }\n"): (typeof documents)["\n    mutation createCompanyUser($company_id: uuid = \"\", $user_id: uuid = \"\") {\n        insert_company_users_one(object: {company_id: $company_id, user_id: $user_id}) {\n            id\n        }\n    }\n"];
+export function graphql(
+  source: '\n    mutation createCompanyUser($company_id: uuid = "", $user_id: uuid = "") {\n        insert_company_users_one(object: {company_id: $company_id, user_id: $user_id}) {\n            id\n        }\n    }\n'
+): (typeof documents)['\n    mutation createCompanyUser($company_id: uuid = "", $user_id: uuid = "") {\n        insert_company_users_one(object: {company_id: $company_id, user_id: $user_id}) {\n            id\n        }\n    }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation createJob($company_id: uuid = \"\", $description: String = \"\", $location: String = \"\", $title: String = \"\", $user_id: uuid = \"\") {\n        insert_jobs_one(object: {company_id: $company_id, description: $description, location: $location, title: $title, user_id: $user_id}) {\n            id\n        }\n    }\n"): (typeof documents)["\n    mutation createJob($company_id: uuid = \"\", $description: String = \"\", $location: String = \"\", $title: String = \"\", $user_id: uuid = \"\") {\n        insert_jobs_one(object: {company_id: $company_id, description: $description, location: $location, title: $title, user_id: $user_id}) {\n            id\n        }\n    }\n"];
+export function graphql(
+  source: '\n    mutation createJob($company_id: uuid = "", $description: String = "", $location: String = "", $title: String = "", $user_id: uuid = "") {\n        insert_jobs_one(object: {company_id: $company_id, description: $description, location: $location, title: $title, user_id: $user_id}) {\n            id\n        }\n    }\n'
+): (typeof documents)['\n    mutation createJob($company_id: uuid = "", $description: String = "", $location: String = "", $title: String = "", $user_id: uuid = "") {\n        insert_jobs_one(object: {company_id: $company_id, description: $description, location: $location, title: $title, user_id: $user_id}) {\n            id\n        }\n    }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query getAllCompanies {\n    companies {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getAllCompanies {\n    companies {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n"];
+export function graphql(
+  source: '\n  query getAllCompanies {\n    companies {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n'
+): (typeof documents)['\n  query getAllCompanies {\n    companies {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\nquery getUserCompanies($id: uuid = \"\") {\n  user(id: $id) {\n    company_users {\n      company {\n        name\n        id\n      }\n    }\n  }\n}"): (typeof documents)["\nquery getUserCompanies($id: uuid = \"\") {\n  user(id: $id) {\n    company_users {\n      company {\n        name\n        id\n      }\n    }\n  }\n}"];
+export function graphql(
+  source: '\nquery getUserCompanies($id: uuid = "") {\n  user(id: $id) {\n    company_users {\n      company {\n        name\n        id\n      }\n    }\n  }\n}'
+): (typeof documents)['\nquery getUserCompanies($id: uuid = "") {\n  user(id: $id) {\n    company_users {\n      company {\n        name\n        id\n      }\n    }\n  }\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetFeaturedCompanies {\n    companies(order_by: { created_at: desc }, limit: 3) {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetFeaturedCompanies {\n    companies(order_by: { created_at: desc }, limit: 3) {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n"];
+export function graphql(
+  source: '\n  query GetFeaturedCompanies {\n    companies(order_by: { created_at: desc }, limit: 3) {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n'
+): (typeof documents)['\n  query GetFeaturedCompanies {\n    companies(order_by: { created_at: desc }, limit: 3) {\n      id\n      name\n      created_at\n      updated_at\n      jobs_aggregate {\n        aggregate {\n          count\n        }\n      }\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetFeaturedJobs {\n    jobs(order_by: { created_at: desc }, limit: 3) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetFeaturedJobs {\n    jobs(order_by: { created_at: desc }, limit: 3) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n"];
+export function graphql(
+  source: '\n  query GetFeaturedJobs {\n    jobs(order_by: { created_at: desc }, limit: 3) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n'
+): (typeof documents)['\n  query GetFeaturedJobs {\n    jobs(order_by: { created_at: desc }, limit: 3) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query getJobById($id: uuid!) {\n    jobs_by_pk(id: $id) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query getJobById($id: uuid!) {\n    jobs_by_pk(id: $id) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n"];
+export function graphql(
+  source: '\n  query getJobById($id: uuid!) {\n    jobs_by_pk(id: $id) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n'
+): (typeof documents)['\n  query getJobById($id: uuid!) {\n    jobs_by_pk(id: $id) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query getJobs($company_id: uuid_comparison_exp = {}) {\n    jobs(where: {company_id: $company_id}) {\n      location\n      title\n      user_id\n      created_at\n      description\n      id\n    }\n  }\n"): (typeof documents)["\n  query getJobs($company_id: uuid_comparison_exp = {}) {\n    jobs(where: {company_id: $company_id}) {\n      location\n      title\n      user_id\n      created_at\n      description\n      id\n    }\n  }\n"];
+export function graphql(
+  source: '\n  query getJobs($company_id: uuid_comparison_exp = {}) {\n    jobs(where: {company_id: $company_id}) {\n      location\n      title\n      user_id\n      created_at\n      description\n      id\n    }\n  }\n'
+): (typeof documents)['\n  query getJobs($company_id: uuid_comparison_exp = {}) {\n    jobs(where: {company_id: $company_id}) {\n      location\n      title\n      user_id\n      created_at\n      description\n      id\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetUserProfile($userId: uuid!) {\n    # Get companies where the user is associated\n    company_users(where: { user_id: { _eq: $userId } }) {\n      id\n      company {\n        id\n        name\n        created_at\n        jobs_aggregate {\n          aggregate {\n            count\n          }\n        }\n      }\n    }\n    \n    # Get jobs created by companies the user is associated with\n    # This would be useful for employers\n    jobs(where: { company: { company_users: { user_id: { _eq: $userId } } } }) {\n      id\n      title\n      location\n      created_at\n      company {\n        id\n        name\n      }\n    }\n    \n    # Note: In a real application, you would also have a table for job applications\n    # For now, we'll simulate this with the available data\n  }\n"): (typeof documents)["\n  query GetUserProfile($userId: uuid!) {\n    # Get companies where the user is associated\n    company_users(where: { user_id: { _eq: $userId } }) {\n      id\n      company {\n        id\n        name\n        created_at\n        jobs_aggregate {\n          aggregate {\n            count\n          }\n        }\n      }\n    }\n    \n    # Get jobs created by companies the user is associated with\n    # This would be useful for employers\n    jobs(where: { company: { company_users: { user_id: { _eq: $userId } } } }) {\n      id\n      title\n      location\n      created_at\n      company {\n        id\n        name\n      }\n    }\n    \n    # Note: In a real application, you would also have a table for job applications\n    # For now, we'll simulate this with the available data\n  }\n"];
+export function graphql(
+  source: "\n  query GetUserProfile($userId: uuid!) {\n    # Get companies where the user is associated\n    company_users(where: { user_id: { _eq: $userId } }) {\n      id\n      company {\n        id\n        name\n        created_at\n        jobs_aggregate {\n          aggregate {\n            count\n          }\n        }\n      }\n    }\n    \n    # Get jobs created by companies the user is associated with\n    # This would be useful for employers\n    jobs(where: { company: { company_users: { user_id: { _eq: $userId } } } }) {\n      id\n      title\n      location\n      created_at\n      company {\n        id\n        name\n      }\n    }\n    \n    # Note: In a real application, you would also have a table for job applications\n    # For now, we'll simulate this with the available data\n  }\n"
+): (typeof documents)["\n  query GetUserProfile($userId: uuid!) {\n    # Get companies where the user is associated\n    company_users(where: { user_id: { _eq: $userId } }) {\n      id\n      company {\n        id\n        name\n        created_at\n        jobs_aggregate {\n          aggregate {\n            count\n          }\n        }\n      }\n    }\n    \n    # Get jobs created by companies the user is associated with\n    # This would be useful for employers\n    jobs(where: { company: { company_users: { user_id: { _eq: $userId } } } }) {\n      id\n      title\n      location\n      created_at\n      company {\n        id\n        name\n      }\n    }\n    \n    # Note: In a real application, you would also have a table for job applications\n    # For now, we'll simulate this with the available data\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query searchJobs($title: String = \"\", $location: String = \"\") {\n  jobs(where: {_and: { title: {_iregex: $title}, location: {_iregex: $location}}}) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query searchJobs($title: String = \"\", $location: String = \"\") {\n  jobs(where: {_and: { title: {_iregex: $title}, location: {_iregex: $location}}}) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n"];
+export function graphql(
+  source: '\n  query searchJobs($title: String = "", $location: String = "") {\n  jobs(where: {_and: { title: {_iregex: $title}, location: {_iregex: $location}}}) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n'
+): (typeof documents)['\n  query searchJobs($title: String = "", $location: String = "") {\n  jobs(where: {_and: { title: {_iregex: $title}, location: {_iregex: $location}}}) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n'];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
 }
 
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<  infer TType,  any>  ? TType  : never;
+export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
+  TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;

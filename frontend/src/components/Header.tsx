@@ -58,7 +58,9 @@ export default function Header() {
                       >
                         <span className="sr-only">Open user menu</span>
                         <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
-                          <span className="text-gray-700">{user?.displayName?.charAt(0) || 'U'}</span>
+                          <span className="text-gray-700">
+                            {user?.displayName?.charAt(0) || 'U'}
+                          </span>
                         </div>
                       </button>
                     </div>
@@ -189,8 +191,12 @@ export default function Header() {
                   </div>
                 </div>
                 <div className="ml-3">
-                  <div className="text-base font-medium text-gray-800 dark:text-white">{user?.displayName || 'User'}</div>
-                  <div className="text-sm font-medium text-gray-500 dark:text-gray-400">{user?.email}</div>
+                  <div className="text-base font-medium text-gray-800 dark:text-white">
+                    {user?.displayName || 'User'}
+                  </div>
+                  <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {user?.email}
+                  </div>
                 </div>
               </div>
               <div className="mt-3 space-y-1">
@@ -243,12 +249,9 @@ export default function Header() {
           )}
         </div>
       </header>
-      
+
       {/* Organization Creation Modal */}
-      <OrganizationCreation 
-        isOpen={isOrgModalOpen} 
-        onClose={() => setIsOrgModalOpen(false)}
-      />
+      <OrganizationCreation isOpen={isOrgModalOpen} onClose={() => setIsOrgModalOpen(false)} />
     </>
   );
 }

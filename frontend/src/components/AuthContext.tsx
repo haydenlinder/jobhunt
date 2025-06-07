@@ -40,14 +40,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const initializeAuth = async () => {
       // Check if user is already signed in
       const { session, error } = await nhost.auth.refreshSession();
-      
+
       if (session) {
         setUser(session.user);
       } else {
         console.log('No active session:', error?.message);
         setUser(null);
       }
-      
+
       setLoading(false);
     };
 
@@ -84,16 +84,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Sign up a new user
   const signUp = async (formData: SignUpFormData) => {
-    const { firstName, lastName, email, password, companyName, companyWebsite, createCompany } = formData;
-    
+    const { firstName, lastName, email, password, companyName, companyWebsite, createCompany } =
+      formData;
+
     // Prepare metadata for user registration
     const metadata = {
       firstName,
       lastName,
-      ...(createCompany && companyName ? { 
-        companyName,
-        companyWebsite: companyWebsite || ''
-      } : {})
+      ...(createCompany && companyName
+        ? {
+            companyName,
+            companyWebsite: companyWebsite || '',
+          }
+        : {}),
     };
 
     const response = await nhost.auth.signUp({
@@ -125,7 +128,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Refresh token
   const refreshToken = async () => {
     const { session, error } = await nhost.auth.refreshSession();
-    
+
     if (error) {
       throw new Error(error.message);
     }
@@ -148,10 +151,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 // Custom hook to use the auth context
 export function useAuth() {
   const context = useContext(AuthContext);
-  
+
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-  
+
   return context;
 }

@@ -9,14 +9,14 @@ export default function SignupPage() {
   const router = useRouter();
   const { signUp, isAuthenticated } = useAuth();
   const searchParams = useSearchParams();
-  
+
   // Redirect to dashboard if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
       router.push('/dashboard');
     }
   }, [isAuthenticated, router]);
-  
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -28,69 +28,68 @@ export default function SignupPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!formData.firstName.trim()) {
       newErrors.firstName = 'First name is required';
     }
-    
+
     if (!formData.lastName.trim()) {
       newErrors.lastName = 'Last name is required';
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Register using Nhost auth
       const response = await signUp(formData);
-      
+
       if (response.error) {
         throw new Error(response.error.message);
       }
-      
+
       // Redirect to dashboard
       router.push('/dashboard');
     } catch (error) {
       console.error('Registration error:', error);
       setErrors({
-        form: 'An error occurred during registration. Please try again.'
+        form: 'An error occurred during registration. Please try again.',
       });
     } finally {
       setIsSubmitting(false);
@@ -105,12 +104,15 @@ export default function SignupPage() {
           Join JobHunt to find your next career opportunity or hire top talent.
         </p>
       </div>
-      
+
       <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 border border-gray-200 dark:border-gray-700">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex gap-4">
             <div className="flex-1">
-              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="firstName"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 First Name
               </label>
               <input
@@ -126,7 +128,10 @@ export default function SignupPage() {
               )}
             </div>
             <div className="flex-1">
-              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="lastName"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Last Name
               </label>
               <input
@@ -142,9 +147,12 @@ export default function SignupPage() {
               )}
             </div>
           </div>
-          
+
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Email Address
             </label>
             <input
@@ -159,9 +167,12 @@ export default function SignupPage() {
               <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
             )}
           </div>
-          
+
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Password
             </label>
             <input
@@ -176,9 +187,12 @@ export default function SignupPage() {
               <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.password}</p>
             )}
           </div>
-          
+
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Confirm Password
             </label>
             <input
@@ -190,16 +204,18 @@ export default function SignupPage() {
               className={`w-full px-3 py-2 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md dark:bg-gray-700 dark:text-white`}
             />
             {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.confirmPassword}</p>
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.confirmPassword}
+              </p>
             )}
           </div>
-          
+
           {errors.form && (
             <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-3">
               <p className="text-sm text-red-600 dark:text-red-400">{errors.form}</p>
             </div>
           )}
-          
+
           <div>
             <button
               type="submit"
@@ -209,11 +225,14 @@ export default function SignupPage() {
               {isSubmitting ? 'Creating Account...' : 'Create Account'}
             </button>
           </div>
-          
+
           <div className="text-center text-sm">
             <p className="text-gray-600 dark:text-gray-400">
               Already have an account?{' '}
-              <Link href="/login" className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 font-medium">
+              <Link
+                href="/login"
+                className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 font-medium"
+              >
                 Log in
               </Link>
             </p>

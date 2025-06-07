@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const SEARCH_JOBS = gql`
   query searchJobs($title: String = "", $location: String = "") {
-  jobs(where: {_and: { title: {_iregex: $title}, location: {_iregex: $location}}}) {
+    jobs(where: { _and: { title: { _iregex: $title }, location: { _iregex: $location } } }) {
       id
       title
       location

@@ -12,11 +12,7 @@ interface JobDetailProps {
 export function JobDetail({ jobId }: JobDetailProps) {
   const { data, isLoading, error } = useQuery<GetJobByIdQuery>({
     queryKey: ['job', jobId],
-    queryFn: () => 
-      graphqlRequest(
-        GET_JOB_BY_ID.loc?.source.body || '', 
-        { id: jobId }
-      ),
+    queryFn: () => graphqlRequest(GET_JOB_BY_ID.loc?.source.body || '', { id: jobId }),
     enabled: !!jobId,
   });
 
@@ -50,14 +46,16 @@ export function JobDetail({ jobId }: JobDetailProps) {
           <span>Posted {new Date(job.created_at).toLocaleDateString()}</span>
         </div>
       </div>
-      
+
       <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Job Description</h2>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          Job Description
+        </h2>
         <div className="prose dark:prose-invert max-w-none">
           <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.description}</p>
         </div>
       </div>
-      
+
       <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
         <button className="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Apply Now

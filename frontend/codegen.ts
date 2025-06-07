@@ -1,22 +1,21 @@
-
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
   schema: {
-    ["https://local.hasura.local.nhost.run/v1/graphql"]: {
+    ['https://local.hasura.local.nhost.run/v1/graphql']: {
       headers: {
-        "x-hasura-admin-secret": "nhost-admin-secret"
-      }
-    }
+        'x-hasura-admin-secret': 'nhost-admin-secret',
+      },
+    },
   },
-  documents: "src/**/*",
+  documents: 'src/**/*',
   generates: {
-    "src/gql/": {
-      preset: "client",
-      plugins: []
-    }
-  }
+    'src/gql/': {
+      preset: 'client',
+      plugins: [],
+    },
+  },
 };
 
 export default config;

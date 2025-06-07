@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import JobSearchForm from "@/components/JobSearchForm";
-import FeaturedJobs from "@/components/FeaturedJobs";
-import FeaturedCompanies from "@/components/FeaturedCompanies";
+import Link from 'next/link';
+import JobSearchForm from '@/components/JobSearchForm';
+import FeaturedJobs from '@/components/FeaturedJobs';
+import FeaturedCompanies from '@/components/FeaturedCompanies';
 
 export default function Home() {
   return (
@@ -15,8 +15,8 @@ export default function Home() {
             Find Your Dream Job
           </h1>
           <p className="mt-6 text-xl max-w-2xl mx-auto">
-            Connect with top companies and opportunities. 
-            Whether you're looking for your next career move or hiring talent, JobHunt has you covered.
+            Connect with top companies and opportunities. Whether you're looking for your next
+            career move or hiring talent, JobHunt has you covered.
           </p>
           <div className="mt-10 flex justify-center gap-4">
             <Link
@@ -50,21 +50,52 @@ export default function Home() {
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">For Job Seekers</h2>
           <ul className="space-y-3">
             <li className="flex items-start">
-              <svg className="h-6 w-6 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                className="h-6 w-6 text-green-500 mr-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span className="text-gray-700 dark:text-gray-300">Access thousands of job opportunities</span>
+              <span className="text-gray-700 dark:text-gray-300">
+                Access thousands of job opportunities
+              </span>
             </li>
             <li className="flex items-start">
-              <svg className="h-6 w-6 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                className="h-6 w-6 text-green-500 mr-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span className="text-gray-700 dark:text-gray-300">Create a profile to showcase your skills</span>
+              <span className="text-gray-700 dark:text-gray-300">
+                Create a profile to showcase your skills
+              </span>
             </li>
             <li className="flex items-start">
-              <svg className="h-6 w-6 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                className="h-6 w-6 text-green-500 mr-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
@@ -85,25 +116,58 @@ export default function Home() {
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">For Employers</h2>
           <ul className="space-y-3">
             <li className="flex items-start">
-              <svg className="h-6 w-6 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                className="h-6 w-6 text-green-500 mr-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span className="text-gray-700 dark:text-gray-300">Post job openings to reach qualified candidates</span>
+              <span className="text-gray-700 dark:text-gray-300">
+                Post job openings to reach qualified candidates
+              </span>
             </li>
             <li className="flex items-start">
-              <svg className="h-6 w-6 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                className="h-6 w-6 text-green-500 mr-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span className="text-gray-700 dark:text-gray-300">Manage applications efficiently</span>
+              <span className="text-gray-700 dark:text-gray-300">
+                Manage applications efficiently
+              </span>
             </li>
             <li className="flex items-start">
-              <svg className="h-6 w-6 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                className="h-6 w-6 text-green-500 mr-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span className="text-gray-700 dark:text-gray-300">Branded company profile and careers page</span>
+              <span className="text-gray-700 dark:text-gray-300">
+                Branded company profile and careers page
+              </span>
             </li>
           </ul>
           <div className="mt-6">

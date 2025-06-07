@@ -17,11 +17,8 @@ export async function graphqlRequest<TData, TVariables = Record<string, unknown>
 ): Promise<TData> {
   try {
     // Pass the query string directly as the first argument, and variables as the second
-    const { data, error } = await nhost.graphql.request<TData>(
-      query,
-      variables as any
-    );
-    
+    const { data, error } = await nhost.graphql.request<TData>(query, variables as any);
+
     if (error) {
       // Handle different error types
       if (Array.isArray(error)) {
@@ -32,7 +29,7 @@ export async function graphqlRequest<TData, TVariables = Record<string, unknown>
         throw new Error(error.message || 'Unknown GraphQL error');
       }
     }
-    
+
     return data;
   } catch (error) {
     console.error('GraphQL request error:', error);

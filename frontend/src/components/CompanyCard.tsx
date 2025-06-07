@@ -19,9 +19,7 @@ export function CompanyCard({ companyName, index }: CompanyCardProps) {
           </div>
           <div className="ml-4">
             <h3 className="text-lg font-medium text-gray-900 dark:text-white">{companyName}</h3>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              Role: Member
-            </span>
+            <span className="text-sm text-gray-500 dark:text-gray-400">Role: Member</span>
           </div>
         </div>
         <div className="flex items-center mt-4 md:mt-0 space-x-4">

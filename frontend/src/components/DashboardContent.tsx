@@ -14,18 +14,17 @@ import { GetJobsQuery, GetUserCompaniesQuery } from '@/gql/graphql';
 export function DashboardContent() {
   const [isJobCreationOpen, setIsJobCreationOpen] = useState(false);
   const [userCompanyIds, setUserCompanyIds] = useState<string[]>([]);
-  
+
   // Get authenticated user
   const { user: authUser } = useAuth();
 
   // Fetch user's companies
   const { data: companiesData } = useQuery({
     queryKey: ['userCompanies', authUser?.id],
-    queryFn: () => 
-      graphqlRequest<GetUserCompaniesQuery>(
-        GET_USER_COMPANIES.loc?.source.body || '',
-        { id: authUser?.id }
-      ),
+    queryFn: () =>
+      graphqlRequest<GetUserCompaniesQuery>(GET_USER_COMPANIES.loc?.source.body || '', {
+        id: authUser?.id,
+      }),
     enabled: !!authUser?.id,
   });
 
@@ -38,15 +37,16 @@ export function DashboardContent() {
   }, [companiesData]);
 
   // Fetch jobs data for user's companies
-  const { data: jobsData, isLoading: isLoadingJobs, refetch: refetchJobs } = useQuery<GetJobsQuery>({
+  const {
+    data: jobsData,
+    isLoading: isLoadingJobs,
+    refetch: refetchJobs,
+  } = useQuery<GetJobsQuery>({
     queryKey: ['jobs', userCompanyIds],
-    queryFn: () => 
-      graphqlRequest(
-        GET_JOBS.loc?.source.body || '', 
-        { 
-          company_id: { _in: userCompanyIds }
-        }
-      ),
+    queryFn: () =>
+      graphqlRequest(GET_JOBS.loc?.source.body || '', {
+        company_id: { _in: userCompanyIds },
+      }),
     enabled: userCompanyIds.length > 0,
   });
 
@@ -66,32 +66,48 @@ export function DashboardContent() {
             onClick={() => setIsJobCreationOpen(true)}
             className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            <svg className="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            <svg
+              className="h-4 w-4 mr-1.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              ></path>
             </svg>
             Create Job
           </button>
         </div>
-        
+
         {isLoadingJobs || userCompanyIds.length === 0 ? (
           <div className="flex justify-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
           </div>
         ) : jobsData?.jobs?.length ? (
           <div className="space-y-4">
-            {jobsData.jobs.map((job) => (
-              <div 
-                key={job.id} 
+            {jobsData.jobs.map(job => (
+              <div
+                key={job.id}
                 className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4"
               >
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white">{job.title}</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">{job.location}</p>
-                <p className="mt-2 text-sm text-gray-700 dark:text-gray-300 line-clamp-2">{job.description}</p>
+                <p className="mt-2 text-sm text-gray-700 dark:text-gray-300 line-clamp-2">
+                  {job.description}
+                </p>
                 <div className="mt-4 flex justify-between items-center">
                   <span className="text-xs text-gray-500 dark:text-gray-400">
                     Posted {new Date(job.created_at).toLocaleDateString()}
                   </span>
-                  <Link href={`/dashboard/jobs/${job.id}`} className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                  <Link
+                    href={`/dashboard/jobs/${job.id}`}
+                    className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+                  >
                     View Details
                   </Link>
                 </div>
@@ -100,13 +116,15 @@ export function DashboardContent() {
           </div>
         ) : (
           <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6 text-center">
-            <p className="text-gray-500 dark:text-gray-400 mb-4">No job postings available at the moment.</p>
+            <p className="text-gray-500 dark:text-gray-400 mb-4">
+              No job postings available at the moment.
+            </p>
           </div>
         )}
       </div>
-      
+
       {/* Job Creation Modal */}
-      <JobCreation 
+      <JobCreation
         isOpen={isJobCreationOpen}
         onClose={() => setIsJobCreationOpen(false)}
         onSuccess={() => {

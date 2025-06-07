@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_USER_PROFILE = gql`
   query GetUserProfile($userId: uuid!) {
@@ -16,7 +16,7 @@ export const GET_USER_PROFILE = gql`
         }
       }
     }
-    
+
     # Get jobs created by companies the user is associated with
     # This would be useful for employers
     jobs(where: { company: { company_users: { user_id: { _eq: $userId } } } }) {
@@ -29,7 +29,7 @@ export const GET_USER_PROFILE = gql`
         name
       }
     }
-    
+
     # Note: In a real application, you would also have a table for job applications
     # For now, we'll simulate this with the available data
   }

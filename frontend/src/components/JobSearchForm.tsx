@@ -1,14 +1,17 @@
-"use client";
+'use client';
 
-import { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useState, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface JobSearchFormProps {
   initialTitle?: string;
   initialLocation?: string;
 }
 
-export default function JobSearchForm({ initialTitle = "", initialLocation = "" }: JobSearchFormProps) {
+export default function JobSearchForm({
+  initialTitle = '',
+  initialLocation = '',
+}: JobSearchFormProps) {
   const router = useRouter();
   const [searchTitle, setSearchTitle] = useState(initialTitle);
   const [searchLocation, setSearchLocation] = useState(initialLocation);
@@ -16,16 +19,16 @@ export default function JobSearchForm({ initialTitle = "", initialLocation = "" 
   // Handle job search
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-    
+
     // Build search query parameters
     const params = new URLSearchParams();
     if (searchTitle) {
-      params.append("title", searchTitle);
+      params.append('title', searchTitle);
     }
     if (searchLocation) {
-      params.append("location", searchLocation);
+      params.append('location', searchLocation);
     }
-    
+
     // Navigate to the jobs page with search parameters
     router.push(`/jobs?${params.toString()}`);
   };
@@ -33,7 +36,9 @@ export default function JobSearchForm({ initialTitle = "", initialLocation = "" 
   return (
     <section className="max-w-4xl mx-auto">
       <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 border border-gray-200 dark:border-gray-700">
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Find Your Perfect Role</h2>
+        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          Find Your Perfect Role
+        </h2>
         <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <input
@@ -41,7 +46,7 @@ export default function JobSearchForm({ initialTitle = "", initialLocation = "" 
               placeholder="Job title, keywords, or company"
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white"
               value={searchTitle}
-              onChange={(e) => setSearchTitle(e.target.value)}
+              onChange={e => setSearchTitle(e.target.value)}
             />
           </div>
           <div className="flex-1">
@@ -50,7 +55,7 @@ export default function JobSearchForm({ initialTitle = "", initialLocation = "" 
               placeholder="Location or Remote"
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white"
               value={searchLocation}
-              onChange={(e) => setSearchLocation(e.target.value)}
+              onChange={e => setSearchLocation(e.target.value)}
             />
           </div>
           <div className="flex-none">
