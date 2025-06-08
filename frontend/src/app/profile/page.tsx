@@ -113,7 +113,7 @@ export default function ProfilePage() {
                   Name
                 </label>
                 <div className="bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-md text-gray-800 dark:text-gray-200">
-                  {firstName} {lastName}
+                  {`${firstName}`} {`${lastName}`}
                 </div>
               </div>
               <div>
