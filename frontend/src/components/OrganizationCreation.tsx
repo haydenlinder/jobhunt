@@ -53,7 +53,7 @@ export function OrganizationCreation({ isOpen, onClose, onSuccess }: Organizatio
         // Create company-user relationship
         await createCompanyUserMutation.mutateAsync({
           company_id: companyId,
-          user_id: authUser?.id,
+          user_id: authUser?.id || '',
         });
 
         setSuccessMessage(`Organization "${orgName}" created successfully!`);

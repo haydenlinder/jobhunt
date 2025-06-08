@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { SEARCH_JOBS } from '@/graphql/queries/searchJobs';
@@ -12,7 +12,8 @@ import { SearchJobsQuery } from '@/gql/graphql';
 // Convert the gql template literal to a string for nhost client
 const SEARCH_JOBS_QUERY = SEARCH_JOBS.loc?.source.body || '';
 
-export default function JobsPage() {
+// Extract the search parameters logic into a separate component
+function JobSearch() {
   const searchParams = useSearchParams();
   const titleParam = searchParams.get('title') || '';
   const locationParam = searchParams.get('location') || '';
@@ -92,5 +93,20 @@ export default function JobsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+// Main component with Suspense boundary
+export default function JobsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center py-8">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+        </div>
+      }
+    >
+      <JobSearch />
+    </Suspense>
   );
 }
