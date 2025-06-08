@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-export default function CreateJobPostingPage({ params }: { params: { organizationId: string } }) {
+export default function CreateJobPostingPage() {
   const router = useRouter();
+  const params = useParams<{ organizationId: string }>();
   const { organizationId } = params;
 
   const [formData, setFormData] = useState({
