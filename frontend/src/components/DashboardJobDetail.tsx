@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { GetJobByIdQuery } from '@/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import { graphqlRequest } from '@/lib/nhost-client';
@@ -14,12 +13,11 @@ interface DashboardJobDetailProps {
 export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
   const { data, isLoading, error } = useQuery<GetJobByIdQuery>({
     queryKey: ['job', jobId],
-    queryFn: () => 
-      graphqlRequest(GET_JOB_BY_ID.loc?.source.body || '', { id: jobId }),
+    queryFn: () => graphqlRequest(GET_JOB_BY_ID.loc?.source.body || '', { id: jobId }),
   });
-  
+
   const job = data?.jobs_by_pk;
-  
+
   if (isLoading) {
     return (
       <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6">
@@ -29,7 +27,7 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
       </div>
     );
   }
-  
+
   if (error || !job) {
     return (
       <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6">
