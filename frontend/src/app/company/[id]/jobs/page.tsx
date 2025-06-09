@@ -6,7 +6,7 @@ import { graphqlRequest } from '@/lib/nhost-client';
 import { GET_JOBS } from '@/graphql/queries/getJobs';
 import { GetJobsQuery } from '@/gql/graphql';
 import JobCard from '@/components/JobCard';
-import React from 'react'
+import React from 'react';
 
 interface CompanyJobsPageProps {
   params: Promise<{
@@ -15,7 +15,7 @@ interface CompanyJobsPageProps {
 }
 
 export default function CompanyJobsPage({ params }: CompanyJobsPageProps) {
-  const awaitedParams = React.use(params)
+  const awaitedParams = React.use(params);
   const { id } = awaitedParams;
   const searchParams = useSearchParams();
   const titleFilter = searchParams?.get('title') || '';
@@ -46,13 +46,13 @@ export default function CompanyJobsPage({ params }: CompanyJobsPageProps) {
           <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
             Find Your Perfect Role
           </h2>
-          <form 
-            onSubmit={(e) => {
+          <form
+            onSubmit={e => {
               e.preventDefault();
               const formData = new FormData(e.currentTarget);
               const title = formData.get('title') as string;
               const location = formData.get('location') as string;
-              
+
               // Build search query parameters
               const params = new URLSearchParams();
               if (title) {
@@ -61,10 +61,10 @@ export default function CompanyJobsPage({ params }: CompanyJobsPageProps) {
               if (location) {
                 params.append('location', location);
               }
-              
+
               // Navigate within the company page
               window.location.href = `/company/${id}/jobs?${params.toString()}`;
-            }} 
+            }}
             className="flex flex-col sm:flex-row gap-4"
           >
             <div className="flex-1">
