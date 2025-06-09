@@ -1,9 +1,5 @@
-'use client';
-
 import Link from 'next/link';
 import JobSearchForm from '@/components/JobSearchForm';
-import FeaturedJobs from '@/components/FeaturedJobs';
-import FeaturedCompanies from '@/components/FeaturedCompanies';
 
 export default function Home() {
   return (
@@ -37,12 +33,6 @@ export default function Home() {
 
       {/* Job Search Form Component */}
       <JobSearchForm />
-
-      {/* Featured Jobs Component */}
-      <FeaturedJobs />
-
-      {/* Featured Companies Component */}
-      <FeaturedCompanies />
 
       {/* For Job Seekers and Employers Sections */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
