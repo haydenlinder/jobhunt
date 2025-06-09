@@ -1,9 +1,33 @@
 import { JobDetail } from '@/components/JobDetail';
 import Link from 'next/link';
 import { getJobById } from '@/lib/server-utils';
+import { Metadata } from 'next';
 
 // Disable caching for this page to ensure fresh data on each request
 export const revalidate = 0;
+
+// Generate metadata for the page
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id: jobId } = await params;
+  const jobData = await getJobById(jobId);
+  const job = jobData.jobs_by_pk;
+
+  if (!job) {
+    return {
+      title: 'Job Not Found',
+    };
+  }
+
+  return {
+    title: `${job.title} at ${job.company.name} | JobHunt`,
+    description:
+      job.description?.substring(0, 160) || `${job.title} job opportunity at ${job.company.name}`,
+  };
+}
 
 // This makes the page server-side rendered
 export default async function JobDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -12,8 +36,43 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
   // Fetch job data on the server side
   const jobData = await getJobById(jobId);
 
+  // Create structured data for the job posting
+  const job = jobData.jobs_by_pk;
+
+  // Create JSON-LD structured data for better SEO
+  const structuredData = job
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'JobPosting',
+        title: job.title,
+        description: job.description,
+        datePosted: job.created_at,
+        hiringOrganization: {
+          '@type': 'Organization',
+          name: job.company.name,
+          identifier: job.company.id,
+        },
+        jobLocation: {
+          '@type': 'Place',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: job.location,
+          },
+        },
+      }
+    : null;
+
   return (
     <div className="space-y-6">
+      {job && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+      )}
+
       <div className="flex items-center">
         <Link
           href="/jobs"
