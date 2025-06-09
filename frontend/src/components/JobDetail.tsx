@@ -1,39 +1,19 @@
-'use client';
-
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { graphqlRequest } from '@/lib/nhost-client';
-import { GET_JOB_BY_ID } from '@/graphql/queries/getJobById';
 import { GetJobByIdQuery } from '@/gql/graphql';
+import { getJobById } from '@/lib/server-utils';
 import { ApplicationForm } from './ApplicationForm';
-
+import { ServerApplicationForm } from './ServerApplicationForm';
 interface JobDetailProps {
   jobId: string;
   initialData?: GetJobByIdQuery;
 }
 
-export function JobDetail({ jobId, initialData }: JobDetailProps) {
-  const [showApplicationForm, setShowApplicationForm] = useState(false);
-
-  const { data, isLoading, error } = useQuery<GetJobByIdQuery>({
-    queryKey: ['job', jobId],
-    queryFn: () => graphqlRequest(GET_JOB_BY_ID.loc?.source.body || '', { id: jobId }),
-    enabled: !!jobId && !initialData,
-    initialData,
-  });
-
+export async function JobDetail({ jobId, initialData }: JobDetailProps) {
+  // If initialData is provided, use it; otherwise fetch the data server-side
+  const data = initialData || await getJobById(jobId);
   const job = data?.jobs_by_pk;
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-      </div>
-    );
-  }
-
-  if (error || !job) {
+  if (!job) {
     return (
       <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6">
         <p className="text-red-500">Failed to load job details.</p>
@@ -69,22 +49,10 @@ export function JobDetail({ jobId, initialData }: JobDetailProps) {
       </div>
 
       <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
-        {!showApplicationForm ? (
-          <button
-            onClick={() => setShowApplicationForm(true)}
-            className="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Apply Now
-          </button>
-        ) : (
-          <ApplicationForm
-            jobId={jobId}
-            companyId={job.company.id}
-            onSuccess={() => {
-              // Form submission was successful
-            }}
-          />
-        )}
+        <ServerApplicationForm
+          jobId={jobId}
+          companyId={job.company.id}
+        />
       </div>
     </div>
   );
