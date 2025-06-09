@@ -1,5 +1,4 @@
-import { ClientApplicationForm } from "./ClientApplicationForm";
-
+import { ClientApplicationForm } from './ClientApplicationForm';
 
 interface ServerApplicationFormProps {
   jobId: string;
@@ -12,7 +11,7 @@ export function ServerApplicationForm({ jobId, companyId }: ServerApplicationFor
       <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         Submit Your Application
       </h2>
-      
+
       <ClientApplicationForm jobId={jobId} companyId={companyId} />
     </div>
   );

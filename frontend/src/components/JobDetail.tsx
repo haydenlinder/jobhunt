@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { GetJobByIdQuery } from '@/gql/graphql';
 import { getJobById } from '@/lib/server-utils';
-import { ApplicationForm } from './ApplicationForm';
 import { ServerApplicationForm } from './ServerApplicationForm';
 interface JobDetailProps {
   jobId: string;
@@ -10,7 +9,7 @@ interface JobDetailProps {
 
 export async function JobDetail({ jobId, initialData }: JobDetailProps) {
   // If initialData is provided, use it; otherwise fetch the data server-side
-  const data = initialData || await getJobById(jobId);
+  const data = initialData || (await getJobById(jobId));
   const job = data?.jobs_by_pk;
 
   if (!job) {
@@ -49,10 +48,7 @@ export async function JobDetail({ jobId, initialData }: JobDetailProps) {
       </div>
 
       <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
-        <ServerApplicationForm
-          jobId={jobId}
-          companyId={job.company.id}
-        />
+        <ServerApplicationForm jobId={jobId} companyId={job.company.id} />
       </div>
     </div>
   );
