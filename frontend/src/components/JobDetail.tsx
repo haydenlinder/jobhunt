@@ -1,15 +1,19 @@
 'use client';
 
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { graphqlRequest } from '@/lib/nhost-client';
 import { GET_JOB_BY_ID } from '@/graphql/queries/getJobById';
 import { GetJobByIdQuery } from '@/gql/graphql';
+import { ApplicationForm } from './ApplicationForm';
 
 interface JobDetailProps {
   jobId: string;
 }
 
 export function JobDetail({ jobId }: JobDetailProps) {
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
+
   const { data, isLoading, error } = useQuery<GetJobByIdQuery>({
     queryKey: ['job', jobId],
     queryFn: () => graphqlRequest(GET_JOB_BY_ID.loc?.source.body || '', { id: jobId }),
@@ -57,9 +61,21 @@ export function JobDetail({ jobId }: JobDetailProps) {
       </div>
 
       <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
-        <button className="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Apply Now
-        </button>
+        {!showApplicationForm ? (
+          <button
+            onClick={() => setShowApplicationForm(true)}
+            className="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Apply Now
+          </button>
+        ) : (
+          <ApplicationForm
+            jobId={jobId}
+            onSuccess={() => {
+              // Form submission was successful
+            }}
+          />
+        )}
       </div>
     </div>
   );
