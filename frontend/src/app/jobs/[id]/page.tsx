@@ -1,12 +1,16 @@
-'use client';
-
 import { JobDetail } from '@/components/JobDetail';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { getJobById } from '@/lib/server-utils';
 
-export default function JobDetailPage() {
-  const params = useParams();
-  const jobId = params.id as string;
+// Disable caching for this page to ensure fresh data on each request
+export const revalidate = 0;
+
+// This makes the page server-side rendered
+export default async function JobDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: jobId } = await params;
+
+  // Fetch job data on the server side
+  const jobData = await getJobById(jobId);
 
   return (
     <div className="space-y-6">
@@ -31,7 +35,7 @@ export default function JobDetailPage() {
         </Link>
       </div>
 
-      <JobDetail jobId={jobId} />
+      <JobDetail jobId={jobId} initialData={jobData} />
     </div>
   );
 }

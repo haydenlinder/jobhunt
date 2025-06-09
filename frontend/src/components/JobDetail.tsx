@@ -10,15 +10,17 @@ import { ApplicationForm } from './ApplicationForm';
 
 interface JobDetailProps {
   jobId: string;
+  initialData?: GetJobByIdQuery;
 }
 
-export function JobDetail({ jobId }: JobDetailProps) {
+export function JobDetail({ jobId, initialData }: JobDetailProps) {
   const [showApplicationForm, setShowApplicationForm] = useState(false);
 
   const { data, isLoading, error } = useQuery<GetJobByIdQuery>({
     queryKey: ['job', jobId],
     queryFn: () => graphqlRequest(GET_JOB_BY_ID.loc?.source.body || '', { id: jobId }),
-    enabled: !!jobId,
+    enabled: !!jobId && !initialData,
+    initialData,
   });
 
   const job = data?.jobs_by_pk;
