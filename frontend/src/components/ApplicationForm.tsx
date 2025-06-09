@@ -4,14 +4,15 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { nhost, graphqlRequest } from '@/lib/nhost-client';
 import { CREATE_APPLICATION } from '@/graphql/mutations/createApplication';
-import { CreateApplicationMutation, CreateApplicationMutationVariables } from '@/gql/graphql';
+import { CreateApplicationMutation } from '@/gql/graphql';
 
 interface ApplicationFormProps {
   jobId: string;
+  companyId: string;
   onSuccess?: () => void;
 }
 
-export function ApplicationForm({ jobId, onSuccess }: ApplicationFormProps) {
+export function ApplicationForm({ jobId, onSuccess, companyId }: ApplicationFormProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -19,12 +20,17 @@ export function ApplicationForm({ jobId, onSuccess }: ApplicationFormProps) {
 
   const createApplicationMutation = useMutation<
     CreateApplicationMutation,
-    CreateApplicationMutationVariables
+    Error,
+    {
+      resumeUrl: string;
+      companyId: string;
+    }
   >({
-    mutationFn: (resumeUrl: string) =>
+    mutationFn: ({ resumeUrl, companyId }) =>
       graphqlRequest(CREATE_APPLICATION.loc?.source.body || '', {
         job_id: jobId,
         resume_url: resumeUrl,
+        company_id: companyId,
       }),
     onSuccess: () => {
       setIsSubmitted(true);
@@ -36,7 +42,6 @@ export function ApplicationForm({ jobId, onSuccess }: ApplicationFormProps) {
       setError(
         `Failed to submit application: ${err instanceof Error ? err.message : 'Unknown error'}`
       );
-      setIsUploading(false);
     },
   });
 
@@ -60,7 +65,6 @@ export function ApplicationForm({ jobId, onSuccess }: ApplicationFormProps) {
       setIsUploading(true);
       setError(null);
 
-      // Upload file to Nhost storage
       const { error: uploadError, fileMetadata } = await nhost.storage.upload({
         file,
         name: `resumes/${jobId}/${Date.now()}-${file.name}`,
@@ -74,13 +78,12 @@ export function ApplicationForm({ jobId, onSuccess }: ApplicationFormProps) {
         throw new Error('File upload failed');
       }
 
-      // Get the file URL
       const resumeUrl = nhost.storage.getPublicUrl({ fileId: fileMetadata.id });
 
-      // Submit application with the file URL
-      createApplicationMutation.mutate(resumeUrl);
+      createApplicationMutation.mutate({ resumeUrl, companyId });
     } catch (err) {
       setError(`File upload failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    } finally {
       setIsUploading(false);
     }
   };

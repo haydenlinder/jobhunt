@@ -71,6 +71,7 @@ export function JobDetail({ jobId }: JobDetailProps) {
         ) : (
           <ApplicationForm
             jobId={jobId}
+            companyId={job.company.id}
             onSuccess={() => {
               // Form submission was successful
             }}
