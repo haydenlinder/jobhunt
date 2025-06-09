@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import { graphqlRequest } from '@/lib/nhost-client';
 import { GET_JOB_BY_ID } from '@/graphql/queries/getJobById';
 import { GetJobByIdQuery } from '@/gql/graphql';
@@ -43,7 +44,12 @@ export function JobDetail({ jobId }: JobDetailProps) {
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{job.title}</h1>
         <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm">
-          <span>{job.company?.name}</span>
+          <Link 
+            href={`/company/${job.company.id}/jobs`}
+            className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 hover:underline"
+          >
+            {job.company?.name}
+          </Link>
           <span className="mx-2">•</span>
           <span>{job.location}</span>
           <span className="mx-2">•</span>
