@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { GetJobByIdQuery } from '@/gql/graphql';
+import { GetPostedJobByIdQuery } from '@/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import { graphqlRequest } from '@/lib/nhost-client';
-import { GET_JOB_BY_ID } from '@/graphql/queries/getJobById';
 import { JobEditForm } from './JobEditForm';
 import { JobApplicationsList } from './JobApplicationsList';
+import { GET_POSTED_JOB_BY_ID } from '@/graphql/queries/getPostedJobById';
 
 interface DashboardJobDetailProps {
   jobId: string;
@@ -16,9 +16,9 @@ interface DashboardJobDetailProps {
 export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const { data, isLoading, error } = useQuery<GetJobByIdQuery>({
+  const { data, isLoading, error } = useQuery<GetPostedJobByIdQuery>({
     queryKey: ['job', jobId],
-    queryFn: () => graphqlRequest(GET_JOB_BY_ID.loc?.source.body || '', { id: jobId }),
+    queryFn: () => graphqlRequest(GET_POSTED_JOB_BY_ID.loc?.source.body || '', { id: jobId }),
   });
 
   const job = data?.jobs_by_pk;

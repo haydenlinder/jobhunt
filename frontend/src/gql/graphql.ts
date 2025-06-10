@@ -6745,15 +6745,6 @@ export type GetJobByIdQuery = {
     description: string;
     created_at: any;
     company: { __typename?: 'companies'; id: any; name?: string | null };
-    applications: Array<{
-      __typename?: 'applications';
-      id: any;
-      resume_url: string;
-      created_at: any;
-      linkedin?: string | null;
-      website?: string | null;
-      email?: string | null;
-    }>;
   } | null;
 };
 
@@ -6777,6 +6768,32 @@ export type GetJobsQuery = {
       aggregate?: { __typename?: 'applications_aggregate_fields'; count: number } | null;
     };
   }>;
+};
+
+export type GetPostedJobByIdQueryVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+export type GetPostedJobByIdQuery = {
+  __typename?: 'query_root';
+  jobs_by_pk?: {
+    __typename?: 'jobs';
+    id: any;
+    title: string;
+    location: string;
+    description: string;
+    created_at: any;
+    company: { __typename?: 'companies'; id: any; name?: string | null };
+    applications: Array<{
+      __typename?: 'applications';
+      id: any;
+      resume_url: string;
+      created_at: any;
+      linkedin?: string | null;
+      website?: string | null;
+      email?: string | null;
+    }>;
+  } | null;
 };
 
 export type GetUserProfileQueryVariables = Exact<{
@@ -7583,21 +7600,6 @@ export const GetJobByIdDocument = {
                     ],
                   },
                 },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'applications' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'resume_url' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'linkedin' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'website' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                    ],
-                  },
-                },
               ],
             },
           },
@@ -7688,6 +7690,78 @@ export const GetJobsDocument = {
     },
   ],
 } as unknown as DocumentNode<GetJobsQuery, GetJobsQueryVariables>;
+export const GetPostedJobByIdDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getPostedJobById' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'jobs_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'location' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'company' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'applications' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'resume_url' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'linkedin' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'website' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetPostedJobByIdQuery, GetPostedJobByIdQueryVariables>;
 export const GetUserProfileDocument = {
   kind: 'Document',
   definitions: [
