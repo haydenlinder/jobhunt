@@ -1,18 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { ApplicationDetail } from './ApplicationDetail';
+import { Applications } from '@/gql/graphql';
 
-interface Application {
-  id: string;
-  resume_url: string;
-  created_at: string;
-}
-
-interface JobApplicationsListProps {
-  applications: Application[];
-}
-
-export function JobApplicationsList({ applications }: JobApplicationsListProps) {
+export function JobApplicationsList({ applications }: { applications: Partial<Applications>[] }) {
   const [expandedApplication, setExpandedApplication] = useState<string | null>(null);
 
   if (!applications || applications.length === 0) {
@@ -111,6 +103,9 @@ export function JobApplicationsList({ applications }: JobApplicationsListProps) 
                       View
                     </a>
                   </div>
+
+                  {/* Parsed Resume Information */}
+                  <ApplicationDetail application={application} />
                 </div>
               </div>
             )}

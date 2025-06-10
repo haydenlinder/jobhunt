@@ -45,9 +45,13 @@ select_permissions:
       columns:
         - company_id
         - created_at
+        - email
         - id
         - job_id
+        - linkedin
+        - name
         - resume_url
+        - website
       filter:
         company:
           company_users:

@@ -92,11 +92,15 @@ export type Applications = {
   company: Companies;
   company_id: Scalars['uuid']['output'];
   created_at: Scalars['timestamptz']['output'];
+  email?: Maybe<Scalars['String']['output']>;
   id: Scalars['uuid']['output'];
   /** An object relationship */
   job: Jobs;
   job_id: Scalars['uuid']['output'];
+  linkedin?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
   resume_url: Scalars['String']['output'];
+  website?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregated selection of "applications" */
@@ -153,10 +157,14 @@ export type Applications_Bool_Exp = {
   company?: InputMaybe<Companies_Bool_Exp>;
   company_id?: InputMaybe<Uuid_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  email?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   job?: InputMaybe<Jobs_Bool_Exp>;
   job_id?: InputMaybe<Uuid_Comparison_Exp>;
+  linkedin?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
   resume_url?: InputMaybe<String_Comparison_Exp>;
+  website?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "applications" */
@@ -170,10 +178,14 @@ export type Applications_Insert_Input = {
   company?: InputMaybe<Companies_Obj_Rel_Insert_Input>;
   company_id?: InputMaybe<Scalars['uuid']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   job?: InputMaybe<Jobs_Obj_Rel_Insert_Input>;
   job_id?: InputMaybe<Scalars['uuid']['input']>;
+  linkedin?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
@@ -181,18 +193,26 @@ export type Applications_Max_Fields = {
   __typename?: 'applications_max_fields';
   company_id?: Maybe<Scalars['uuid']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   job_id?: Maybe<Scalars['uuid']['output']>;
+  linkedin?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
   resume_url?: Maybe<Scalars['String']['output']>;
+  website?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by max() on columns of table "applications" */
 export type Applications_Max_Order_By = {
   company_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   job_id?: InputMaybe<Order_By>;
+  linkedin?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
+  website?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -200,18 +220,26 @@ export type Applications_Min_Fields = {
   __typename?: 'applications_min_fields';
   company_id?: Maybe<Scalars['uuid']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   job_id?: Maybe<Scalars['uuid']['output']>;
+  linkedin?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
   resume_url?: Maybe<Scalars['String']['output']>;
+  website?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by min() on columns of table "applications" */
 export type Applications_Min_Order_By = {
   company_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   job_id?: InputMaybe<Order_By>;
+  linkedin?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
+  website?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "applications" */
@@ -235,10 +263,14 @@ export type Applications_Order_By = {
   company?: InputMaybe<Companies_Order_By>;
   company_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   job?: InputMaybe<Jobs_Order_By>;
   job_id?: InputMaybe<Order_By>;
+  linkedin?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
+  website?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: applications */
@@ -253,20 +285,32 @@ export enum Applications_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  Email = 'email',
+  /** column name */
   Id = 'id',
   /** column name */
   JobId = 'job_id',
   /** column name */
+  Linkedin = 'linkedin',
+  /** column name */
+  Name = 'name',
+  /** column name */
   ResumeUrl = 'resume_url',
+  /** column name */
+  Website = 'website',
 }
 
 /** input type for updating data in table "applications" */
 export type Applications_Set_Input = {
   company_id?: InputMaybe<Scalars['uuid']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   job_id?: InputMaybe<Scalars['uuid']['input']>;
+  linkedin?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Streaming cursor of the table "applications" */
@@ -281,9 +325,13 @@ export type Applications_Stream_Cursor_Input = {
 export type Applications_Stream_Cursor_Value_Input = {
   company_id?: InputMaybe<Scalars['uuid']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   job_id?: InputMaybe<Scalars['uuid']['input']>;
+  linkedin?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** update columns of table "applications" */
@@ -293,11 +341,19 @@ export enum Applications_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  Email = 'email',
+  /** column name */
   Id = 'id',
   /** column name */
   JobId = 'job_id',
   /** column name */
+  Linkedin = 'linkedin',
+  /** column name */
+  Name = 'name',
+  /** column name */
   ResumeUrl = 'resume_url',
+  /** column name */
+  Website = 'website',
 }
 
 export type Applications_Updates = {
@@ -6578,6 +6634,19 @@ export type CreateJobMutation = {
   insert_jobs_one?: { __typename?: 'jobs'; id: any } | null;
 };
 
+export type UpdateApplicationMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  linkedin?: InputMaybe<Scalars['String']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type UpdateApplicationMutation = {
+  __typename?: 'mutation_root';
+  update_applications_by_pk?: { __typename?: 'applications'; id: any } | null;
+};
+
 export type UpdateJobMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
   title?: InputMaybe<Scalars['String']['input']>;
@@ -6681,6 +6750,9 @@ export type GetJobByIdQuery = {
       id: any;
       resume_url: string;
       created_at: any;
+      linkedin?: string | null;
+      website?: string | null;
+      email?: string | null;
     }>;
   } | null;
 };
@@ -7026,6 +7098,106 @@ export const CreateJobDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateJobMutation, CreateJobMutationVariables>;
+export const UpdateApplicationDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateApplication' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'email' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'linkedin' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'website' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'update_applications_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'pk_columns' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: '_set' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'email' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'email' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'linkedin' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'linkedin' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'website' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'website' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateApplicationMutation, UpdateApplicationMutationVariables>;
 export const UpdateJobDocument = {
   kind: 'Document',
   definitions: [
@@ -7420,6 +7592,9 @@ export const GetJobByIdDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'resume_url' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'linkedin' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'website' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
                     ],
                   },
                 },

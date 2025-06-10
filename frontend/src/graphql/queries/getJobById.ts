@@ -16,6 +16,9 @@ export const GET_JOB_BY_ID = gql`
         id
         resume_url
         created_at
+        linkedin
+        website
+        email
       }
     }
   }
