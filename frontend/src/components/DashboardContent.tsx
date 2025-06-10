@@ -101,9 +101,14 @@ export function DashboardContent() {
                   {job.description}
                 </p>
                 <div className="mt-4 flex justify-between items-center">
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
-                    Posted {new Date(job.created_at).toLocaleDateString()}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      Posted {new Date(job.created_at).toLocaleDateString()}
+                    </span>
+                    <span className="text-xs font-medium px-2 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full">
+                      {job.applications_aggregate?.aggregate?.count || 0} Applications
+                    </span>
+                  </div>
                   <Link
                     href={`/dashboard/jobs/${job.id}`}
                     className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"

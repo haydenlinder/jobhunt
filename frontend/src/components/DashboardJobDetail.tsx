@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { graphqlRequest } from '@/lib/nhost-client';
 import { GET_JOB_BY_ID } from '@/graphql/queries/getJobById';
 import { JobEditForm } from './JobEditForm';
+import { JobApplicationsList } from './JobApplicationsList';
 
 interface DashboardJobDetailProps {
   jobId: string;
@@ -98,6 +99,9 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
               </p>
             </div>
           </div>
+
+          {/* Applications list */}
+          <JobApplicationsList applications={job.applications || []} />
 
           <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
             <div className="flex justify-between items-center">

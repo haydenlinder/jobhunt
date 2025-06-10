@@ -5,6 +5,14 @@ object_relationships:
   - name: company
     using:
       foreign_key_constraint_on: company_id
+array_relationships:
+  - name: applications
+    using:
+      foreign_key_constraint_on:
+        column: job_id
+        table:
+          name: applications
+          schema: public
 insert_permissions:
   - role: user
     permission:

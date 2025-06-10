@@ -1,6 +1,13 @@
 table:
   name: applications
   schema: public
+object_relationships:
+  - name: company
+    using:
+      foreign_key_constraint_on: company_id
+  - name: job
+    using:
+      foreign_key_constraint_on: job_id
 insert_permissions:
   - role: public
     permission:
@@ -26,7 +33,10 @@ select_permissions:
   - role: public
     permission:
       columns:
+        - company_id
+        - created_at
         - id
+        - job_id
         - resume_url
       filter: {}
     comment: ""
@@ -39,13 +49,29 @@ select_permissions:
         - job_id
         - resume_url
       filter:
-        company_id:
-          _eq: X-Hasura-Company-Id
+        company:
+          company_users:
+            user_id:
+              _eq: X-Hasura-User-Id
+      allow_aggregations: true
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns: []
+      filter:
+        company:
+          company_users:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
     comment: ""
 delete_permissions:
   - role: user
     permission:
       filter:
-        company_id:
-          _eq: X-Hasura-Company-Id
+        company:
+          company_users:
+            user_id:
+              _eq: X-Hasura-User-Id
     comment: ""

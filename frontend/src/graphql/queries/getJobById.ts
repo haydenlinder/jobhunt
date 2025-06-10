@@ -12,6 +12,11 @@ export const GET_JOB_BY_ID = gql`
         id
         name
       }
+      applications {
+        id
+        resume_url
+        created_at
+      }
     }
   }
 `;

@@ -13,6 +13,11 @@ export const GET_JOBS = gql`
         name
         id
       }
+      applications_aggregate {
+        aggregate {
+          count
+        }
+      }
     }
   }
 `;
