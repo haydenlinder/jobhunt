@@ -45,3 +45,22 @@ select_permissions:
       filter: {}
       allow_aggregations: true
     comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - description
+        - location
+        - title
+        - created_at
+        - updated_at
+        - company_id
+        - id
+        - user_id
+      filter: {}
+      check:
+        company:
+          company_users:
+            user_id:
+              _eq: X-Hasura-User-Id
+    comment: ""
