@@ -200,6 +200,12 @@ export default function Header() {
               </div>
               <div className="mt-3 space-y-1">
                 <Link
+                  href="/dashboard"
+                  className="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  Dashboard
+                </Link>
+                <Link
                   href="/profile"
                   className="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
