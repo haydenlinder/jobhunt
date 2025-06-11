@@ -3,29 +3,20 @@
 import { Applications } from '@/gql/graphql';
 import { useState, useEffect } from 'react';
 
-interface ParsedResumeData {
-  name: string | null;
-  website: string | null;
-  email: string | null;
-  linkedin: string | null;
-  resume_url: string;
-}
-
 export function ApplicationDetail({
-  application: { resume_url, id, linkedin, email, website },
+  application: { resume_url, id, linkedin, email, website, years_of_experience, skills },
 }: {
   application: Partial<Applications>;
 }) {
-  const [parsedData, setParsedData] = useState<ParsedResumeData | null | Partial<Applications>>(
-    null
-  );
+  const [parsedData, setParsedData] = useState<null | Partial<Applications>>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const parseResume = async () => {
       if (!resume_url) return;
-      if (email) return setParsedData({ resume_url, linkedin, email, website });
+      if (email)
+        return setParsedData({ resume_url, linkedin, email, website, years_of_experience, skills });
 
       setIsLoading(true);
       setError(null);
@@ -57,6 +48,7 @@ export function ApplicationDetail({
         }
 
         const data = await response.json();
+        console.log({ data });
         setParsedData(data);
       } catch (err) {
         console.error('Error parsing resume:', err);
@@ -67,7 +59,7 @@ export function ApplicationDetail({
     };
 
     parseResume();
-  }, [resume_url, linkedin, email, website, id]);
+  }, [resume_url, linkedin, email, website, id, skills, years_of_experience]);
 
   if (isLoading) {
     return (
@@ -99,14 +91,42 @@ export function ApplicationDetail({
 
   return (
     <div className="pt-3">
-      <h3 className="font-medium text-gray-900 dark:text-white mb-3">Parsed Resume Information</h3>
       <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-md space-y-3">
+        <Resume url={resume_url || ''} />
+
         {parsedData.name && (
           <div>
             <span className="text-sm font-medium text-gray-500 dark:text-gray-400 block">
               Name:
             </span>
             <span className="text-gray-900 dark:text-white">{parsedData.name}</span>
+          </div>
+        )}
+
+        {parsedData.years_of_experience && (
+          <div>
+            <span className="text-sm font-medium text-gray-500 dark:text-gray-400 block">
+              Years of experience:
+            </span>
+            <span className="text-gray-900 dark:text-white">{parsedData.years_of_experience}</span>
+          </div>
+        )}
+
+        {parsedData.skills && (
+          <div className="max-w-full">
+            <span className="text-sm font-medium text-gray-500 dark:text-gray-400 block">
+              Top Skills:
+            </span>
+            <div className="flex flex-wrap gap-1">
+              {parsedData.skills?.slice(0, 5).map((skill, i) => (
+                <div
+                  key={`${skill}-${i}`}
+                  className="text-gray-900 bg-gray-600 py-1 px-2 rounded dark:text-white h-fit"
+                >
+                  {skill}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
@@ -150,7 +170,11 @@ export function ApplicationDetail({
               LinkedIn:
             </span>
             <a
-              href={parsedData.linkedin}
+              href={
+                parsedData.linkedin.startsWith('http')
+                  ? parsedData.linkedin
+                  : `https://${parsedData.linkedin}`
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300"
@@ -163,3 +187,32 @@ export function ApplicationDetail({
     </div>
   );
 }
+
+const Resume = ({ url }: { url: string }) => {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+    >
+      <svg
+        className="h-5 w-5 flex-shrink-0 text-indigo-500 dark:text-indigo-400"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+      </svg>
+      <div className="ml-2">resume</div>
+    </a>
+  );
+};

@@ -51,7 +51,9 @@ select_permissions:
         - linkedin
         - name
         - resume_url
+        - skills
         - website
+        - years_of_experience
       filter:
         company:
           company_users:

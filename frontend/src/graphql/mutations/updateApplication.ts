@@ -6,11 +6,18 @@ export const UPDATE_APPLICATION = gql`
     $email: String = ""
     $linkedin: String = ""
     $website: String = ""
-    $name: String = ""
+    $skills: [String!] = ""
+    $years_of_experience: Int = 10
   ) {
     update_applications_by_pk(
       pk_columns: { id: $id }
-      _set: { email: $email, linkedin: $linkedin, website: $website, name: $name }
+      _set: {
+        email: $email
+        linkedin: $linkedin
+        website: $website
+        skills: $skills
+        years_of_experience: $years_of_experience
+      }
     ) {
       id
     }

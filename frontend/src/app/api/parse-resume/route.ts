@@ -59,11 +59,13 @@ export async function POST(request: NextRequest) {
                 'This is a resume. Extract and return ONLY the following information in JSON format:\n' +
                 "1. The applicant's full name\n" +
                 '2. Their website URL (if present)\n' +
-                '2. Their linkedin URL (if present)\n' +
-                '3. Their email address\n\n' +
+                '3. Their linkedin URL (if present)\n' +
+                '4. Their email address\n\n' +
+                '5. Years of experience (work experience only)\n\n' +
+                '6. Skills (ordered by top skills)\n\n' +
                 'Format the response as a valid JSON object with the keys: "name", "website", and "email". ' +
                 'If any information is not found, use null for that field. ' +
-                'For example: {"name": "John Doe", "website": "johndoe.com", "email": "john@example.com", linkedin: "https://linkedin.com/in/johndoe"}',
+                'For example: {"name": "John Doe", "website": "johndoe.com", "email": "john@example.com", linkedin: "https://linkedin.com/in/johndoe", years_of_experience: "3", skills: "[\"carpentry\", \"microsoft office\"]"}',
             },
           ],
         },
@@ -105,6 +107,8 @@ export async function POST(request: NextRequest) {
             email: resumeData.email || null,
             linkedin: resumeData.linkedin || null,
             website: resumeData.website || null,
+            skills: resumeData.skills || null,
+            years_of_experience: resumeData.years_of_experience || null,
           },
           {
             headers: {

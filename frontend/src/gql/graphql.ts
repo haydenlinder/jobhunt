@@ -53,6 +53,23 @@ export type Int_Comparison_Exp = {
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+export type String_Array_Comparison_Exp = {
+  /** is the array contained in the given array value */
+  _contained_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** does the array contain the given value */
+  _contains?: InputMaybe<Array<Scalars['String']['input']>>;
+  _eq?: InputMaybe<Array<Scalars['String']['input']>>;
+  _gt?: InputMaybe<Array<Scalars['String']['input']>>;
+  _gte?: InputMaybe<Array<Scalars['String']['input']>>;
+  _in?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Array<Scalars['String']['input']>>;
+  _lte?: InputMaybe<Array<Scalars['String']['input']>>;
+  _neq?: InputMaybe<Array<Scalars['String']['input']>>;
+  _nin?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
+};
+
+/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['String']['input']>;
   _gt?: InputMaybe<Scalars['String']['input']>;
@@ -100,7 +117,9 @@ export type Applications = {
   linkedin?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   resume_url: Scalars['String']['output'];
+  skills?: Maybe<Array<Scalars['String']['output']>>;
   website?: Maybe<Scalars['String']['output']>;
+  years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
 
 /** aggregated selection of "applications" */
@@ -124,9 +143,17 @@ export type Applications_Aggregate_Bool_Exp_Count = {
 /** aggregate fields of "applications" */
 export type Applications_Aggregate_Fields = {
   __typename?: 'applications_aggregate_fields';
+  avg?: Maybe<Applications_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Applications_Max_Fields>;
   min?: Maybe<Applications_Min_Fields>;
+  stddev?: Maybe<Applications_Stddev_Fields>;
+  stddev_pop?: Maybe<Applications_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Applications_Stddev_Samp_Fields>;
+  sum?: Maybe<Applications_Sum_Fields>;
+  var_pop?: Maybe<Applications_Var_Pop_Fields>;
+  var_samp?: Maybe<Applications_Var_Samp_Fields>;
+  variance?: Maybe<Applications_Variance_Fields>;
 };
 
 /** aggregate fields of "applications" */
@@ -137,9 +164,17 @@ export type Applications_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "applications" */
 export type Applications_Aggregate_Order_By = {
+  avg?: InputMaybe<Applications_Avg_Order_By>;
   count?: InputMaybe<Order_By>;
   max?: InputMaybe<Applications_Max_Order_By>;
   min?: InputMaybe<Applications_Min_Order_By>;
+  stddev?: InputMaybe<Applications_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Applications_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Applications_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Applications_Sum_Order_By>;
+  var_pop?: InputMaybe<Applications_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Applications_Var_Samp_Order_By>;
+  variance?: InputMaybe<Applications_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "applications" */
@@ -147,6 +182,17 @@ export type Applications_Arr_Rel_Insert_Input = {
   data: Array<Applications_Insert_Input>;
   /** upsert condition */
   on_conflict?: InputMaybe<Applications_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Applications_Avg_Fields = {
+  __typename?: 'applications_avg_fields';
+  years_of_experience?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "applications" */
+export type Applications_Avg_Order_By = {
+  years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "applications". All fields are combined with a logical 'AND'. */
@@ -164,7 +210,9 @@ export type Applications_Bool_Exp = {
   linkedin?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   resume_url?: InputMaybe<String_Comparison_Exp>;
+  skills?: InputMaybe<String_Array_Comparison_Exp>;
   website?: InputMaybe<String_Comparison_Exp>;
+  years_of_experience?: InputMaybe<Int_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "applications" */
@@ -172,6 +220,11 @@ export enum Applications_Constraint {
   /** unique or primary key constraint on columns "id" */
   ApplicationsPkey = 'applications_pkey',
 }
+
+/** input type for incrementing numeric columns in table "applications" */
+export type Applications_Inc_Input = {
+  years_of_experience?: InputMaybe<Scalars['Int']['input']>;
+};
 
 /** input type for inserting data into table "applications" */
 export type Applications_Insert_Input = {
@@ -185,7 +238,9 @@ export type Applications_Insert_Input = {
   linkedin?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
+  skills?: InputMaybe<Array<Scalars['String']['input']>>;
   website?: InputMaybe<Scalars['String']['input']>;
+  years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate max on columns */
@@ -199,7 +254,9 @@ export type Applications_Max_Fields = {
   linkedin?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   resume_url?: Maybe<Scalars['String']['output']>;
+  skills?: Maybe<Array<Scalars['String']['output']>>;
   website?: Maybe<Scalars['String']['output']>;
+  years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by max() on columns of table "applications" */
@@ -212,7 +269,9 @@ export type Applications_Max_Order_By = {
   linkedin?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
+  skills?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
+  years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -226,7 +285,9 @@ export type Applications_Min_Fields = {
   linkedin?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   resume_url?: Maybe<Scalars['String']['output']>;
+  skills?: Maybe<Array<Scalars['String']['output']>>;
   website?: Maybe<Scalars['String']['output']>;
+  years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by min() on columns of table "applications" */
@@ -239,7 +300,9 @@ export type Applications_Min_Order_By = {
   linkedin?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
+  skills?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
+  years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "applications" */
@@ -270,7 +333,9 @@ export type Applications_Order_By = {
   linkedin?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
+  skills?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
+  years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: applications */
@@ -297,7 +362,11 @@ export enum Applications_Select_Column {
   /** column name */
   ResumeUrl = 'resume_url',
   /** column name */
+  Skills = 'skills',
+  /** column name */
   Website = 'website',
+  /** column name */
+  YearsOfExperience = 'years_of_experience',
 }
 
 /** input type for updating data in table "applications" */
@@ -310,7 +379,42 @@ export type Applications_Set_Input = {
   linkedin?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
+  skills?: InputMaybe<Array<Scalars['String']['input']>>;
   website?: InputMaybe<Scalars['String']['input']>;
+  years_of_experience?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Applications_Stddev_Fields = {
+  __typename?: 'applications_stddev_fields';
+  years_of_experience?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "applications" */
+export type Applications_Stddev_Order_By = {
+  years_of_experience?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Applications_Stddev_Pop_Fields = {
+  __typename?: 'applications_stddev_pop_fields';
+  years_of_experience?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "applications" */
+export type Applications_Stddev_Pop_Order_By = {
+  years_of_experience?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Applications_Stddev_Samp_Fields = {
+  __typename?: 'applications_stddev_samp_fields';
+  years_of_experience?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "applications" */
+export type Applications_Stddev_Samp_Order_By = {
+  years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "applications" */
@@ -331,7 +435,20 @@ export type Applications_Stream_Cursor_Value_Input = {
   linkedin?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
+  skills?: InputMaybe<Array<Scalars['String']['input']>>;
   website?: InputMaybe<Scalars['String']['input']>;
+  years_of_experience?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Applications_Sum_Fields = {
+  __typename?: 'applications_sum_fields';
+  years_of_experience?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "applications" */
+export type Applications_Sum_Order_By = {
+  years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "applications" */
@@ -353,14 +470,53 @@ export enum Applications_Update_Column {
   /** column name */
   ResumeUrl = 'resume_url',
   /** column name */
+  Skills = 'skills',
+  /** column name */
   Website = 'website',
+  /** column name */
+  YearsOfExperience = 'years_of_experience',
 }
 
 export type Applications_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Applications_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Applications_Set_Input>;
   /** filter the rows which have to be updated */
   where: Applications_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Applications_Var_Pop_Fields = {
+  __typename?: 'applications_var_pop_fields';
+  years_of_experience?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "applications" */
+export type Applications_Var_Pop_Order_By = {
+  years_of_experience?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Applications_Var_Samp_Fields = {
+  __typename?: 'applications_var_samp_fields';
+  years_of_experience?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "applications" */
+export type Applications_Var_Samp_Order_By = {
+  years_of_experience?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Applications_Variance_Fields = {
+  __typename?: 'applications_variance_fields';
+  years_of_experience?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "applications" */
+export type Applications_Variance_Order_By = {
+  years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** Oauth requests, inserted before redirecting to the provider's site. Don't modify its structure as Hasura Auth relies on it to function properly. */
@@ -4521,12 +4677,14 @@ export type Mutation_RootUpdateVirusesArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_ApplicationsArgs = {
+  _inc?: InputMaybe<Applications_Inc_Input>;
   _set?: InputMaybe<Applications_Set_Input>;
   where: Applications_Bool_Exp;
 };
 
 /** mutation root */
 export type Mutation_RootUpdate_Applications_By_PkArgs = {
+  _inc?: InputMaybe<Applications_Inc_Input>;
   _set?: InputMaybe<Applications_Set_Input>;
   pk_columns: Applications_Pk_Columns_Input;
 };
@@ -6639,7 +6797,8 @@ export type UpdateApplicationMutationVariables = Exact<{
   email?: InputMaybe<Scalars['String']['input']>;
   linkedin?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+  skills?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 export type UpdateApplicationMutation = {
@@ -7149,9 +7308,21 @@ export const UpdateApplicationDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skills' } },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+            },
+          },
           defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'years_of_experience' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '10' },
         },
       ],
       selectionSet: {
@@ -7198,8 +7369,16 @@ export const UpdateApplicationDocument = {
                     },
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'name' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+                      name: { kind: 'Name', value: 'skills' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'skills' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'years_of_experience' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'years_of_experience' },
+                      },
                     },
                   ],
                 },
