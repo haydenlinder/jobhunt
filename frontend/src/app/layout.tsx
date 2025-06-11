@@ -27,14 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen relative`}
+      >
         <AuthProvider>
           <QueryProvider>
             <Header />
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">{children}</main>
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-50">{children}</main>
           </QueryProvider>
         </AuthProvider>
-        <footer className="bg-white dark:bg-gray-900 mt-auto py-6 border-t border-gray-200 dark:border-gray-800">
+        <footer className="bg-white absolute w-full bottom-0 dark:bg-gray-900 mt-auto py-6 border-t border-gray-200 dark:border-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-gray-500 dark:text-gray-400 text-sm">
               © {new Date().getFullYear()} JobHunt. All rights reserved.

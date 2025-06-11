@@ -51,7 +51,7 @@ export default function FeaturedCompanies() {
           : featuredCompanies.map(company => (
               <Link
                 key={company.id}
-                href={`/${company.name?.toLowerCase().replace(' ', '-')}/jobs`}
+                href={`company/${company.id}/jobs`}
                 className="block bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
               >
                 <div className="h-12 w-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mb-4">

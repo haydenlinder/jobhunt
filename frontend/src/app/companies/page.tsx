@@ -200,7 +200,7 @@ export default function CompaniesPage() {
             </>
           ) : (
             <Link
-              href="/dashboard/jobs"
+              href="/dashboard"
               className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-lg font-medium text-lg shadow-md transition-all"
             >
               Post a Job
