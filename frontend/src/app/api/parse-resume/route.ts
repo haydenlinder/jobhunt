@@ -3,7 +3,11 @@ import OpenAI from 'openai';
 import { nhost } from '@/lib/nhost-client';
 import { UPDATE_APPLICATION } from '@/graphql/mutations/updateApplication';
 import { GET_APPLICATION_JOB_INFO } from '@/graphql/queries/getApplicationJobInfo';
-import { GetApplicationJobInfoQuery, Jobs, UpdateApplicationMutation, UpdateApplicationMutationVariables } from '@/gql/graphql';
+import {
+  GetApplicationJobInfoQuery,
+  UpdateApplicationMutation,
+  UpdateApplicationMutationVariables,
+} from '@/gql/graphql';
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,7 +22,9 @@ export async function POST(request: NextRequest) {
     const resumeFile = formData.get('resume') as File | null;
     const applicationId = formData.get('applicationId') as string | null;
 
-    let job: Exclude<GetApplicationJobInfoQuery['applications_by_pk'], null | undefined>['job'] | undefined = undefined
+    let job:
+      | Exclude<GetApplicationJobInfoQuery['applications_by_pk'], null | undefined>['job']
+      | undefined = undefined;
     if (applicationId) {
       try {
         const res = await nhost.graphql.request<GetApplicationJobInfoQuery>(
@@ -32,7 +38,7 @@ export async function POST(request: NextRequest) {
             },
           }
         );
-        job = res.data?.applications_by_pk?.job
+        job = res.data?.applications_by_pk?.job;
       } catch (error) {
         console.error('Error updating application in Nhost:', error);
         // Continue execution even if update fails - still return the parsed data
@@ -91,8 +97,8 @@ export async function POST(request: NextRequest) {
                 'Format the response as a valid JSON object. ' +
                 'If any information is not found, use null for that field. ' +
                 'For example: {"name": "John Doe", "website": "johndoe.com", "email": "john@example.com", linkedin: "https://linkedin.com/in/johndoe", years_of_experience: "3", skills: "[\"carpentry\", \"microsoft office\"]", relevant_skills: "[\"microsoft office\"]"}' +
-                `\n\nJob Title: ${job?.title}\n`+
-                `\n\nJob Location: ${job?.location}\n`+
+                `\n\nJob Title: ${job?.title}\n` +
+                `\n\nJob Location: ${job?.location}\n` +
                 `\n\nJob description: \n` +
                 `${job?.description}`,
             },
