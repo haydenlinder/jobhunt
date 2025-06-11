@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
           },
           {
             headers: {
-              'x-hasura-admin-secret': process.env.GRAPHQL_ADMIN_SECRET || "",
+              'x-hasura-admin-secret': process.env.GRAPHQL_ADMIN_SECRET || '',
             },
           }
         );
