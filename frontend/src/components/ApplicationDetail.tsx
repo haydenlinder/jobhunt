@@ -4,19 +4,20 @@ import { Applications } from '@/gql/graphql';
 import { useState, useEffect } from 'react';
 
 export function ApplicationDetail({
-  application: { resume_url, id, linkedin, email, website, years_of_experience, skills },
+  application: { resume_url, id, linkedin, email, website, years_of_experience, skills, relevant_skills, match_score },
 }: {
   application: Partial<Applications>;
 }) {
-  const [parsedData, setParsedData] = useState<null | Partial<Applications>>(null);
+  const [parsedData, setParsedData] = useState<null | Partial<Applications>>({ resume_url, id, linkedin, email, website, years_of_experience, skills, relevant_skills, match_score });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const parseResume = async () => {
       if (!resume_url) return;
-      if (email)
-        return setParsedData({ resume_url, linkedin, email, website, years_of_experience, skills });
+      console.log({match_score})
+      if (typeof match_score === 'number')
+        return 
 
       setIsLoading(true);
       setError(null);
@@ -59,7 +60,7 @@ export function ApplicationDetail({
     };
 
     parseResume();
-  }, [resume_url, linkedin, email, website, id, skills, years_of_experience]);
+  }, [resume_url]);
 
   if (isLoading) {
     return (
@@ -102,6 +103,19 @@ export function ApplicationDetail({
             <span className="text-gray-900 dark:text-white">{parsedData.name}</span>
           </div>
         )}
+        
+        {typeof parsedData.match_score === 'number' && (
+          <div>
+            <span className="text-sm font-medium text-gray-500 dark:text-gray-400 block">
+              Match Score:
+            </span>
+            {parsedData.match_score > 70 ? 
+            <span className="text-gray-900 bg-green-800 p-1 rounded-full text-center dark:text-white">{parsedData.match_score}</span>
+            :
+            <span className="text-gray-900 bg-yellow-800 p-1 rounded-full text-center dark:text-white">{parsedData.match_score}</span>
+            }
+          </div>
+        )}
 
         {parsedData.years_of_experience && (
           <div>
@@ -118,14 +132,25 @@ export function ApplicationDetail({
               Top Skills:
             </span>
             <div className="flex flex-wrap gap-1">
-              {parsedData.skills?.slice(0, 5).map((skill, i) => (
+              {parsedData.skills?.slice(0, 5).map((skill, i) => {
+                if (parsedData.relevant_skills?.includes(skill)) 
+                return (
                 <div
                   key={`${skill}-${i}`}
-                  className="text-gray-900 bg-gray-600 py-1 px-2 rounded dark:text-white h-fit"
+                  className="text-gray-900 bg-green-800 py-1 px-2 rounded dark:text-white h-fit"
                 >
                   {skill}
                 </div>
-              ))}
+                )
+                else return (
+                  <div
+                  key={`${skill}-${i}`}
+                  className="text-gray-900 bg-gray-800 py-1 px-2 rounded dark:text-white h-fit"
+                >
+                  {skill}
+                </div>
+                )
+              })}
             </div>
           </div>
         )}

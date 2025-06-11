@@ -5,25 +5,21 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
-  [_ in K]?: never;
-};
-export type Incremental<T> =
-  | T
-  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
-  bigint: { input: any; output: any };
-  bytea: { input: any; output: any };
-  citext: { input: any; output: any };
-  jsonb: { input: any; output: any };
-  timestamptz: { input: any; output: any };
-  uuid: { input: any; output: any };
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  bigint: { input: any; output: any; }
+  bytea: { input: any; output: any; }
+  citext: { input: any; output: any; }
+  jsonb: { input: any; output: any; }
+  timestamptz: { input: any; output: any; }
+  uuid: { input: any; output: any; }
 };
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
@@ -115,7 +111,9 @@ export type Applications = {
   job: Jobs;
   job_id: Scalars['uuid']['output'];
   linkedin?: Maybe<Scalars['String']['output']>;
+  match_score?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  relevant_skills?: Maybe<Array<Scalars['String']['output']>>;
   resume_url: Scalars['String']['output'];
   skills?: Maybe<Array<Scalars['String']['output']>>;
   website?: Maybe<Scalars['String']['output']>;
@@ -156,6 +154,7 @@ export type Applications_Aggregate_Fields = {
   variance?: Maybe<Applications_Variance_Fields>;
 };
 
+
 /** aggregate fields of "applications" */
 export type Applications_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Applications_Select_Column>>;
@@ -187,11 +186,13 @@ export type Applications_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type Applications_Avg_Fields = {
   __typename?: 'applications_avg_fields';
+  match_score?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by avg() on columns of table "applications" */
 export type Applications_Avg_Order_By = {
+  match_score?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -208,7 +209,9 @@ export type Applications_Bool_Exp = {
   job?: InputMaybe<Jobs_Bool_Exp>;
   job_id?: InputMaybe<Uuid_Comparison_Exp>;
   linkedin?: InputMaybe<String_Comparison_Exp>;
+  match_score?: InputMaybe<Int_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  relevant_skills?: InputMaybe<String_Array_Comparison_Exp>;
   resume_url?: InputMaybe<String_Comparison_Exp>;
   skills?: InputMaybe<String_Array_Comparison_Exp>;
   website?: InputMaybe<String_Comparison_Exp>;
@@ -218,11 +221,12 @@ export type Applications_Bool_Exp = {
 /** unique or primary key constraints on table "applications" */
 export enum Applications_Constraint {
   /** unique or primary key constraint on columns "id" */
-  ApplicationsPkey = 'applications_pkey',
+  ApplicationsPkey = 'applications_pkey'
 }
 
 /** input type for incrementing numeric columns in table "applications" */
 export type Applications_Inc_Input = {
+  match_score?: InputMaybe<Scalars['Int']['input']>;
   years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -236,7 +240,9 @@ export type Applications_Insert_Input = {
   job?: InputMaybe<Jobs_Obj_Rel_Insert_Input>;
   job_id?: InputMaybe<Scalars['uuid']['input']>;
   linkedin?: InputMaybe<Scalars['String']['input']>;
+  match_score?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  relevant_skills?: InputMaybe<Array<Scalars['String']['input']>>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']>>;
   website?: InputMaybe<Scalars['String']['input']>;
@@ -252,7 +258,9 @@ export type Applications_Max_Fields = {
   id?: Maybe<Scalars['uuid']['output']>;
   job_id?: Maybe<Scalars['uuid']['output']>;
   linkedin?: Maybe<Scalars['String']['output']>;
+  match_score?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  relevant_skills?: Maybe<Array<Scalars['String']['output']>>;
   resume_url?: Maybe<Scalars['String']['output']>;
   skills?: Maybe<Array<Scalars['String']['output']>>;
   website?: Maybe<Scalars['String']['output']>;
@@ -267,7 +275,9 @@ export type Applications_Max_Order_By = {
   id?: InputMaybe<Order_By>;
   job_id?: InputMaybe<Order_By>;
   linkedin?: InputMaybe<Order_By>;
+  match_score?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  relevant_skills?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
   skills?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
@@ -283,7 +293,9 @@ export type Applications_Min_Fields = {
   id?: Maybe<Scalars['uuid']['output']>;
   job_id?: Maybe<Scalars['uuid']['output']>;
   linkedin?: Maybe<Scalars['String']['output']>;
+  match_score?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  relevant_skills?: Maybe<Array<Scalars['String']['output']>>;
   resume_url?: Maybe<Scalars['String']['output']>;
   skills?: Maybe<Array<Scalars['String']['output']>>;
   website?: Maybe<Scalars['String']['output']>;
@@ -298,7 +310,9 @@ export type Applications_Min_Order_By = {
   id?: InputMaybe<Order_By>;
   job_id?: InputMaybe<Order_By>;
   linkedin?: InputMaybe<Order_By>;
+  match_score?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  relevant_skills?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
   skills?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
@@ -331,7 +345,9 @@ export type Applications_Order_By = {
   job?: InputMaybe<Jobs_Order_By>;
   job_id?: InputMaybe<Order_By>;
   linkedin?: InputMaybe<Order_By>;
+  match_score?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  relevant_skills?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
   skills?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
@@ -358,7 +374,11 @@ export enum Applications_Select_Column {
   /** column name */
   Linkedin = 'linkedin',
   /** column name */
+  MatchScore = 'match_score',
+  /** column name */
   Name = 'name',
+  /** column name */
+  RelevantSkills = 'relevant_skills',
   /** column name */
   ResumeUrl = 'resume_url',
   /** column name */
@@ -366,7 +386,7 @@ export enum Applications_Select_Column {
   /** column name */
   Website = 'website',
   /** column name */
-  YearsOfExperience = 'years_of_experience',
+  YearsOfExperience = 'years_of_experience'
 }
 
 /** input type for updating data in table "applications" */
@@ -377,7 +397,9 @@ export type Applications_Set_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   job_id?: InputMaybe<Scalars['uuid']['input']>;
   linkedin?: InputMaybe<Scalars['String']['input']>;
+  match_score?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  relevant_skills?: InputMaybe<Array<Scalars['String']['input']>>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']>>;
   website?: InputMaybe<Scalars['String']['input']>;
@@ -387,33 +409,39 @@ export type Applications_Set_Input = {
 /** aggregate stddev on columns */
 export type Applications_Stddev_Fields = {
   __typename?: 'applications_stddev_fields';
+  match_score?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev() on columns of table "applications" */
 export type Applications_Stddev_Order_By = {
+  match_score?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Applications_Stddev_Pop_Fields = {
   __typename?: 'applications_stddev_pop_fields';
+  match_score?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_pop() on columns of table "applications" */
 export type Applications_Stddev_Pop_Order_By = {
+  match_score?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Applications_Stddev_Samp_Fields = {
   __typename?: 'applications_stddev_samp_fields';
+  match_score?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_samp() on columns of table "applications" */
 export type Applications_Stddev_Samp_Order_By = {
+  match_score?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -433,7 +461,9 @@ export type Applications_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   job_id?: InputMaybe<Scalars['uuid']['input']>;
   linkedin?: InputMaybe<Scalars['String']['input']>;
+  match_score?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  relevant_skills?: InputMaybe<Array<Scalars['String']['input']>>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']>>;
   website?: InputMaybe<Scalars['String']['input']>;
@@ -443,11 +473,13 @@ export type Applications_Stream_Cursor_Value_Input = {
 /** aggregate sum on columns */
 export type Applications_Sum_Fields = {
   __typename?: 'applications_sum_fields';
+  match_score?: Maybe<Scalars['Int']['output']>;
   years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by sum() on columns of table "applications" */
 export type Applications_Sum_Order_By = {
+  match_score?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -466,7 +498,11 @@ export enum Applications_Update_Column {
   /** column name */
   Linkedin = 'linkedin',
   /** column name */
+  MatchScore = 'match_score',
+  /** column name */
   Name = 'name',
+  /** column name */
+  RelevantSkills = 'relevant_skills',
   /** column name */
   ResumeUrl = 'resume_url',
   /** column name */
@@ -474,7 +510,7 @@ export enum Applications_Update_Column {
   /** column name */
   Website = 'website',
   /** column name */
-  YearsOfExperience = 'years_of_experience',
+  YearsOfExperience = 'years_of_experience'
 }
 
 export type Applications_Updates = {
@@ -489,33 +525,39 @@ export type Applications_Updates = {
 /** aggregate var_pop on columns */
 export type Applications_Var_Pop_Fields = {
   __typename?: 'applications_var_pop_fields';
+  match_score?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_pop() on columns of table "applications" */
 export type Applications_Var_Pop_Order_By = {
+  match_score?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Applications_Var_Samp_Fields = {
   __typename?: 'applications_var_samp_fields';
+  match_score?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_samp() on columns of table "applications" */
 export type Applications_Var_Samp_Order_By = {
+  match_score?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Applications_Variance_Fields = {
   __typename?: 'applications_variance_fields';
+  match_score?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by variance() on columns of table "applications" */
 export type Applications_Variance_Order_By = {
+  match_score?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -525,6 +567,7 @@ export type AuthProviderRequests = {
   id: Scalars['uuid']['output'];
   options?: Maybe<Scalars['jsonb']['output']>;
 };
+
 
 /** Oauth requests, inserted before redirecting to the provider's site. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthProviderRequestsOptionsArgs = {
@@ -545,6 +588,7 @@ export type AuthProviderRequests_Aggregate_Fields = {
   max?: Maybe<AuthProviderRequests_Max_Fields>;
   min?: Maybe<AuthProviderRequests_Min_Fields>;
 };
+
 
 /** aggregate fields of "auth.provider_requests" */
 export type AuthProviderRequests_Aggregate_FieldsCountArgs = {
@@ -569,7 +613,7 @@ export type AuthProviderRequests_Bool_Exp = {
 /** unique or primary key constraints on table "auth.provider_requests" */
 export enum AuthProviderRequests_Constraint {
   /** unique or primary key constraint on columns "id" */
-  ProviderRequestsPkey = 'provider_requests_pkey',
+  ProviderRequestsPkey = 'provider_requests_pkey'
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
@@ -642,7 +686,7 @@ export enum AuthProviderRequests_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Options = 'options',
+  Options = 'options'
 }
 
 /** input type for updating data in table "auth.provider_requests" */
@@ -670,7 +714,7 @@ export enum AuthProviderRequests_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Options = 'options',
+  Options = 'options'
 }
 
 export type AuthProviderRequests_Updates = {
@@ -700,6 +744,7 @@ export type AuthProviders = {
   userProviders_aggregate: AuthUserProviders_Aggregate;
 };
 
+
 /** List of available Oauth providers. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthProvidersUserProvidersArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
@@ -708,6 +753,7 @@ export type AuthProvidersUserProvidersArgs = {
   order_by?: InputMaybe<Array<AuthUserProviders_Order_By>>;
   where?: InputMaybe<AuthUserProviders_Bool_Exp>;
 };
+
 
 /** List of available Oauth providers. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthProvidersUserProviders_AggregateArgs = {
@@ -733,6 +779,7 @@ export type AuthProviders_Aggregate_Fields = {
   min?: Maybe<AuthProviders_Min_Fields>;
 };
 
+
 /** aggregate fields of "auth.providers" */
 export type AuthProviders_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<AuthProviders_Select_Column>>;
@@ -752,7 +799,7 @@ export type AuthProviders_Bool_Exp = {
 /** unique or primary key constraints on table "auth.providers" */
 export enum AuthProviders_Constraint {
   /** unique or primary key constraint on columns "id" */
-  ProvidersPkey = 'providers_pkey',
+  ProvidersPkey = 'providers_pkey'
 }
 
 /** input type for inserting data into table "auth.providers" */
@@ -810,7 +857,7 @@ export type AuthProviders_Pk_Columns_Input = {
 /** select columns of table "auth.providers" */
 export enum AuthProviders_Select_Column {
   /** column name */
-  Id = 'id',
+  Id = 'id'
 }
 
 /** input type for updating data in table "auth.providers" */
@@ -834,7 +881,7 @@ export type AuthProviders_Stream_Cursor_Value_Input = {
 /** update columns of table "auth.providers" */
 export enum AuthProviders_Update_Column {
   /** column name */
-  Id = 'id',
+  Id = 'id'
 }
 
 export type AuthProviders_Updates = {
@@ -855,6 +902,7 @@ export type AuthRefreshTokenTypes = {
   value: Scalars['String']['output'];
 };
 
+
 /** columns and relationships of "auth.refresh_token_types" */
 export type AuthRefreshTokenTypesRefreshTokensArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokens_Select_Column>>;
@@ -863,6 +911,7 @@ export type AuthRefreshTokenTypesRefreshTokensArgs = {
   order_by?: InputMaybe<Array<AuthRefreshTokens_Order_By>>;
   where?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
 };
+
 
 /** columns and relationships of "auth.refresh_token_types" */
 export type AuthRefreshTokenTypesRefreshTokens_AggregateArgs = {
@@ -888,6 +937,7 @@ export type AuthRefreshTokenTypes_Aggregate_Fields = {
   min?: Maybe<AuthRefreshTokenTypes_Min_Fields>;
 };
 
+
 /** aggregate fields of "auth.refresh_token_types" */
 export type AuthRefreshTokenTypes_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<AuthRefreshTokenTypes_Select_Column>>;
@@ -908,14 +958,14 @@ export type AuthRefreshTokenTypes_Bool_Exp = {
 /** unique or primary key constraints on table "auth.refresh_token_types" */
 export enum AuthRefreshTokenTypes_Constraint {
   /** unique or primary key constraint on columns "value" */
-  RefreshTokenTypesPkey = 'refresh_token_types_pkey',
+  RefreshTokenTypesPkey = 'refresh_token_types_pkey'
 }
 
 export enum AuthRefreshTokenTypes_Enum {
   /** Personal access token */
   Pat = 'pat',
   /** Regular refresh token */
-  Regular = 'regular',
+  Regular = 'regular'
 }
 
 /** Boolean expression to compare columns of type "authRefreshTokenTypes_enum". All fields are combined with logical 'AND'. */
@@ -981,7 +1031,7 @@ export enum AuthRefreshTokenTypes_Select_Column {
   /** column name */
   Comment = 'comment',
   /** column name */
-  Value = 'value',
+  Value = 'value'
 }
 
 /** input type for updating data in table "auth.refresh_token_types" */
@@ -1009,7 +1059,7 @@ export enum AuthRefreshTokenTypes_Update_Column {
   /** column name */
   Comment = 'comment',
   /** column name */
-  Value = 'value',
+  Value = 'value'
 }
 
 export type AuthRefreshTokenTypes_Updates = {
@@ -1032,6 +1082,7 @@ export type AuthRefreshTokens = {
   user: Users;
   userId: Scalars['uuid']['output'];
 };
+
 
 /** User refresh tokens. Hasura auth uses them to rotate new access tokens as long as the refresh token is not expired. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRefreshTokensMetadataArgs = {
@@ -1063,6 +1114,7 @@ export type AuthRefreshTokens_Aggregate_Fields = {
   max?: Maybe<AuthRefreshTokens_Max_Fields>;
   min?: Maybe<AuthRefreshTokens_Min_Fields>;
 };
+
 
 /** aggregate fields of "auth.refresh_tokens" */
 export type AuthRefreshTokens_Aggregate_FieldsCountArgs = {
@@ -1107,7 +1159,7 @@ export type AuthRefreshTokens_Bool_Exp = {
 /** unique or primary key constraints on table "auth.refresh_tokens" */
 export enum AuthRefreshTokens_Constraint {
   /** unique or primary key constraint on columns "id" */
-  RefreshTokensPkey = 'refresh_tokens_pkey',
+  RefreshTokensPkey = 'refresh_tokens_pkey'
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
@@ -1228,7 +1280,7 @@ export enum AuthRefreshTokens_Select_Column {
   /** column name */
   Type = 'type',
   /** column name */
-  UserId = 'userId',
+  UserId = 'userId'
 }
 
 /** input type for updating data in table "auth.refresh_tokens" */
@@ -1276,7 +1328,7 @@ export enum AuthRefreshTokens_Update_Column {
   /** column name */
   Type = 'type',
   /** column name */
-  UserId = 'userId',
+  UserId = 'userId'
 }
 
 export type AuthRefreshTokens_Updates = {
@@ -1310,6 +1362,7 @@ export type AuthRoles = {
   usersByDefaultRole_aggregate: Users_Aggregate;
 };
 
+
 /** Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRolesUserRolesArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
@@ -1318,6 +1371,7 @@ export type AuthRolesUserRolesArgs = {
   order_by?: InputMaybe<Array<AuthUserRoles_Order_By>>;
   where?: InputMaybe<AuthUserRoles_Bool_Exp>;
 };
+
 
 /** Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRolesUserRoles_AggregateArgs = {
@@ -1328,6 +1382,7 @@ export type AuthRolesUserRoles_AggregateArgs = {
   where?: InputMaybe<AuthUserRoles_Bool_Exp>;
 };
 
+
 /** Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRolesUsersByDefaultRoleArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
@@ -1336,6 +1391,7 @@ export type AuthRolesUsersByDefaultRoleArgs = {
   order_by?: InputMaybe<Array<Users_Order_By>>;
   where?: InputMaybe<Users_Bool_Exp>;
 };
+
 
 /** Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRolesUsersByDefaultRole_AggregateArgs = {
@@ -1361,6 +1417,7 @@ export type AuthRoles_Aggregate_Fields = {
   min?: Maybe<AuthRoles_Min_Fields>;
 };
 
+
 /** aggregate fields of "auth.roles" */
 export type AuthRoles_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<AuthRoles_Select_Column>>;
@@ -1382,7 +1439,7 @@ export type AuthRoles_Bool_Exp = {
 /** unique or primary key constraints on table "auth.roles" */
 export enum AuthRoles_Constraint {
   /** unique or primary key constraint on columns "role" */
-  RolesPkey = 'roles_pkey',
+  RolesPkey = 'roles_pkey'
 }
 
 /** input type for inserting data into table "auth.roles" */
@@ -1442,7 +1499,7 @@ export type AuthRoles_Pk_Columns_Input = {
 /** select columns of table "auth.roles" */
 export enum AuthRoles_Select_Column {
   /** column name */
-  Role = 'role',
+  Role = 'role'
 }
 
 /** input type for updating data in table "auth.roles" */
@@ -1466,7 +1523,7 @@ export type AuthRoles_Stream_Cursor_Value_Input = {
 /** update columns of table "auth.roles" */
 export enum AuthRoles_Update_Column {
   /** column name */
-  Role = 'role',
+  Role = 'role'
 }
 
 export type AuthRoles_Updates = {
@@ -1519,6 +1576,7 @@ export type AuthUserProviders_Aggregate_Fields = {
   min?: Maybe<AuthUserProviders_Min_Fields>;
 };
 
+
 /** aggregate fields of "auth.user_providers" */
 export type AuthUserProviders_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
@@ -1561,7 +1619,7 @@ export enum AuthUserProviders_Constraint {
   /** unique or primary key constraint on columns "id" */
   UserProvidersPkey = 'user_providers_pkey',
   /** unique or primary key constraint on columns "provider_user_id", "provider_id" */
-  UserProvidersProviderIdProviderUserIdKey = 'user_providers_provider_id_provider_user_id_key',
+  UserProvidersProviderIdProviderUserIdKey = 'user_providers_provider_id_provider_user_id_key'
 }
 
 /** input type for inserting data into table "auth.user_providers" */
@@ -1680,7 +1738,7 @@ export enum AuthUserProviders_Select_Column {
   /** column name */
   UpdatedAt = 'updatedAt',
   /** column name */
-  UserId = 'userId',
+  UserId = 'userId'
 }
 
 /** input type for updating data in table "auth.user_providers" */
@@ -1732,7 +1790,7 @@ export enum AuthUserProviders_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt',
   /** column name */
-  UserId = 'userId',
+  UserId = 'userId'
 }
 
 export type AuthUserProviders_Updates = {
@@ -1781,6 +1839,7 @@ export type AuthUserRoles_Aggregate_Fields = {
   min?: Maybe<AuthUserRoles_Min_Fields>;
 };
 
+
 /** aggregate fields of "auth.user_roles" */
 export type AuthUserRoles_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
@@ -1819,7 +1878,7 @@ export enum AuthUserRoles_Constraint {
   /** unique or primary key constraint on columns "id" */
   UserRolesPkey = 'user_roles_pkey',
   /** unique or primary key constraint on columns "user_id", "role" */
-  UserRolesUserIdRoleKey = 'user_roles_user_id_role_key',
+  UserRolesUserIdRoleKey = 'user_roles_user_id_role_key'
 }
 
 /** input type for inserting data into table "auth.user_roles" */
@@ -1906,7 +1965,7 @@ export enum AuthUserRoles_Select_Column {
   /** column name */
   Role = 'role',
   /** column name */
-  UserId = 'userId',
+  UserId = 'userId'
 }
 
 /** input type for updating data in table "auth.user_roles" */
@@ -1942,7 +2001,7 @@ export enum AuthUserRoles_Update_Column {
   /** column name */
   Role = 'role',
   /** column name */
-  UserId = 'userId',
+  UserId = 'userId'
 }
 
 export type AuthUserRoles_Updates = {
@@ -1999,6 +2058,7 @@ export type AuthUserSecurityKeys_Aggregate_Fields = {
   var_samp?: Maybe<AuthUserSecurityKeys_Var_Samp_Fields>;
   variance?: Maybe<AuthUserSecurityKeys_Variance_Fields>;
 };
+
 
 /** aggregate fields of "auth.user_security_keys" */
 export type AuthUserSecurityKeys_Aggregate_FieldsCountArgs = {
@@ -2059,7 +2119,7 @@ export enum AuthUserSecurityKeys_Constraint {
   /** unique or primary key constraint on columns "credential_id" */
   UserSecurityKeyCredentialIdKey = 'user_security_key_credential_id_key',
   /** unique or primary key constraint on columns "id" */
-  UserSecurityKeysPkey = 'user_security_keys_pkey',
+  UserSecurityKeysPkey = 'user_security_keys_pkey'
 }
 
 /** input type for incrementing numeric columns in table "auth.user_security_keys" */
@@ -2169,7 +2229,7 @@ export enum AuthUserSecurityKeys_Select_Column {
   /** column name */
   Transports = 'transports',
   /** column name */
-  UserId = 'userId',
+  UserId = 'userId'
 }
 
 /** input type for updating data in table "auth.user_security_keys" */
@@ -2261,7 +2321,7 @@ export enum AuthUserSecurityKeys_Update_Column {
   /** column name */
   Transports = 'transports',
   /** column name */
-  UserId = 'userId',
+  UserId = 'userId'
 }
 
 export type AuthUserSecurityKeys_Updates = {
@@ -2336,6 +2396,7 @@ export type Buckets = {
   updatedAt: Scalars['timestamptz']['output'];
 };
 
+
 /** columns and relationships of "storage.buckets" */
 export type BucketsFilesArgs = {
   distinct_on?: InputMaybe<Array<Files_Select_Column>>;
@@ -2344,6 +2405,7 @@ export type BucketsFilesArgs = {
   order_by?: InputMaybe<Array<Files_Order_By>>;
   where?: InputMaybe<Files_Bool_Exp>;
 };
+
 
 /** columns and relationships of "storage.buckets" */
 export type BucketsFiles_AggregateArgs = {
@@ -2376,6 +2438,7 @@ export type Buckets_Aggregate_Fields = {
   var_samp?: Maybe<Buckets_Var_Samp_Fields>;
   variance?: Maybe<Buckets_Variance_Fields>;
 };
+
 
 /** aggregate fields of "storage.buckets" */
 export type Buckets_Aggregate_FieldsCountArgs = {
@@ -2411,7 +2474,7 @@ export type Buckets_Bool_Exp = {
 /** unique or primary key constraints on table "storage.buckets" */
 export enum Buckets_Constraint {
   /** unique or primary key constraint on columns "id" */
-  BucketsPkey = 'buckets_pkey',
+  BucketsPkey = 'buckets_pkey'
 }
 
 /** input type for incrementing numeric columns in table "storage.buckets" */
@@ -2516,7 +2579,7 @@ export enum Buckets_Select_Column {
   /** column name */
   PresignedUrlsEnabled = 'presignedUrlsEnabled',
   /** column name */
-  UpdatedAt = 'updatedAt',
+  UpdatedAt = 'updatedAt'
 }
 
 /** input type for updating data in table "storage.buckets" */
@@ -2600,7 +2663,7 @@ export enum Buckets_Update_Column {
   /** column name */
   PresignedUrlsEnabled = 'presignedUrlsEnabled',
   /** column name */
-  UpdatedAt = 'updatedAt',
+  UpdatedAt = 'updatedAt'
 }
 
 export type Buckets_Updates = {
@@ -2699,6 +2762,7 @@ export type Companies = {
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
+
 /** columns and relationships of "companies" */
 export type CompaniesCompany_UsersArgs = {
   distinct_on?: InputMaybe<Array<Company_Users_Select_Column>>;
@@ -2707,6 +2771,7 @@ export type CompaniesCompany_UsersArgs = {
   order_by?: InputMaybe<Array<Company_Users_Order_By>>;
   where?: InputMaybe<Company_Users_Bool_Exp>;
 };
+
 
 /** columns and relationships of "companies" */
 export type CompaniesCompany_Users_AggregateArgs = {
@@ -2717,6 +2782,7 @@ export type CompaniesCompany_Users_AggregateArgs = {
   where?: InputMaybe<Company_Users_Bool_Exp>;
 };
 
+
 /** columns and relationships of "companies" */
 export type CompaniesJobsArgs = {
   distinct_on?: InputMaybe<Array<Jobs_Select_Column>>;
@@ -2725,6 +2791,7 @@ export type CompaniesJobsArgs = {
   order_by?: InputMaybe<Array<Jobs_Order_By>>;
   where?: InputMaybe<Jobs_Bool_Exp>;
 };
+
 
 /** columns and relationships of "companies" */
 export type CompaniesJobs_AggregateArgs = {
@@ -2750,6 +2817,7 @@ export type Companies_Aggregate_Fields = {
   min?: Maybe<Companies_Min_Fields>;
 };
 
+
 /** aggregate fields of "companies" */
 export type Companies_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Companies_Select_Column>>;
@@ -2774,7 +2842,7 @@ export type Companies_Bool_Exp = {
 /** unique or primary key constraints on table "companies" */
 export enum Companies_Constraint {
   /** unique or primary key constraint on columns "id" */
-  OrgsPkey = 'orgs_pkey',
+  OrgsPkey = 'orgs_pkey'
 }
 
 /** input type for inserting data into table "companies" */
@@ -2852,7 +2920,7 @@ export enum Companies_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
-  UpdatedAt = 'updated_at',
+  UpdatedAt = 'updated_at'
 }
 
 /** input type for updating data in table "companies" */
@@ -2888,7 +2956,7 @@ export enum Companies_Update_Column {
   /** column name */
   Name = 'name',
   /** column name */
-  UpdatedAt = 'updated_at',
+  UpdatedAt = 'updated_at'
 }
 
 export type Companies_Updates = {
@@ -2934,6 +3002,7 @@ export type Company_Users_Aggregate_Fields = {
   min?: Maybe<Company_Users_Min_Fields>;
 };
 
+
 /** aggregate fields of "company_users" */
 export type Company_Users_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Company_Users_Select_Column>>;
@@ -2968,7 +3037,7 @@ export type Company_Users_Bool_Exp = {
 /** unique or primary key constraints on table "company_users" */
 export enum Company_Users_Constraint {
   /** unique or primary key constraint on columns "id" */
-  CompanyUsersPkey = 'company_users_pkey',
+  CompanyUsersPkey = 'company_users_pkey'
 }
 
 /** input type for inserting data into table "company_users" */
@@ -3045,7 +3114,7 @@ export enum Company_Users_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  UserId = 'user_id',
+  UserId = 'user_id'
 }
 
 /** input type for updating data in table "company_users" */
@@ -3077,7 +3146,7 @@ export enum Company_Users_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  UserId = 'user_id',
+  UserId = 'user_id'
 }
 
 export type Company_Users_Updates = {
@@ -3092,7 +3161,7 @@ export enum Cursor_Ordering {
   /** ascending ordering of the cursor */
   Asc = 'ASC',
   /** descending ordering of the cursor */
-  Desc = 'DESC',
+  Desc = 'DESC'
 }
 
 /** columns and relationships of "storage.files" */
@@ -3112,6 +3181,7 @@ export type Files = {
   updatedAt: Scalars['timestamptz']['output'];
   uploadedByUserId?: Maybe<Scalars['uuid']['output']>;
 };
+
 
 /** columns and relationships of "storage.files" */
 export type FilesMetadataArgs = {
@@ -3167,6 +3237,7 @@ export type Files_Aggregate_Fields = {
   var_samp?: Maybe<Files_Var_Samp_Fields>;
   variance?: Maybe<Files_Variance_Fields>;
 };
+
 
 /** aggregate fields of "storage.files" */
 export type Files_Aggregate_FieldsCountArgs = {
@@ -3234,7 +3305,7 @@ export type Files_Bool_Exp = {
 /** unique or primary key constraints on table "storage.files" */
 export enum Files_Constraint {
   /** unique or primary key constraint on columns "id" */
-  FilesPkey = 'files_pkey',
+  FilesPkey = 'files_pkey'
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
@@ -3399,19 +3470,19 @@ export enum Files_Select_Column {
   /** column name */
   UpdatedAt = 'updatedAt',
   /** column name */
-  UploadedByUserId = 'uploadedByUserId',
+  UploadedByUserId = 'uploadedByUserId'
 }
 
 /** select "files_aggregate_bool_exp_bool_and_arguments_columns" columns of table "storage.files" */
 export enum Files_Select_Column_Files_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
   /** column name */
-  IsUploaded = 'isUploaded',
+  IsUploaded = 'isUploaded'
 }
 
 /** select "files_aggregate_bool_exp_bool_or_arguments_columns" columns of table "storage.files" */
 export enum Files_Select_Column_Files_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
   /** column name */
-  IsUploaded = 'isUploaded',
+  IsUploaded = 'isUploaded'
 }
 
 /** input type for updating data in table "storage.files" */
@@ -3519,7 +3590,7 @@ export enum Files_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt',
   /** column name */
-  UploadedByUserId = 'uploadedByUserId',
+  UploadedByUserId = 'uploadedByUserId'
 }
 
 export type Files_Updates = {
@@ -3593,6 +3664,7 @@ export type Jobs = {
   user_id: Scalars['uuid']['output'];
 };
 
+
 /** columns and relationships of "jobs" */
 export type JobsApplicationsArgs = {
   distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
@@ -3601,6 +3673,7 @@ export type JobsApplicationsArgs = {
   order_by?: InputMaybe<Array<Applications_Order_By>>;
   where?: InputMaybe<Applications_Bool_Exp>;
 };
+
 
 /** columns and relationships of "jobs" */
 export type JobsApplications_AggregateArgs = {
@@ -3636,6 +3709,7 @@ export type Jobs_Aggregate_Fields = {
   max?: Maybe<Jobs_Max_Fields>;
   min?: Maybe<Jobs_Min_Fields>;
 };
+
 
 /** aggregate fields of "jobs" */
 export type Jobs_Aggregate_FieldsCountArgs = {
@@ -3678,7 +3752,7 @@ export type Jobs_Bool_Exp = {
 /** unique or primary key constraints on table "jobs" */
 export enum Jobs_Constraint {
   /** unique or primary key constraint on columns "id" */
-  JobsPkey = 'jobs_pkey',
+  JobsPkey = 'jobs_pkey'
 }
 
 /** input type for inserting data into table "jobs" */
@@ -3804,7 +3878,7 @@ export enum Jobs_Select_Column {
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'user_id',
+  UserId = 'user_id'
 }
 
 /** input type for updating data in table "jobs" */
@@ -3856,7 +3930,7 @@ export enum Jobs_Update_Column {
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'user_id',
+  UserId = 'user_id'
 }
 
 export type Jobs_Updates = {
@@ -4123,165 +4197,198 @@ export type Mutation_Root = {
   update_virus_many?: Maybe<Array<Maybe<Virus_Mutation_Response>>>;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteAuthProviderArgs = {
   id: Scalars['String']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteAuthProviderRequestArgs = {
   id: Scalars['uuid']['input'];
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteAuthProviderRequestsArgs = {
   where: AuthProviderRequests_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteAuthProvidersArgs = {
   where: AuthProviders_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteAuthRefreshTokenArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteAuthRefreshTokenTypeArgs = {
   value: Scalars['String']['input'];
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteAuthRefreshTokenTypesArgs = {
   where: AuthRefreshTokenTypes_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteAuthRefreshTokensArgs = {
   where: AuthRefreshTokens_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteAuthRoleArgs = {
   role: Scalars['String']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteAuthRolesArgs = {
   where: AuthRoles_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteAuthUserProviderArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteAuthUserProvidersArgs = {
   where: AuthUserProviders_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteAuthUserRoleArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteAuthUserRolesArgs = {
   where: AuthUserRoles_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteAuthUserSecurityKeyArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteAuthUserSecurityKeysArgs = {
   where: AuthUserSecurityKeys_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteBucketArgs = {
   id: Scalars['String']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteBucketsArgs = {
   where: Buckets_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteFileArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteFilesArgs = {
   where: Files_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteUserArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteUsersArgs = {
   where: Users_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDeleteVirusArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootDeleteVirusesArgs = {
   where: Virus_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDelete_ApplicationsArgs = {
   where: Applications_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootDelete_Applications_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
+
 /** mutation root */
 export type Mutation_RootDelete_CompaniesArgs = {
   where: Companies_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootDelete_Companies_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
+
 /** mutation root */
 export type Mutation_RootDelete_Company_UsersArgs = {
   where: Company_Users_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootDelete_Company_Users_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
+
 /** mutation root */
 export type Mutation_RootDelete_JobsArgs = {
   where: Jobs_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootDelete_Jobs_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertAuthProviderArgs = {
@@ -4289,11 +4396,13 @@ export type Mutation_RootInsertAuthProviderArgs = {
   on_conflict?: InputMaybe<AuthProviders_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertAuthProviderRequestArgs = {
   object: AuthProviderRequests_Insert_Input;
   on_conflict?: InputMaybe<AuthProviderRequests_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertAuthProviderRequestsArgs = {
@@ -4301,11 +4410,13 @@ export type Mutation_RootInsertAuthProviderRequestsArgs = {
   on_conflict?: InputMaybe<AuthProviderRequests_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertAuthProvidersArgs = {
   objects: Array<AuthProviders_Insert_Input>;
   on_conflict?: InputMaybe<AuthProviders_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertAuthRefreshTokenArgs = {
@@ -4313,11 +4424,13 @@ export type Mutation_RootInsertAuthRefreshTokenArgs = {
   on_conflict?: InputMaybe<AuthRefreshTokens_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertAuthRefreshTokenTypeArgs = {
   object: AuthRefreshTokenTypes_Insert_Input;
   on_conflict?: InputMaybe<AuthRefreshTokenTypes_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertAuthRefreshTokenTypesArgs = {
@@ -4325,11 +4438,13 @@ export type Mutation_RootInsertAuthRefreshTokenTypesArgs = {
   on_conflict?: InputMaybe<AuthRefreshTokenTypes_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertAuthRefreshTokensArgs = {
   objects: Array<AuthRefreshTokens_Insert_Input>;
   on_conflict?: InputMaybe<AuthRefreshTokens_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertAuthRoleArgs = {
@@ -4337,11 +4452,13 @@ export type Mutation_RootInsertAuthRoleArgs = {
   on_conflict?: InputMaybe<AuthRoles_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertAuthRolesArgs = {
   objects: Array<AuthRoles_Insert_Input>;
   on_conflict?: InputMaybe<AuthRoles_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertAuthUserProviderArgs = {
@@ -4349,11 +4466,13 @@ export type Mutation_RootInsertAuthUserProviderArgs = {
   on_conflict?: InputMaybe<AuthUserProviders_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertAuthUserProvidersArgs = {
   objects: Array<AuthUserProviders_Insert_Input>;
   on_conflict?: InputMaybe<AuthUserProviders_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertAuthUserRoleArgs = {
@@ -4361,11 +4480,13 @@ export type Mutation_RootInsertAuthUserRoleArgs = {
   on_conflict?: InputMaybe<AuthUserRoles_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertAuthUserRolesArgs = {
   objects: Array<AuthUserRoles_Insert_Input>;
   on_conflict?: InputMaybe<AuthUserRoles_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertAuthUserSecurityKeyArgs = {
@@ -4373,11 +4494,13 @@ export type Mutation_RootInsertAuthUserSecurityKeyArgs = {
   on_conflict?: InputMaybe<AuthUserSecurityKeys_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertAuthUserSecurityKeysArgs = {
   objects: Array<AuthUserSecurityKeys_Insert_Input>;
   on_conflict?: InputMaybe<AuthUserSecurityKeys_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertBucketArgs = {
@@ -4385,11 +4508,13 @@ export type Mutation_RootInsertBucketArgs = {
   on_conflict?: InputMaybe<Buckets_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertBucketsArgs = {
   objects: Array<Buckets_Insert_Input>;
   on_conflict?: InputMaybe<Buckets_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertFileArgs = {
@@ -4397,11 +4522,13 @@ export type Mutation_RootInsertFileArgs = {
   on_conflict?: InputMaybe<Files_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertFilesArgs = {
   objects: Array<Files_Insert_Input>;
   on_conflict?: InputMaybe<Files_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertUserArgs = {
@@ -4409,11 +4536,13 @@ export type Mutation_RootInsertUserArgs = {
   on_conflict?: InputMaybe<Users_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertUsersArgs = {
   objects: Array<Users_Insert_Input>;
   on_conflict?: InputMaybe<Users_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsertVirusArgs = {
@@ -4421,11 +4550,13 @@ export type Mutation_RootInsertVirusArgs = {
   on_conflict?: InputMaybe<Virus_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsertVirusesArgs = {
   objects: Array<Virus_Insert_Input>;
   on_conflict?: InputMaybe<Virus_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsert_ApplicationsArgs = {
@@ -4433,11 +4564,13 @@ export type Mutation_RootInsert_ApplicationsArgs = {
   on_conflict?: InputMaybe<Applications_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsert_Applications_OneArgs = {
   object: Applications_Insert_Input;
   on_conflict?: InputMaybe<Applications_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsert_CompaniesArgs = {
@@ -4445,11 +4578,13 @@ export type Mutation_RootInsert_CompaniesArgs = {
   on_conflict?: InputMaybe<Companies_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsert_Companies_OneArgs = {
   object: Companies_Insert_Input;
   on_conflict?: InputMaybe<Companies_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsert_Company_UsersArgs = {
@@ -4457,11 +4592,13 @@ export type Mutation_RootInsert_Company_UsersArgs = {
   on_conflict?: InputMaybe<Company_Users_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsert_Company_Users_OneArgs = {
   object: Company_Users_Insert_Input;
   on_conflict?: InputMaybe<Company_Users_On_Conflict>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsert_JobsArgs = {
@@ -4469,17 +4606,20 @@ export type Mutation_RootInsert_JobsArgs = {
   on_conflict?: InputMaybe<Jobs_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsert_Jobs_OneArgs = {
   object: Jobs_Insert_Input;
   on_conflict?: InputMaybe<Jobs_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthProviderArgs = {
   _set?: InputMaybe<AuthProviders_Set_Input>;
   pk_columns: AuthProviders_Pk_Columns_Input;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateAuthProviderRequestArgs = {
@@ -4492,6 +4632,7 @@ export type Mutation_RootUpdateAuthProviderRequestArgs = {
   pk_columns: AuthProviderRequests_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthProviderRequestsArgs = {
   _append?: InputMaybe<AuthProviderRequests_Append_Input>;
@@ -4503,11 +4644,13 @@ export type Mutation_RootUpdateAuthProviderRequestsArgs = {
   where: AuthProviderRequests_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthProvidersArgs = {
   _set?: InputMaybe<AuthProviders_Set_Input>;
   where: AuthProviders_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateAuthRefreshTokenArgs = {
@@ -4520,17 +4663,20 @@ export type Mutation_RootUpdateAuthRefreshTokenArgs = {
   pk_columns: AuthRefreshTokens_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthRefreshTokenTypeArgs = {
   _set?: InputMaybe<AuthRefreshTokenTypes_Set_Input>;
   pk_columns: AuthRefreshTokenTypes_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthRefreshTokenTypesArgs = {
   _set?: InputMaybe<AuthRefreshTokenTypes_Set_Input>;
   where: AuthRefreshTokenTypes_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateAuthRefreshTokensArgs = {
@@ -4543,11 +4689,13 @@ export type Mutation_RootUpdateAuthRefreshTokensArgs = {
   where: AuthRefreshTokens_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthRoleArgs = {
   _set?: InputMaybe<AuthRoles_Set_Input>;
   pk_columns: AuthRoles_Pk_Columns_Input;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateAuthRolesArgs = {
@@ -4555,11 +4703,13 @@ export type Mutation_RootUpdateAuthRolesArgs = {
   where: AuthRoles_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthUserProviderArgs = {
   _set?: InputMaybe<AuthUserProviders_Set_Input>;
   pk_columns: AuthUserProviders_Pk_Columns_Input;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateAuthUserProvidersArgs = {
@@ -4567,17 +4717,20 @@ export type Mutation_RootUpdateAuthUserProvidersArgs = {
   where: AuthUserProviders_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthUserRoleArgs = {
   _set?: InputMaybe<AuthUserRoles_Set_Input>;
   pk_columns: AuthUserRoles_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthUserRolesArgs = {
   _set?: InputMaybe<AuthUserRoles_Set_Input>;
   where: AuthUserRoles_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateAuthUserSecurityKeyArgs = {
@@ -4586,12 +4739,14 @@ export type Mutation_RootUpdateAuthUserSecurityKeyArgs = {
   pk_columns: AuthUserSecurityKeys_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateAuthUserSecurityKeysArgs = {
   _inc?: InputMaybe<AuthUserSecurityKeys_Inc_Input>;
   _set?: InputMaybe<AuthUserSecurityKeys_Set_Input>;
   where: AuthUserSecurityKeys_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateBucketArgs = {
@@ -4600,12 +4755,14 @@ export type Mutation_RootUpdateBucketArgs = {
   pk_columns: Buckets_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateBucketsArgs = {
   _inc?: InputMaybe<Buckets_Inc_Input>;
   _set?: InputMaybe<Buckets_Set_Input>;
   where: Buckets_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateFileArgs = {
@@ -4619,6 +4776,7 @@ export type Mutation_RootUpdateFileArgs = {
   pk_columns: Files_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateFilesArgs = {
   _append?: InputMaybe<Files_Append_Input>;
@@ -4631,6 +4789,7 @@ export type Mutation_RootUpdateFilesArgs = {
   where: Files_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateUserArgs = {
   _append?: InputMaybe<Users_Append_Input>;
@@ -4641,6 +4800,7 @@ export type Mutation_RootUpdateUserArgs = {
   _set?: InputMaybe<Users_Set_Input>;
   pk_columns: Users_Pk_Columns_Input;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateUsersArgs = {
@@ -4653,6 +4813,7 @@ export type Mutation_RootUpdateUsersArgs = {
   where: Users_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdateVirusArgs = {
   _append?: InputMaybe<Virus_Append_Input>;
@@ -4663,6 +4824,7 @@ export type Mutation_RootUpdateVirusArgs = {
   _set?: InputMaybe<Virus_Set_Input>;
   pk_columns: Virus_Pk_Columns_Input;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdateVirusesArgs = {
@@ -4675,12 +4837,14 @@ export type Mutation_RootUpdateVirusesArgs = {
   where: Virus_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_ApplicationsArgs = {
   _inc?: InputMaybe<Applications_Inc_Input>;
   _set?: InputMaybe<Applications_Set_Input>;
   where: Applications_Bool_Exp;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdate_Applications_By_PkArgs = {
@@ -4689,55 +4853,66 @@ export type Mutation_RootUpdate_Applications_By_PkArgs = {
   pk_columns: Applications_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Applications_ManyArgs = {
   updates: Array<Applications_Updates>;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdate_AuthProviderRequests_ManyArgs = {
   updates: Array<AuthProviderRequests_Updates>;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_AuthProviders_ManyArgs = {
   updates: Array<AuthProviders_Updates>;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdate_AuthRefreshTokenTypes_ManyArgs = {
   updates: Array<AuthRefreshTokenTypes_Updates>;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_AuthRefreshTokens_ManyArgs = {
   updates: Array<AuthRefreshTokens_Updates>;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdate_AuthRoles_ManyArgs = {
   updates: Array<AuthRoles_Updates>;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_AuthUserProviders_ManyArgs = {
   updates: Array<AuthUserProviders_Updates>;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdate_AuthUserRoles_ManyArgs = {
   updates: Array<AuthUserRoles_Updates>;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_AuthUserSecurityKeys_ManyArgs = {
   updates: Array<AuthUserSecurityKeys_Updates>;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Buckets_ManyArgs = {
   updates: Array<Buckets_Updates>;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdate_CompaniesArgs = {
@@ -4745,16 +4920,19 @@ export type Mutation_RootUpdate_CompaniesArgs = {
   where: Companies_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Companies_By_PkArgs = {
   _set?: InputMaybe<Companies_Set_Input>;
   pk_columns: Companies_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Companies_ManyArgs = {
   updates: Array<Companies_Updates>;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdate_Company_UsersArgs = {
@@ -4762,21 +4940,25 @@ export type Mutation_RootUpdate_Company_UsersArgs = {
   where: Company_Users_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Company_Users_By_PkArgs = {
   _set?: InputMaybe<Company_Users_Set_Input>;
   pk_columns: Company_Users_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Company_Users_ManyArgs = {
   updates: Array<Company_Users_Updates>;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Files_ManyArgs = {
   updates: Array<Files_Updates>;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdate_JobsArgs = {
@@ -4784,21 +4966,25 @@ export type Mutation_RootUpdate_JobsArgs = {
   where: Jobs_Bool_Exp;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Jobs_By_PkArgs = {
   _set?: InputMaybe<Jobs_Set_Input>;
   pk_columns: Jobs_Pk_Columns_Input;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Jobs_ManyArgs = {
   updates: Array<Jobs_Updates>;
 };
 
+
 /** mutation root */
 export type Mutation_RootUpdate_Users_ManyArgs = {
   updates: Array<Users_Updates>;
 };
+
 
 /** mutation root */
 export type Mutation_RootUpdate_Virus_ManyArgs = {
@@ -4818,7 +5004,7 @@ export enum Order_By {
   /** in descending order, nulls first */
   DescNullsFirst = 'desc_nulls_first',
   /** in descending order, nulls last */
-  DescNullsLast = 'desc_nulls_last',
+  DescNullsLast = 'desc_nulls_last'
 }
 
 export type Query_Root = {
@@ -4921,6 +5107,7 @@ export type Query_Root = {
   virusesAggregate: Virus_Aggregate;
 };
 
+
 export type Query_RootApplicationsArgs = {
   distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -4928,6 +5115,7 @@ export type Query_RootApplicationsArgs = {
   order_by?: InputMaybe<Array<Applications_Order_By>>;
   where?: InputMaybe<Applications_Bool_Exp>;
 };
+
 
 export type Query_RootApplications_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
@@ -4937,17 +5125,21 @@ export type Query_RootApplications_AggregateArgs = {
   where?: InputMaybe<Applications_Bool_Exp>;
 };
 
+
 export type Query_RootApplications_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Query_RootAuthProviderArgs = {
   id: Scalars['String']['input'];
 };
 
+
 export type Query_RootAuthProviderRequestArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Query_RootAuthProviderRequestsArgs = {
   distinct_on?: InputMaybe<Array<AuthProviderRequests_Select_Column>>;
@@ -4957,6 +5149,7 @@ export type Query_RootAuthProviderRequestsArgs = {
   where?: InputMaybe<AuthProviderRequests_Bool_Exp>;
 };
 
+
 export type Query_RootAuthProviderRequestsAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthProviderRequests_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -4964,6 +5157,7 @@ export type Query_RootAuthProviderRequestsAggregateArgs = {
   order_by?: InputMaybe<Array<AuthProviderRequests_Order_By>>;
   where?: InputMaybe<AuthProviderRequests_Bool_Exp>;
 };
+
 
 export type Query_RootAuthProvidersArgs = {
   distinct_on?: InputMaybe<Array<AuthProviders_Select_Column>>;
@@ -4973,6 +5167,7 @@ export type Query_RootAuthProvidersArgs = {
   where?: InputMaybe<AuthProviders_Bool_Exp>;
 };
 
+
 export type Query_RootAuthProvidersAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthProviders_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -4981,13 +5176,16 @@ export type Query_RootAuthProvidersAggregateArgs = {
   where?: InputMaybe<AuthProviders_Bool_Exp>;
 };
 
+
 export type Query_RootAuthRefreshTokenArgs = {
   id: Scalars['uuid']['input'];
 };
 
+
 export type Query_RootAuthRefreshTokenTypeArgs = {
   value: Scalars['String']['input'];
 };
+
 
 export type Query_RootAuthRefreshTokenTypesArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokenTypes_Select_Column>>;
@@ -4997,6 +5195,7 @@ export type Query_RootAuthRefreshTokenTypesArgs = {
   where?: InputMaybe<AuthRefreshTokenTypes_Bool_Exp>;
 };
 
+
 export type Query_RootAuthRefreshTokenTypesAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokenTypes_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5004,6 +5203,7 @@ export type Query_RootAuthRefreshTokenTypesAggregateArgs = {
   order_by?: InputMaybe<Array<AuthRefreshTokenTypes_Order_By>>;
   where?: InputMaybe<AuthRefreshTokenTypes_Bool_Exp>;
 };
+
 
 export type Query_RootAuthRefreshTokensArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokens_Select_Column>>;
@@ -5013,6 +5213,7 @@ export type Query_RootAuthRefreshTokensArgs = {
   where?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
 };
 
+
 export type Query_RootAuthRefreshTokensAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokens_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5021,9 +5222,11 @@ export type Query_RootAuthRefreshTokensAggregateArgs = {
   where?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
 };
 
+
 export type Query_RootAuthRoleArgs = {
   role: Scalars['String']['input'];
 };
+
 
 export type Query_RootAuthRolesArgs = {
   distinct_on?: InputMaybe<Array<AuthRoles_Select_Column>>;
@@ -5033,6 +5236,7 @@ export type Query_RootAuthRolesArgs = {
   where?: InputMaybe<AuthRoles_Bool_Exp>;
 };
 
+
 export type Query_RootAuthRolesAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthRoles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5041,9 +5245,11 @@ export type Query_RootAuthRolesAggregateArgs = {
   where?: InputMaybe<AuthRoles_Bool_Exp>;
 };
 
+
 export type Query_RootAuthUserProviderArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Query_RootAuthUserProvidersArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
@@ -5053,6 +5259,7 @@ export type Query_RootAuthUserProvidersArgs = {
   where?: InputMaybe<AuthUserProviders_Bool_Exp>;
 };
 
+
 export type Query_RootAuthUserProvidersAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5061,9 +5268,11 @@ export type Query_RootAuthUserProvidersAggregateArgs = {
   where?: InputMaybe<AuthUserProviders_Bool_Exp>;
 };
 
+
 export type Query_RootAuthUserRoleArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Query_RootAuthUserRolesArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
@@ -5073,6 +5282,7 @@ export type Query_RootAuthUserRolesArgs = {
   where?: InputMaybe<AuthUserRoles_Bool_Exp>;
 };
 
+
 export type Query_RootAuthUserRolesAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5081,9 +5291,11 @@ export type Query_RootAuthUserRolesAggregateArgs = {
   where?: InputMaybe<AuthUserRoles_Bool_Exp>;
 };
 
+
 export type Query_RootAuthUserSecurityKeyArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Query_RootAuthUserSecurityKeysArgs = {
   distinct_on?: InputMaybe<Array<AuthUserSecurityKeys_Select_Column>>;
@@ -5093,6 +5305,7 @@ export type Query_RootAuthUserSecurityKeysArgs = {
   where?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
 };
 
+
 export type Query_RootAuthUserSecurityKeysAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserSecurityKeys_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5101,9 +5314,11 @@ export type Query_RootAuthUserSecurityKeysAggregateArgs = {
   where?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
 };
 
+
 export type Query_RootBucketArgs = {
   id: Scalars['String']['input'];
 };
+
 
 export type Query_RootBucketsArgs = {
   distinct_on?: InputMaybe<Array<Buckets_Select_Column>>;
@@ -5113,6 +5328,7 @@ export type Query_RootBucketsArgs = {
   where?: InputMaybe<Buckets_Bool_Exp>;
 };
 
+
 export type Query_RootBucketsAggregateArgs = {
   distinct_on?: InputMaybe<Array<Buckets_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5120,6 +5336,7 @@ export type Query_RootBucketsAggregateArgs = {
   order_by?: InputMaybe<Array<Buckets_Order_By>>;
   where?: InputMaybe<Buckets_Bool_Exp>;
 };
+
 
 export type Query_RootCompaniesArgs = {
   distinct_on?: InputMaybe<Array<Companies_Select_Column>>;
@@ -5129,6 +5346,7 @@ export type Query_RootCompaniesArgs = {
   where?: InputMaybe<Companies_Bool_Exp>;
 };
 
+
 export type Query_RootCompanies_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Companies_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5137,9 +5355,11 @@ export type Query_RootCompanies_AggregateArgs = {
   where?: InputMaybe<Companies_Bool_Exp>;
 };
 
+
 export type Query_RootCompanies_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Query_RootCompany_UsersArgs = {
   distinct_on?: InputMaybe<Array<Company_Users_Select_Column>>;
@@ -5149,6 +5369,7 @@ export type Query_RootCompany_UsersArgs = {
   where?: InputMaybe<Company_Users_Bool_Exp>;
 };
 
+
 export type Query_RootCompany_Users_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Company_Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5157,13 +5378,16 @@ export type Query_RootCompany_Users_AggregateArgs = {
   where?: InputMaybe<Company_Users_Bool_Exp>;
 };
 
+
 export type Query_RootCompany_Users_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
+
 export type Query_RootFileArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Query_RootFilesArgs = {
   distinct_on?: InputMaybe<Array<Files_Select_Column>>;
@@ -5173,6 +5397,7 @@ export type Query_RootFilesArgs = {
   where?: InputMaybe<Files_Bool_Exp>;
 };
 
+
 export type Query_RootFilesAggregateArgs = {
   distinct_on?: InputMaybe<Array<Files_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5180,6 +5405,7 @@ export type Query_RootFilesAggregateArgs = {
   order_by?: InputMaybe<Array<Files_Order_By>>;
   where?: InputMaybe<Files_Bool_Exp>;
 };
+
 
 export type Query_RootJobsArgs = {
   distinct_on?: InputMaybe<Array<Jobs_Select_Column>>;
@@ -5189,6 +5415,7 @@ export type Query_RootJobsArgs = {
   where?: InputMaybe<Jobs_Bool_Exp>;
 };
 
+
 export type Query_RootJobs_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Jobs_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5197,13 +5424,16 @@ export type Query_RootJobs_AggregateArgs = {
   where?: InputMaybe<Jobs_Bool_Exp>;
 };
 
+
 export type Query_RootJobs_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
+
 export type Query_RootUserArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Query_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
@@ -5213,6 +5443,7 @@ export type Query_RootUsersArgs = {
   where?: InputMaybe<Users_Bool_Exp>;
 };
 
+
 export type Query_RootUsersAggregateArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5221,9 +5452,11 @@ export type Query_RootUsersAggregateArgs = {
   where?: InputMaybe<Users_Bool_Exp>;
 };
 
+
 export type Query_RootVirusArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Query_RootVirusesArgs = {
   distinct_on?: InputMaybe<Array<Virus_Select_Column>>;
@@ -5232,6 +5465,7 @@ export type Query_RootVirusesArgs = {
   order_by?: InputMaybe<Array<Virus_Order_By>>;
   where?: InputMaybe<Virus_Bool_Exp>;
 };
+
 
 export type Query_RootVirusesAggregateArgs = {
   distinct_on?: InputMaybe<Array<Virus_Select_Column>>;
@@ -5373,6 +5607,7 @@ export type Subscription_Root = {
   virusesAggregate: Virus_Aggregate;
 };
 
+
 export type Subscription_RootApplicationsArgs = {
   distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5380,6 +5615,7 @@ export type Subscription_RootApplicationsArgs = {
   order_by?: InputMaybe<Array<Applications_Order_By>>;
   where?: InputMaybe<Applications_Bool_Exp>;
 };
+
 
 export type Subscription_RootApplications_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
@@ -5389,9 +5625,11 @@ export type Subscription_RootApplications_AggregateArgs = {
   where?: InputMaybe<Applications_Bool_Exp>;
 };
 
+
 export type Subscription_RootApplications_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootApplications_StreamArgs = {
   batch_size: Scalars['Int']['input'];
@@ -5399,13 +5637,16 @@ export type Subscription_RootApplications_StreamArgs = {
   where?: InputMaybe<Applications_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthProviderArgs = {
   id: Scalars['String']['input'];
 };
 
+
 export type Subscription_RootAuthProviderRequestArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootAuthProviderRequestsArgs = {
   distinct_on?: InputMaybe<Array<AuthProviderRequests_Select_Column>>;
@@ -5415,6 +5656,7 @@ export type Subscription_RootAuthProviderRequestsArgs = {
   where?: InputMaybe<AuthProviderRequests_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthProviderRequestsAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthProviderRequests_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5423,11 +5665,13 @@ export type Subscription_RootAuthProviderRequestsAggregateArgs = {
   where?: InputMaybe<AuthProviderRequests_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthProviderRequests_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<AuthProviderRequests_Stream_Cursor_Input>>;
   where?: InputMaybe<AuthProviderRequests_Bool_Exp>;
 };
+
 
 export type Subscription_RootAuthProvidersArgs = {
   distinct_on?: InputMaybe<Array<AuthProviders_Select_Column>>;
@@ -5437,6 +5681,7 @@ export type Subscription_RootAuthProvidersArgs = {
   where?: InputMaybe<AuthProviders_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthProvidersAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthProviders_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5445,19 +5690,23 @@ export type Subscription_RootAuthProvidersAggregateArgs = {
   where?: InputMaybe<AuthProviders_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthProviders_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<AuthProviders_Stream_Cursor_Input>>;
   where?: InputMaybe<AuthProviders_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthRefreshTokenArgs = {
   id: Scalars['uuid']['input'];
 };
 
+
 export type Subscription_RootAuthRefreshTokenTypeArgs = {
   value: Scalars['String']['input'];
 };
+
 
 export type Subscription_RootAuthRefreshTokenTypesArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokenTypes_Select_Column>>;
@@ -5467,6 +5716,7 @@ export type Subscription_RootAuthRefreshTokenTypesArgs = {
   where?: InputMaybe<AuthRefreshTokenTypes_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthRefreshTokenTypesAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokenTypes_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5475,11 +5725,13 @@ export type Subscription_RootAuthRefreshTokenTypesAggregateArgs = {
   where?: InputMaybe<AuthRefreshTokenTypes_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthRefreshTokenTypes_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<AuthRefreshTokenTypes_Stream_Cursor_Input>>;
   where?: InputMaybe<AuthRefreshTokenTypes_Bool_Exp>;
 };
+
 
 export type Subscription_RootAuthRefreshTokensArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokens_Select_Column>>;
@@ -5489,6 +5741,7 @@ export type Subscription_RootAuthRefreshTokensArgs = {
   where?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthRefreshTokensAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokens_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5497,15 +5750,18 @@ export type Subscription_RootAuthRefreshTokensAggregateArgs = {
   where?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthRefreshTokens_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<AuthRefreshTokens_Stream_Cursor_Input>>;
   where?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthRoleArgs = {
   role: Scalars['String']['input'];
 };
+
 
 export type Subscription_RootAuthRolesArgs = {
   distinct_on?: InputMaybe<Array<AuthRoles_Select_Column>>;
@@ -5515,6 +5771,7 @@ export type Subscription_RootAuthRolesArgs = {
   where?: InputMaybe<AuthRoles_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthRolesAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthRoles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5523,15 +5780,18 @@ export type Subscription_RootAuthRolesAggregateArgs = {
   where?: InputMaybe<AuthRoles_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthRoles_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<AuthRoles_Stream_Cursor_Input>>;
   where?: InputMaybe<AuthRoles_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthUserProviderArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootAuthUserProvidersArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
@@ -5541,6 +5801,7 @@ export type Subscription_RootAuthUserProvidersArgs = {
   where?: InputMaybe<AuthUserProviders_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthUserProvidersAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5549,15 +5810,18 @@ export type Subscription_RootAuthUserProvidersAggregateArgs = {
   where?: InputMaybe<AuthUserProviders_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthUserProviders_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<AuthUserProviders_Stream_Cursor_Input>>;
   where?: InputMaybe<AuthUserProviders_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthUserRoleArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootAuthUserRolesArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
@@ -5567,6 +5831,7 @@ export type Subscription_RootAuthUserRolesArgs = {
   where?: InputMaybe<AuthUserRoles_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthUserRolesAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5575,15 +5840,18 @@ export type Subscription_RootAuthUserRolesAggregateArgs = {
   where?: InputMaybe<AuthUserRoles_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthUserRoles_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<AuthUserRoles_Stream_Cursor_Input>>;
   where?: InputMaybe<AuthUserRoles_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthUserSecurityKeyArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootAuthUserSecurityKeysArgs = {
   distinct_on?: InputMaybe<Array<AuthUserSecurityKeys_Select_Column>>;
@@ -5593,6 +5861,7 @@ export type Subscription_RootAuthUserSecurityKeysArgs = {
   where?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthUserSecurityKeysAggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserSecurityKeys_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5601,15 +5870,18 @@ export type Subscription_RootAuthUserSecurityKeysAggregateArgs = {
   where?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuthUserSecurityKeys_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<AuthUserSecurityKeys_Stream_Cursor_Input>>;
   where?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
 };
 
+
 export type Subscription_RootBucketArgs = {
   id: Scalars['String']['input'];
 };
+
 
 export type Subscription_RootBucketsArgs = {
   distinct_on?: InputMaybe<Array<Buckets_Select_Column>>;
@@ -5619,6 +5891,7 @@ export type Subscription_RootBucketsArgs = {
   where?: InputMaybe<Buckets_Bool_Exp>;
 };
 
+
 export type Subscription_RootBucketsAggregateArgs = {
   distinct_on?: InputMaybe<Array<Buckets_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5627,11 +5900,13 @@ export type Subscription_RootBucketsAggregateArgs = {
   where?: InputMaybe<Buckets_Bool_Exp>;
 };
 
+
 export type Subscription_RootBuckets_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Buckets_Stream_Cursor_Input>>;
   where?: InputMaybe<Buckets_Bool_Exp>;
 };
+
 
 export type Subscription_RootCompaniesArgs = {
   distinct_on?: InputMaybe<Array<Companies_Select_Column>>;
@@ -5641,6 +5916,7 @@ export type Subscription_RootCompaniesArgs = {
   where?: InputMaybe<Companies_Bool_Exp>;
 };
 
+
 export type Subscription_RootCompanies_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Companies_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5649,15 +5925,18 @@ export type Subscription_RootCompanies_AggregateArgs = {
   where?: InputMaybe<Companies_Bool_Exp>;
 };
 
+
 export type Subscription_RootCompanies_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootCompanies_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Companies_Stream_Cursor_Input>>;
   where?: InputMaybe<Companies_Bool_Exp>;
 };
+
 
 export type Subscription_RootCompany_UsersArgs = {
   distinct_on?: InputMaybe<Array<Company_Users_Select_Column>>;
@@ -5667,6 +5946,7 @@ export type Subscription_RootCompany_UsersArgs = {
   where?: InputMaybe<Company_Users_Bool_Exp>;
 };
 
+
 export type Subscription_RootCompany_Users_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Company_Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5675,9 +5955,11 @@ export type Subscription_RootCompany_Users_AggregateArgs = {
   where?: InputMaybe<Company_Users_Bool_Exp>;
 };
 
+
 export type Subscription_RootCompany_Users_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootCompany_Users_StreamArgs = {
   batch_size: Scalars['Int']['input'];
@@ -5685,9 +5967,11 @@ export type Subscription_RootCompany_Users_StreamArgs = {
   where?: InputMaybe<Company_Users_Bool_Exp>;
 };
 
+
 export type Subscription_RootFileArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootFilesArgs = {
   distinct_on?: InputMaybe<Array<Files_Select_Column>>;
@@ -5697,6 +5981,7 @@ export type Subscription_RootFilesArgs = {
   where?: InputMaybe<Files_Bool_Exp>;
 };
 
+
 export type Subscription_RootFilesAggregateArgs = {
   distinct_on?: InputMaybe<Array<Files_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5705,11 +5990,13 @@ export type Subscription_RootFilesAggregateArgs = {
   where?: InputMaybe<Files_Bool_Exp>;
 };
 
+
 export type Subscription_RootFiles_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Files_Stream_Cursor_Input>>;
   where?: InputMaybe<Files_Bool_Exp>;
 };
+
 
 export type Subscription_RootJobsArgs = {
   distinct_on?: InputMaybe<Array<Jobs_Select_Column>>;
@@ -5719,6 +6006,7 @@ export type Subscription_RootJobsArgs = {
   where?: InputMaybe<Jobs_Bool_Exp>;
 };
 
+
 export type Subscription_RootJobs_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Jobs_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5727,9 +6015,11 @@ export type Subscription_RootJobs_AggregateArgs = {
   where?: InputMaybe<Jobs_Bool_Exp>;
 };
 
+
 export type Subscription_RootJobs_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootJobs_StreamArgs = {
   batch_size: Scalars['Int']['input'];
@@ -5737,9 +6027,11 @@ export type Subscription_RootJobs_StreamArgs = {
   where?: InputMaybe<Jobs_Bool_Exp>;
 };
 
+
 export type Subscription_RootUserArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
@@ -5749,6 +6041,7 @@ export type Subscription_RootUsersArgs = {
   where?: InputMaybe<Users_Bool_Exp>;
 };
 
+
 export type Subscription_RootUsersAggregateArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5757,21 +6050,25 @@ export type Subscription_RootUsersAggregateArgs = {
   where?: InputMaybe<Users_Bool_Exp>;
 };
 
+
 export type Subscription_RootUsers_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
   where?: InputMaybe<Users_Bool_Exp>;
 };
 
+
 export type Subscription_RootVirusArgs = {
   id: Scalars['uuid']['input'];
 };
+
 
 export type Subscription_RootVirus_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Virus_Stream_Cursor_Input>>;
   where?: InputMaybe<Virus_Bool_Exp>;
 };
+
 
 export type Subscription_RootVirusesArgs = {
   distinct_on?: InputMaybe<Array<Virus_Select_Column>>;
@@ -5780,6 +6077,7 @@ export type Subscription_RootVirusesArgs = {
   order_by?: InputMaybe<Array<Virus_Order_By>>;
   where?: InputMaybe<Virus_Bool_Exp>;
 };
+
 
 export type Subscription_RootVirusesAggregateArgs = {
   distinct_on?: InputMaybe<Array<Virus_Select_Column>>;
@@ -5854,6 +6152,7 @@ export type Users = {
   userProviders_aggregate: AuthUserProviders_Aggregate;
 };
 
+
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersCompany_UsersArgs = {
   distinct_on?: InputMaybe<Array<Company_Users_Select_Column>>;
@@ -5862,6 +6161,7 @@ export type UsersCompany_UsersArgs = {
   order_by?: InputMaybe<Array<Company_Users_Order_By>>;
   where?: InputMaybe<Company_Users_Bool_Exp>;
 };
+
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersCompany_Users_AggregateArgs = {
@@ -5872,10 +6172,12 @@ export type UsersCompany_Users_AggregateArgs = {
   where?: InputMaybe<Company_Users_Bool_Exp>;
 };
 
+
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersMetadataArgs = {
   path?: InputMaybe<Scalars['String']['input']>;
 };
+
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersRefreshTokensArgs = {
@@ -5886,6 +6188,7 @@ export type UsersRefreshTokensArgs = {
   where?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
 };
 
+
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersRefreshTokens_AggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokens_Select_Column>>;
@@ -5894,6 +6197,7 @@ export type UsersRefreshTokens_AggregateArgs = {
   order_by?: InputMaybe<Array<AuthRefreshTokens_Order_By>>;
   where?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
 };
+
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersRolesArgs = {
@@ -5904,6 +6208,7 @@ export type UsersRolesArgs = {
   where?: InputMaybe<AuthUserRoles_Bool_Exp>;
 };
 
+
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersRoles_AggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
@@ -5912,6 +6217,7 @@ export type UsersRoles_AggregateArgs = {
   order_by?: InputMaybe<Array<AuthUserRoles_Order_By>>;
   where?: InputMaybe<AuthUserRoles_Bool_Exp>;
 };
+
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersSecurityKeysArgs = {
@@ -5922,6 +6228,7 @@ export type UsersSecurityKeysArgs = {
   where?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
 };
 
+
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersSecurityKeys_AggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserSecurityKeys_Select_Column>>;
@@ -5931,6 +6238,7 @@ export type UsersSecurityKeys_AggregateArgs = {
   where?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
 };
 
+
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersUserProvidersArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
@@ -5939,6 +6247,7 @@ export type UsersUserProvidersArgs = {
   order_by?: InputMaybe<Array<AuthUserProviders_Order_By>>;
   where?: InputMaybe<AuthUserProviders_Bool_Exp>;
 };
+
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersUserProviders_AggregateArgs = {
@@ -5990,6 +6299,7 @@ export type Users_Aggregate_Fields = {
   max?: Maybe<Users_Max_Fields>;
   min?: Maybe<Users_Min_Fields>;
 };
+
 
 /** aggregate fields of "auth.users" */
 export type Users_Aggregate_FieldsCountArgs = {
@@ -6066,7 +6376,7 @@ export enum Users_Constraint {
   /** unique or primary key constraint on columns "phone_number" */
   UsersPhoneNumberKey = 'users_phone_number_key',
   /** unique or primary key constraint on columns "id" */
-  UsersPkey = 'users_pkey',
+  UsersPkey = 'users_pkey'
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
@@ -6336,7 +6646,7 @@ export enum Users_Select_Column {
   /** column name */
   TotpSecret = 'totpSecret',
   /** column name */
-  UpdatedAt = 'updatedAt',
+  UpdatedAt = 'updatedAt'
 }
 
 /** select "users_aggregate_bool_exp_bool_and_arguments_columns" columns of table "auth.users" */
@@ -6348,7 +6658,7 @@ export enum Users_Select_Column_Users_Aggregate_Bool_Exp_Bool_And_Arguments_Colu
   /** column name */
   IsAnonymous = 'isAnonymous',
   /** column name */
-  PhoneNumberVerified = 'phoneNumberVerified',
+  PhoneNumberVerified = 'phoneNumberVerified'
 }
 
 /** select "users_aggregate_bool_exp_bool_or_arguments_columns" columns of table "auth.users" */
@@ -6360,7 +6670,7 @@ export enum Users_Select_Column_Users_Aggregate_Bool_Exp_Bool_Or_Arguments_Colum
   /** column name */
   IsAnonymous = 'isAnonymous',
   /** column name */
-  PhoneNumberVerified = 'phoneNumberVerified',
+  PhoneNumberVerified = 'phoneNumberVerified'
 }
 
 /** input type for updating data in table "auth.users" */
@@ -6480,7 +6790,7 @@ export enum Users_Update_Column {
   /** column name */
   TotpSecret = 'totpSecret',
   /** column name */
-  UpdatedAt = 'updatedAt',
+  UpdatedAt = 'updatedAt'
 }
 
 export type Users_Updates = {
@@ -6527,6 +6837,7 @@ export type Virus = {
   virus: Scalars['String']['output'];
 };
 
+
 /** columns and relationships of "storage.virus" */
 export type VirusUserSessionArgs = {
   path?: InputMaybe<Scalars['String']['input']>;
@@ -6546,6 +6857,7 @@ export type Virus_Aggregate_Fields = {
   max?: Maybe<Virus_Max_Fields>;
   min?: Maybe<Virus_Min_Fields>;
 };
+
 
 /** aggregate fields of "storage.virus" */
 export type Virus_Aggregate_FieldsCountArgs = {
@@ -6576,7 +6888,7 @@ export type Virus_Bool_Exp = {
 /** unique or primary key constraints on table "storage.virus" */
 export enum Virus_Constraint {
   /** unique or primary key constraint on columns "id" */
-  VirusPkey = 'virus_pkey',
+  VirusPkey = 'virus_pkey'
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
@@ -6681,7 +6993,7 @@ export enum Virus_Select_Column {
   /** column name */
   UserSession = 'userSession',
   /** column name */
-  Virus = 'virus',
+  Virus = 'virus'
 }
 
 /** input type for updating data in table "storage.virus" */
@@ -6729,7 +7041,7 @@ export enum Virus_Update_Column {
   /** column name */
   UserSession = 'userSession',
   /** column name */
-  Virus = 'virus',
+  Virus = 'virus'
 }
 
 export type Virus_Updates = {
@@ -6755,29 +7067,23 @@ export type CreateApplicationMutationVariables = Exact<{
   company_id?: InputMaybe<Scalars['uuid']['input']>;
 }>;
 
-export type CreateApplicationMutation = {
-  __typename?: 'mutation_root';
-  insert_applications_one?: { __typename?: 'applications'; id: any; resume_url: string } | null;
-};
+
+export type CreateApplicationMutation = { __typename?: 'mutation_root', insert_applications_one?: { __typename?: 'applications', id: any, resume_url: string } | null };
 
 export type CreateCompanyMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-export type CreateCompanyMutation = {
-  __typename?: 'mutation_root';
-  insert_companies_one?: { __typename?: 'companies'; id: any; name?: string | null } | null;
-};
+
+export type CreateCompanyMutation = { __typename?: 'mutation_root', insert_companies_one?: { __typename?: 'companies', id: any, name?: string | null } | null };
 
 export type CreateCompanyUserMutationVariables = Exact<{
   company_id?: InputMaybe<Scalars['uuid']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 }>;
 
-export type CreateCompanyUserMutation = {
-  __typename?: 'mutation_root';
-  insert_company_users_one?: { __typename?: 'company_users'; id: any } | null;
-};
+
+export type CreateCompanyUserMutation = { __typename?: 'mutation_root', insert_company_users_one?: { __typename?: 'company_users', id: any } | null };
 
 export type CreateJobMutationVariables = Exact<{
   company_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -6787,10 +7093,8 @@ export type CreateJobMutationVariables = Exact<{
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 }>;
 
-export type CreateJobMutation = {
-  __typename?: 'mutation_root';
-  insert_jobs_one?: { __typename?: 'jobs'; id: any } | null;
-};
+
+export type CreateJobMutation = { __typename?: 'mutation_root', insert_jobs_one?: { __typename?: 'jobs', id: any } | null };
 
 export type UpdateApplicationMutationVariables = Exact<{
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -6798,13 +7102,13 @@ export type UpdateApplicationMutationVariables = Exact<{
   linkedin?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  relevant_skills?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
   years_of_experience?: InputMaybe<Scalars['Int']['input']>;
+  match_score?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
-export type UpdateApplicationMutation = {
-  __typename?: 'mutation_root';
-  update_applications_by_pk?: { __typename?: 'applications'; id: any } | null;
-};
+
+export type UpdateApplicationMutation = { __typename?: 'mutation_root', update_applications_by_pk?: { __typename?: 'applications', id: any } | null };
 
 export type UpdateJobMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -6813,1400 +7117,88 @@ export type UpdateJobMutationVariables = Exact<{
   description?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-export type UpdateJobMutation = {
-  __typename?: 'mutation_root';
-  update_jobs_by_pk?: {
-    __typename?: 'jobs';
-    id: any;
-    title: string;
-    location: string;
-    description: string;
-    created_at: any;
-    company: { __typename?: 'companies'; id: any; name?: string | null };
-  } | null;
-};
 
-export type GetAllCompaniesQueryVariables = Exact<{ [key: string]: never }>;
+export type UpdateJobMutation = { __typename?: 'mutation_root', update_jobs_by_pk?: { __typename?: 'jobs', id: any, title: string, location: string, description: string, created_at: any, company: { __typename?: 'companies', id: any, name?: string | null } } | null };
 
-export type GetAllCompaniesQuery = {
-  __typename?: 'query_root';
-  companies: Array<{
-    __typename?: 'companies';
-    id: any;
-    name?: string | null;
-    created_at?: any | null;
-    updated_at?: any | null;
-    jobs_aggregate: {
-      __typename?: 'jobs_aggregate';
-      aggregate?: { __typename?: 'jobs_aggregate_fields'; count: number } | null;
-    };
-  }>;
-};
+export type GetAllCompaniesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllCompaniesQuery = { __typename?: 'query_root', companies: Array<{ __typename?: 'companies', id: any, name?: string | null, created_at?: any | null, updated_at?: any | null, jobs_aggregate: { __typename?: 'jobs_aggregate', aggregate?: { __typename?: 'jobs_aggregate_fields', count: number } | null } }> };
+
+export type GetApplicationJobInfoQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+
+export type GetApplicationJobInfoQuery = { __typename?: 'query_root', applications_by_pk?: { __typename?: 'applications', job: { __typename?: 'jobs', description: string, title: string, location: string } } | null };
 
 export type GetUserCompaniesQueryVariables = Exact<{
   id?: InputMaybe<Scalars['uuid']['input']>;
 }>;
 
-export type GetUserCompaniesQuery = {
-  __typename?: 'query_root';
-  user?: {
-    __typename?: 'users';
-    company_users: Array<{
-      __typename?: 'company_users';
-      company?: { __typename?: 'companies'; name?: string | null; id: any } | null;
-    }>;
-  } | null;
-};
 
-export type GetFeaturedCompaniesQueryVariables = Exact<{ [key: string]: never }>;
+export type GetUserCompaniesQuery = { __typename?: 'query_root', user?: { __typename?: 'users', company_users: Array<{ __typename?: 'company_users', company?: { __typename?: 'companies', name?: string | null, id: any } | null }> } | null };
 
-export type GetFeaturedCompaniesQuery = {
-  __typename?: 'query_root';
-  companies: Array<{
-    __typename?: 'companies';
-    id: any;
-    name?: string | null;
-    created_at?: any | null;
-    updated_at?: any | null;
-    jobs_aggregate: {
-      __typename?: 'jobs_aggregate';
-      aggregate?: { __typename?: 'jobs_aggregate_fields'; count: number } | null;
-    };
-  }>;
-};
+export type GetFeaturedCompaniesQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetFeaturedJobsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetFeaturedJobsQuery = {
-  __typename?: 'query_root';
-  jobs: Array<{
-    __typename?: 'jobs';
-    id: any;
-    title: string;
-    location: string;
-    description: string;
-    created_at: any;
-    company: { __typename?: 'companies'; id: any; name?: string | null };
-  }>;
-};
+export type GetFeaturedCompaniesQuery = { __typename?: 'query_root', companies: Array<{ __typename?: 'companies', id: any, name?: string | null, created_at?: any | null, updated_at?: any | null, jobs_aggregate: { __typename?: 'jobs_aggregate', aggregate?: { __typename?: 'jobs_aggregate_fields', count: number } | null } }> };
+
+export type GetFeaturedJobsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFeaturedJobsQuery = { __typename?: 'query_root', jobs: Array<{ __typename?: 'jobs', id: any, title: string, location: string, description: string, created_at: any, company: { __typename?: 'companies', id: any, name?: string | null } }> };
 
 export type GetJobByIdQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
 
-export type GetJobByIdQuery = {
-  __typename?: 'query_root';
-  jobs_by_pk?: {
-    __typename?: 'jobs';
-    id: any;
-    title: string;
-    location: string;
-    description: string;
-    created_at: any;
-    company: { __typename?: 'companies'; id: any; name?: string | null };
-  } | null;
-};
+
+export type GetJobByIdQuery = { __typename?: 'query_root', jobs_by_pk?: { __typename?: 'jobs', id: any, title: string, location: string, description: string, created_at: any, company: { __typename?: 'companies', id: any, name?: string | null } } | null };
 
 export type GetJobsQueryVariables = Exact<{
   company_id?: InputMaybe<Uuid_Comparison_Exp>;
 }>;
 
-export type GetJobsQuery = {
-  __typename?: 'query_root';
-  jobs: Array<{
-    __typename?: 'jobs';
-    location: string;
-    title: string;
-    user_id: any;
-    created_at: any;
-    description: string;
-    id: any;
-    company: { __typename?: 'companies'; name?: string | null; id: any };
-    applications_aggregate: {
-      __typename?: 'applications_aggregate';
-      aggregate?: { __typename?: 'applications_aggregate_fields'; count: number } | null;
-    };
-  }>;
-};
+
+export type GetJobsQuery = { __typename?: 'query_root', jobs: Array<{ __typename?: 'jobs', location: string, title: string, user_id: any, created_at: any, description: string, id: any, company: { __typename?: 'companies', name?: string | null, id: any }, applications_aggregate: { __typename?: 'applications_aggregate', aggregate?: { __typename?: 'applications_aggregate_fields', count: number } | null } }> };
 
 export type GetPostedJobByIdQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
 
-export type GetPostedJobByIdQuery = {
-  __typename?: 'query_root';
-  jobs_by_pk?: {
-    __typename?: 'jobs';
-    id: any;
-    title: string;
-    location: string;
-    description: string;
-    created_at: any;
-    company: { __typename?: 'companies'; id: any; name?: string | null };
-    applications: Array<{
-      __typename?: 'applications';
-      id: any;
-      resume_url: string;
-      created_at: any;
-      linkedin?: string | null;
-      website?: string | null;
-      email?: string | null;
-    }>;
-  } | null;
-};
+
+export type GetPostedJobByIdQuery = { __typename?: 'query_root', jobs_by_pk?: { __typename?: 'jobs', id: any, title: string, location: string, description: string, created_at: any, company: { __typename?: 'companies', id: any, name?: string | null }, applications: Array<{ __typename?: 'applications', id: any, resume_url: string, created_at: any, linkedin?: string | null, website?: string | null, email?: string | null, years_of_experience?: number | null, skills?: Array<string> | null, relevant_skills?: Array<string> | null, match_score?: number | null }> } | null };
 
 export type GetUserProfileQueryVariables = Exact<{
   userId: Scalars['uuid']['input'];
 }>;
 
-export type GetUserProfileQuery = {
-  __typename?: 'query_root';
-  company_users: Array<{
-    __typename?: 'company_users';
-    id: any;
-    company?: {
-      __typename?: 'companies';
-      id: any;
-      name?: string | null;
-      created_at?: any | null;
-      jobs_aggregate: {
-        __typename?: 'jobs_aggregate';
-        aggregate?: { __typename?: 'jobs_aggregate_fields'; count: number } | null;
-      };
-    } | null;
-  }>;
-  jobs: Array<{
-    __typename?: 'jobs';
-    id: any;
-    title: string;
-    location: string;
-    created_at: any;
-    company: { __typename?: 'companies'; id: any; name?: string | null };
-  }>;
-};
+
+export type GetUserProfileQuery = { __typename?: 'query_root', company_users: Array<{ __typename?: 'company_users', id: any, company?: { __typename?: 'companies', id: any, name?: string | null, created_at?: any | null, jobs_aggregate: { __typename?: 'jobs_aggregate', aggregate?: { __typename?: 'jobs_aggregate_fields', count: number } | null } } | null }>, jobs: Array<{ __typename?: 'jobs', id: any, title: string, location: string, created_at: any, company: { __typename?: 'companies', id: any, name?: string | null } }> };
 
 export type SearchJobsQueryVariables = Exact<{
   title?: InputMaybe<Scalars['String']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-export type SearchJobsQuery = {
-  __typename?: 'query_root';
-  jobs: Array<{
-    __typename?: 'jobs';
-    id: any;
-    title: string;
-    location: string;
-    description: string;
-    created_at: any;
-    company: { __typename?: 'companies'; id: any; name?: string | null };
-  }>;
-};
 
-export const CreateApplicationDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'CreateApplication' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'job_id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'resume_url' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'company_id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'insert_applications_one' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'object' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'job_id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'job_id' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'resume_url' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'resume_url' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'company_id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'company_id' } },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'resume_url' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<CreateApplicationMutation, CreateApplicationMutationVariables>;
-export const CreateCompanyDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'createCompany' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'insert_companies_one' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'object' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'name' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<CreateCompanyMutation, CreateCompanyMutationVariables>;
-export const CreateCompanyUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'createCompanyUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'company_id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'user_id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'insert_company_users_one' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'object' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'company_id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'company_id' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'user_id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'user_id' } },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<CreateCompanyUserMutation, CreateCompanyUserMutationVariables>;
-export const CreateJobDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'createJob' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'company_id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'location' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'title' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'user_id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'insert_jobs_one' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'object' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'company_id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'company_id' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'description' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'location' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'location' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'title' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'title' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'user_id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'user_id' } },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<CreateJobMutation, CreateJobMutationVariables>;
-export const UpdateApplicationDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'UpdateApplication' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'email' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'linkedin' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'website' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skills' } },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-            },
-          },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'years_of_experience' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
-          defaultValue: { kind: 'IntValue', value: '10' },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'update_applications_by_pk' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'pk_columns' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-                    },
-                  ],
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: '_set' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'email' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'email' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'linkedin' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'linkedin' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'website' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'website' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'skills' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'skills' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'years_of_experience' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'years_of_experience' },
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<UpdateApplicationMutation, UpdateApplicationMutationVariables>;
-export const UpdateJobDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'updateJob' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'title' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'location' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'update_jobs_by_pk' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'pk_columns' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-                    },
-                  ],
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: '_set' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'title' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'title' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'location' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'location' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'description' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'location' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'company' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<UpdateJobMutation, UpdateJobMutationVariables>;
-export const GetAllCompaniesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getAllCompanies' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'companies' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'updated_at' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'jobs_aggregate' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'aggregate' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'count' } }],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetAllCompaniesQuery, GetAllCompaniesQueryVariables>;
-export const GetUserCompaniesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getUserCompanies' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'user' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'company_users' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'company' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetUserCompaniesQuery, GetUserCompaniesQueryVariables>;
-export const GetFeaturedCompaniesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetFeaturedCompanies' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'companies' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'order_by' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'created_at' },
-                      value: { kind: 'EnumValue', value: 'desc' },
-                    },
-                  ],
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: { kind: 'IntValue', value: '3' },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'updated_at' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'jobs_aggregate' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'aggregate' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'count' } }],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetFeaturedCompaniesQuery, GetFeaturedCompaniesQueryVariables>;
-export const GetFeaturedJobsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetFeaturedJobs' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'jobs' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'order_by' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'created_at' },
-                      value: { kind: 'EnumValue', value: 'desc' },
-                    },
-                  ],
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: { kind: 'IntValue', value: '3' },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'location' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'company' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetFeaturedJobsQuery, GetFeaturedJobsQueryVariables>;
-export const GetJobByIdDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getJobById' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'jobs_by_pk' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'location' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'company' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetJobByIdQuery, GetJobByIdQueryVariables>;
-export const GetJobsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getJobs' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'company_id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid_comparison_exp' } },
-          defaultValue: { kind: 'ObjectValue', fields: [] },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'jobs' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'company_id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'company_id' } },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'location' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'user_id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'company' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                    ],
-                  },
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'applications_aggregate' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'aggregate' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'count' } }],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetJobsQuery, GetJobsQueryVariables>;
-export const GetPostedJobByIdDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getPostedJobById' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'jobs_by_pk' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'location' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'company' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'applications' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'resume_url' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'linkedin' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'website' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetPostedJobByIdQuery, GetPostedJobByIdQueryVariables>;
-export const GetUserProfileDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetUserProfile' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'company_users' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'user_id' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: '_eq' },
-                            value: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'company' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'jobs_aggregate' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'aggregate' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'count' } },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'jobs' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'company' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'company_users' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'user_id' },
-                                  value: {
-                                    kind: 'ObjectValue',
-                                    fields: [
-                                      {
-                                        kind: 'ObjectField',
-                                        name: { kind: 'Name', value: '_eq' },
-                                        value: {
-                                          kind: 'Variable',
-                                          name: { kind: 'Name', value: 'userId' },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'location' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'company' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetUserProfileQuery, GetUserProfileQueryVariables>;
-export const SearchJobsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'searchJobs' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'title' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'location' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '', block: false },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'jobs' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: '_and' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'title' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: '_iregex' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'title' },
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'location' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: '_iregex' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'location' },
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'location' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'company' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<SearchJobsQuery, SearchJobsQueryVariables>;
+export type SearchJobsQuery = { __typename?: 'query_root', jobs: Array<{ __typename?: 'jobs', id: any, title: string, location: string, description: string, created_at: any, company: { __typename?: 'companies', id: any, name?: string | null } }> };
+
+
+export const CreateApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"job_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"resume_url"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"company_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_applications_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"job_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"job_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"resume_url"},"value":{"kind":"Variable","name":{"kind":"Name","value":"resume_url"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"company_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"company_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"resume_url"}}]}}]}}]} as unknown as DocumentNode<CreateApplicationMutation, CreateApplicationMutationVariables>;
+export const CreateCompanyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createCompany"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_companies_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateCompanyMutation, CreateCompanyMutationVariables>;
+export const CreateCompanyUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createCompanyUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"company_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_company_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"company_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"company_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateCompanyUserMutation, CreateCompanyUserMutationVariables>;
+export const CreateJobDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createJob"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"company_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"location"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_jobs_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"company_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"company_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"location"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateJobMutation, CreateJobMutationVariables>;
+export const UpdateApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"linkedin"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"website"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skills"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"relevant_skills"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"years_of_experience"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"10"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"match_score"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"0"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_applications_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"linkedin"},"value":{"kind":"Variable","name":{"kind":"Name","value":"linkedin"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"website"},"value":{"kind":"Variable","name":{"kind":"Name","value":"website"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"skills"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skills"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"years_of_experience"},"value":{"kind":"Variable","name":{"kind":"Name","value":"years_of_experience"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"relevant_skills"},"value":{"kind":"Variable","name":{"kind":"Name","value":"relevant_skills"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"match_score"},"value":{"kind":"Variable","name":{"kind":"Name","value":"match_score"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateApplicationMutation, UpdateApplicationMutationVariables>;
+export const UpdateJobDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateJob"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"location"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_jobs_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"location"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateJobMutation, UpdateJobMutationVariables>;
+export const GetAllCompaniesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getAllCompanies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"jobs_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllCompaniesQuery, GetAllCompaniesQueryVariables>;
+export const GetApplicationJobInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetApplicationJobInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"applications_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"job"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}}]}}]}}]} as unknown as DocumentNode<GetApplicationJobInfoQuery, GetApplicationJobInfoQueryVariables>;
+export const GetUserCompaniesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUserCompanies"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"company_users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUserCompaniesQuery, GetUserCompaniesQueryVariables>;
+export const GetFeaturedCompaniesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFeaturedCompanies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"3"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"jobs_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFeaturedCompaniesQuery, GetFeaturedCompaniesQueryVariables>;
+export const GetFeaturedJobsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFeaturedJobs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"3"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetFeaturedJobsQuery, GetFeaturedJobsQueryVariables>;
+export const GetJobByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getJobById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobs_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetJobByIdQuery, GetJobByIdQueryVariables>;
+export const GetJobsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getJobs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"company_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid_comparison_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"company_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"company_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"applications_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetJobsQuery, GetJobsQueryVariables>;
+export const GetPostedJobByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getPostedJobById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobs_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"applications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"resume_url"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"linkedin"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"years_of_experience"}},{"kind":"Field","name":{"kind":"Name","value":"skills"}},{"kind":"Field","name":{"kind":"Name","value":"relevant_skills"}},{"kind":"Field","name":{"kind":"Name","value":"match_score"}}]}}]}}]}}]} as unknown as DocumentNode<GetPostedJobByIdQuery, GetPostedJobByIdQueryVariables>;
+export const GetUserProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"company_users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"jobs_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"jobs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"company"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"company_users"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetUserProfileQuery, GetUserProfileQueryVariables>;
+export const SearchJobsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"searchJobs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"location"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_iregex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_iregex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"location"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<SearchJobsQuery, SearchJobsQueryVariables>;

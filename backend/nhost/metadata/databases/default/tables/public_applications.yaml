@@ -49,7 +49,9 @@ select_permissions:
         - id
         - job_id
         - linkedin
+        - match_score
         - name
+        - relevant_skills
         - resume_url
         - skills
         - website

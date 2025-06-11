@@ -21,6 +21,8 @@ export const GET_POSTED_JOB_BY_ID = gql`
         email
         years_of_experience
         skills
+        relevant_skills
+        match_score
       }
     }
   }

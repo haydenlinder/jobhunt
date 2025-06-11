@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { nhost } from '@/lib/nhost-client';
 import { UPDATE_APPLICATION } from '@/graphql/mutations/updateApplication';
+import { GET_APPLICATION_JOB_INFO } from '@/graphql/queries/getApplicationJobInfo';
+import { GetApplicationJobInfoQuery, Jobs, UpdateApplicationMutation, UpdateApplicationMutationVariables } from '@/gql/graphql';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,6 +17,27 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const resumeFile = formData.get('resume') as File | null;
     const applicationId = formData.get('applicationId') as string | null;
+
+    let job: Exclude<GetApplicationJobInfoQuery['applications_by_pk'], null | undefined>['job'] | undefined = undefined
+    if (applicationId) {
+      try {
+        const res = await nhost.graphql.request<GetApplicationJobInfoQuery>(
+          GET_APPLICATION_JOB_INFO.loc?.source.body || '',
+          {
+            id: applicationId,
+          },
+          {
+            headers: {
+              'x-hasura-admin-secret': process.env.GRAPHQL_ADMIN_SECRET || '',
+            },
+          }
+        );
+        job = res.data?.applications_by_pk?.job
+      } catch (error) {
+        console.error('Error updating application in Nhost:', error);
+        // Continue execution even if update fails - still return the parsed data
+      }
+    }
 
     if (!resumeFile) {
       return NextResponse.json({ error: 'No resume provided' }, { status: 400 });
@@ -56,16 +79,22 @@ export async function POST(request: NextRequest) {
             {
               type: 'input_text',
               text:
-                'This is a resume. Extract and return ONLY the following information in JSON format:\n' +
-                "1. The applicant's full name\n" +
-                '2. Their website URL (if present)\n' +
-                '3. Their linkedin URL (if present)\n' +
-                '4. Their email address\n\n' +
-                '5. Years of experience (work experience only)\n\n' +
-                '6. Skills (ordered by top skills)\n\n' +
-                'Format the response as a valid JSON object with the keys: "name", "website", and "email". ' +
+                'This is a resume. Below is the job description. Extract and return ONLY the following information in JSON format:\n' +
+                "1. name: The applicant's full name\n" +
+                '2. website: Their website URL (if present)\n' +
+                '3. linkedin: Their linkedin URL (if present)\n' +
+                '4. email: Their email address\n\n' +
+                '5. years_of_experience: Years of experience (work experience only)\n\n' +
+                '6. skills: Skills (ordered by top skills)\n\n' +
+                '7. relevant_skills: Skills Relevant to the job description (ordered by top skills)\n\n' +
+                '8. match_score: an integer between 0 and 100 inclusive, which scores how good of a match this applicant is with the job\n\n' +
+                'Format the response as a valid JSON object. ' +
                 'If any information is not found, use null for that field. ' +
-                'For example: {"name": "John Doe", "website": "johndoe.com", "email": "john@example.com", linkedin: "https://linkedin.com/in/johndoe", years_of_experience: "3", skills: "[\"carpentry\", \"microsoft office\"]"}',
+                'For example: {"name": "John Doe", "website": "johndoe.com", "email": "john@example.com", linkedin: "https://linkedin.com/in/johndoe", years_of_experience: "3", skills: "[\"carpentry\", \"microsoft office\"]", relevant_skills: "[\"microsoft office\"]"}' +
+                `\n\nJob Title: ${job?.title}\n`+
+                `\n\nJob Location: ${job?.location}\n`+
+                `\n\nJob description: \n` +
+                `${job?.description}`,
             },
           ],
         },
@@ -100,7 +129,7 @@ export async function POST(request: NextRequest) {
     // If applicationId is provided, update the application in Nhost
     if (applicationId) {
       try {
-        await nhost.graphql.request(
+        await nhost.graphql.request<UpdateApplicationMutation, UpdateApplicationMutationVariables>(
           UPDATE_APPLICATION.loc?.source.body || '',
           {
             id: applicationId,
@@ -109,6 +138,8 @@ export async function POST(request: NextRequest) {
             website: resumeData.website || null,
             skills: resumeData.skills || null,
             years_of_experience: resumeData.years_of_experience || null,
+            relevant_skills: resumeData.relevant_skills || null,
+            match_score: resumeData.match_score ?? null,
           },
           {
             headers: {
