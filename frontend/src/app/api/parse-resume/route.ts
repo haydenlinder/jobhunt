@@ -130,7 +130,6 @@ export async function POST(request: NextRequest) {
         email: null,
       };
     }
-    console.log({ applicationId });
 
     // If applicationId is provided, update the application in Nhost
     if (applicationId) {

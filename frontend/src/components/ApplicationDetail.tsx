@@ -35,7 +35,6 @@ export function ApplicationDetail({
   useEffect(() => {
     const parseResume = async () => {
       if (!resume_url) return;
-      console.log({ match_score });
       if (typeof match_score === 'number') return;
 
       setIsLoading(true);
@@ -68,7 +67,6 @@ export function ApplicationDetail({
         }
 
         const data = await response.json();
-        console.log({ data });
         setParsedData(data);
       } catch (err) {
         console.error('Error parsing resume:', err);
