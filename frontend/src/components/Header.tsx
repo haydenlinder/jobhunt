@@ -12,7 +12,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-white shadow-sm dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-900 sticky top-0 shadow-lg border-b-gray-700 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
