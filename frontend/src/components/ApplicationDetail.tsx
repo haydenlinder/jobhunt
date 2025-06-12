@@ -14,6 +14,7 @@ export function ApplicationDetail({
     skills,
     relevant_skills,
     match_score,
+    created_at,
   },
 }: {
   application: Partial<Applications>;
@@ -110,6 +111,13 @@ export function ApplicationDetail({
   return (
     <div className="pt-3">
       <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-md space-y-3">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          {new Date(created_at).toLocaleDateString()} at{' '}
+          {new Date(created_at).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </p>
         <Resume url={resume_url || ''} />
 
         {parsedData.name && (

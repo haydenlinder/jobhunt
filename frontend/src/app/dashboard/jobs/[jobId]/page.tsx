@@ -8,7 +8,7 @@ export default function DashboardJobDetailPage() {
   const jobId = params.jobId as string;
 
   return (
-    <div className="container mx-auto py-6 px-4">
+    <div className="">
       <DashboardJobDetail jobId={jobId} />
     </div>
   );

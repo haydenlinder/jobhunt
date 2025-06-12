@@ -42,7 +42,7 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+    <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
       {isEditing && job ? (
         <JobEditForm
           job={job}
