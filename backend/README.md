@@ -1,3 +1,8 @@
+## Install Nhost CLI
+```
+sudo curl -L https://raw.githubusercontent.com/nhost/cli/main/get.sh | bash
+```
+
 ## Start
 ```
 nhost up
@@ -12,3 +17,6 @@ URLs:
 - Functions:        https://local.functions.local.nhost.run
 - Dashboard:        https://local.dashboard.local.nhost.run
 - Mailhog:          https://local.mailhog.local.nhost.run
+
+
+Any changes to the Hasura console will automatically be source-controlled with migrations and metadata.
