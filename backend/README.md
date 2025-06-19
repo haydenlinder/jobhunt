@@ -3,6 +3,15 @@
 sudo curl -L https://raw.githubusercontent.com/nhost/cli/main/get.sh | bash
 ```
 
+# Add secrets
+First, create a `.secrets` file in this folder with the following:
+```
+GRAFANA_ADMIN_PASSWORD = 'grafana-admin-password'
+HASURA_GRAPHQL_ADMIN_SECRET = 'nhost-admin-secret'
+HASURA_GRAPHQL_JWT_SECRET = '0f987876650b4a085e64594fae9219e7781b17506bec02489ad061fba8cb22db'
+NHOST_WEBHOOK_SECRET = 'nhost-webhook-secret'
+```
+
 ## Start
 ```
 nhost up
