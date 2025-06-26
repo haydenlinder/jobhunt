@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const CREATE_COMPANY = gql`
+export const CREATE_APPLICATION_STAGE = gql`
   mutation CreateApplicationStage(
     $job_id: uuid = ""
     $name: String = ""
