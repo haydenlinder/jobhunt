@@ -1,7 +1,14 @@
 'use client';
 
-import { Applications } from '@/gql/graphql';
+import {
+  Applications,
+  UpdateApplicationStageMutation,
+  UpdateApplicationStageMutationVariables,
+} from '@/gql/graphql';
+import { UPDATE_APPLICATION_STAGE } from '@/graphql/mutations/updateApplicationStage';
+import { graphqlRequest } from '@/lib/nhost-client';
 import { useState, useEffect } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function ApplicationDetail({
   application: {
@@ -15,6 +22,8 @@ export function ApplicationDetail({
     relevant_skills,
     match_score,
     created_at,
+    stage,
+    job_id,
   },
 }: {
   application: Partial<Applications>;
@@ -30,8 +39,31 @@ export function ApplicationDetail({
     relevant_skills,
     match_score,
   });
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const nextStage = (stage || 0) + 1;
+  const client = useQueryClient();
+
+  const { mutate: moveToNextStage, isPending } = useMutation<
+    UpdateApplicationStageMutation,
+    Error,
+    UpdateApplicationStageMutationVariables
+  >({
+    mutationFn: () =>
+      graphqlRequest(UPDATE_APPLICATION_STAGE.loc?.source.body || '', {
+        id: id,
+        stage: nextStage,
+      }),
+    onSuccess: () => {
+      client.refetchQueries({ queryKey: ['job', job_id] });
+    },
+    onError: err => {
+      setError(
+        `Failed to submit application: ${err instanceof Error ? err.message : 'Unknown error'}`
+      );
+    },
+  });
 
   useEffect(() => {
     const parseResume = async () => {
@@ -118,7 +150,16 @@ export function ApplicationDetail({
             minute: '2-digit',
           })}
         </p>
-        <Resume url={resume_url || ''} />
+        <div className="flex justify-between">
+          <Resume url={resume_url || ''} />
+          <button
+            disabled={isPending}
+            onClick={() => moveToNextStage({ id, stage: nextStage })}
+            className="border rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-50/5"
+          >
+            Move to stage {nextStage}
+          </button>
+        </div>
 
         {parsedData.name && (
           <div>

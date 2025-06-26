@@ -100,6 +100,17 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
             </div>
           </div>
 
+          <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Stages</h2>
+            <div className="prose dark:prose-invert max-w-none">
+              <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                {job.application_stages.map(stage => (
+                  <li key={stage.id}>{stage.name}</li>
+                ))}
+              </p>
+            </div>
+          </div>
+
           {/* Applications list */}
           <JobApplicationsList applications={job.applications || []} />
 

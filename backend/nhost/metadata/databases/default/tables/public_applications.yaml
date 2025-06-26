@@ -54,6 +54,7 @@ select_permissions:
         - relevant_skills
         - resume_url
         - skills
+        - stage
         - website
         - years_of_experience
       filter:
@@ -66,7 +67,8 @@ select_permissions:
 update_permissions:
   - role: user
     permission:
-      columns: []
+      columns:
+        - stage
       filter:
         company:
           company_users:

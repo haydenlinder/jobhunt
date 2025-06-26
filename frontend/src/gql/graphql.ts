@@ -102,6 +102,251 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** columns and relationships of "application_stages" */
+export type Application_Stages = {
+  __typename?: 'application_stages';
+  created_at: Scalars['timestamptz']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['uuid']['output'];
+  /** An object relationship */
+  job: Jobs;
+  job_id: Scalars['uuid']['output'];
+  name: Scalars['String']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+  user_id: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "application_stages" */
+export type Application_Stages_Aggregate = {
+  __typename?: 'application_stages_aggregate';
+  aggregate?: Maybe<Application_Stages_Aggregate_Fields>;
+  nodes: Array<Application_Stages>;
+};
+
+export type Application_Stages_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Application_Stages_Aggregate_Bool_Exp_Count>;
+};
+
+export type Application_Stages_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Application_Stages_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Application_Stages_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "application_stages" */
+export type Application_Stages_Aggregate_Fields = {
+  __typename?: 'application_stages_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Application_Stages_Max_Fields>;
+  min?: Maybe<Application_Stages_Min_Fields>;
+};
+
+/** aggregate fields of "application_stages" */
+export type Application_Stages_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Application_Stages_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "application_stages" */
+export type Application_Stages_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Application_Stages_Max_Order_By>;
+  min?: InputMaybe<Application_Stages_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "application_stages" */
+export type Application_Stages_Arr_Rel_Insert_Input = {
+  data: Array<Application_Stages_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Application_Stages_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "application_stages". All fields are combined with a logical 'AND'. */
+export type Application_Stages_Bool_Exp = {
+  _and?: InputMaybe<Array<Application_Stages_Bool_Exp>>;
+  _not?: InputMaybe<Application_Stages_Bool_Exp>;
+  _or?: InputMaybe<Array<Application_Stages_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  job?: InputMaybe<Jobs_Bool_Exp>;
+  job_id?: InputMaybe<Uuid_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "application_stages" */
+export enum Application_Stages_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  ApplicationStagesPkey = 'application_stages_pkey',
+}
+
+/** input type for inserting data into table "application_stages" */
+export type Application_Stages_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  job?: InputMaybe<Jobs_Obj_Rel_Insert_Input>;
+  job_id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Application_Stages_Max_Fields = {
+  __typename?: 'application_stages_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  job_id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "application_stages" */
+export type Application_Stages_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  job_id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Application_Stages_Min_Fields = {
+  __typename?: 'application_stages_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  job_id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "application_stages" */
+export type Application_Stages_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  job_id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "application_stages" */
+export type Application_Stages_Mutation_Response = {
+  __typename?: 'application_stages_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Application_Stages>;
+};
+
+/** on_conflict condition type for table "application_stages" */
+export type Application_Stages_On_Conflict = {
+  constraint: Application_Stages_Constraint;
+  update_columns?: Array<Application_Stages_Update_Column>;
+  where?: InputMaybe<Application_Stages_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "application_stages". */
+export type Application_Stages_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  job?: InputMaybe<Jobs_Order_By>;
+  job_id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: application_stages */
+export type Application_Stages_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "application_stages" */
+export enum Application_Stages_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  JobId = 'job_id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id',
+}
+
+/** input type for updating data in table "application_stages" */
+export type Application_Stages_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  job_id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "application_stages" */
+export type Application_Stages_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Application_Stages_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Application_Stages_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  job_id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "application_stages" */
+export enum Application_Stages_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  JobId = 'job_id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id',
+}
+
+export type Application_Stages_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Application_Stages_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Application_Stages_Bool_Exp;
+};
+
 /** columns and relationships of "applications" */
 export type Applications = {
   __typename?: 'applications';
@@ -120,6 +365,7 @@ export type Applications = {
   relevant_skills?: Maybe<Array<Scalars['String']['output']>>;
   resume_url: Scalars['String']['output'];
   skills?: Maybe<Array<Scalars['String']['output']>>;
+  stage?: Maybe<Scalars['Int']['output']>;
   website?: Maybe<Scalars['String']['output']>;
   years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
@@ -190,12 +436,14 @@ export type Applications_Arr_Rel_Insert_Input = {
 export type Applications_Avg_Fields = {
   __typename?: 'applications_avg_fields';
   match_score?: Maybe<Scalars['Float']['output']>;
+  stage?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by avg() on columns of table "applications" */
 export type Applications_Avg_Order_By = {
   match_score?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -217,6 +465,7 @@ export type Applications_Bool_Exp = {
   relevant_skills?: InputMaybe<String_Array_Comparison_Exp>;
   resume_url?: InputMaybe<String_Comparison_Exp>;
   skills?: InputMaybe<String_Array_Comparison_Exp>;
+  stage?: InputMaybe<Int_Comparison_Exp>;
   website?: InputMaybe<String_Comparison_Exp>;
   years_of_experience?: InputMaybe<Int_Comparison_Exp>;
 };
@@ -230,6 +479,7 @@ export enum Applications_Constraint {
 /** input type for incrementing numeric columns in table "applications" */
 export type Applications_Inc_Input = {
   match_score?: InputMaybe<Scalars['Int']['input']>;
+  stage?: InputMaybe<Scalars['Int']['input']>;
   years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -248,6 +498,7 @@ export type Applications_Insert_Input = {
   relevant_skills?: InputMaybe<Array<Scalars['String']['input']>>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']>>;
+  stage?: InputMaybe<Scalars['Int']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
   years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -266,6 +517,7 @@ export type Applications_Max_Fields = {
   relevant_skills?: Maybe<Array<Scalars['String']['output']>>;
   resume_url?: Maybe<Scalars['String']['output']>;
   skills?: Maybe<Array<Scalars['String']['output']>>;
+  stage?: Maybe<Scalars['Int']['output']>;
   website?: Maybe<Scalars['String']['output']>;
   years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
@@ -283,6 +535,7 @@ export type Applications_Max_Order_By = {
   relevant_skills?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
   skills?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
@@ -301,6 +554,7 @@ export type Applications_Min_Fields = {
   relevant_skills?: Maybe<Array<Scalars['String']['output']>>;
   resume_url?: Maybe<Scalars['String']['output']>;
   skills?: Maybe<Array<Scalars['String']['output']>>;
+  stage?: Maybe<Scalars['Int']['output']>;
   website?: Maybe<Scalars['String']['output']>;
   years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
@@ -318,6 +572,7 @@ export type Applications_Min_Order_By = {
   relevant_skills?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
   skills?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
@@ -353,6 +608,7 @@ export type Applications_Order_By = {
   relevant_skills?: InputMaybe<Order_By>;
   resume_url?: InputMaybe<Order_By>;
   skills?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
@@ -387,6 +643,8 @@ export enum Applications_Select_Column {
   /** column name */
   Skills = 'skills',
   /** column name */
+  Stage = 'stage',
+  /** column name */
   Website = 'website',
   /** column name */
   YearsOfExperience = 'years_of_experience',
@@ -405,6 +663,7 @@ export type Applications_Set_Input = {
   relevant_skills?: InputMaybe<Array<Scalars['String']['input']>>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']>>;
+  stage?: InputMaybe<Scalars['Int']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
   years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -413,12 +672,14 @@ export type Applications_Set_Input = {
 export type Applications_Stddev_Fields = {
   __typename?: 'applications_stddev_fields';
   match_score?: Maybe<Scalars['Float']['output']>;
+  stage?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev() on columns of table "applications" */
 export type Applications_Stddev_Order_By = {
   match_score?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -426,12 +687,14 @@ export type Applications_Stddev_Order_By = {
 export type Applications_Stddev_Pop_Fields = {
   __typename?: 'applications_stddev_pop_fields';
   match_score?: Maybe<Scalars['Float']['output']>;
+  stage?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_pop() on columns of table "applications" */
 export type Applications_Stddev_Pop_Order_By = {
   match_score?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -439,12 +702,14 @@ export type Applications_Stddev_Pop_Order_By = {
 export type Applications_Stddev_Samp_Fields = {
   __typename?: 'applications_stddev_samp_fields';
   match_score?: Maybe<Scalars['Float']['output']>;
+  stage?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_samp() on columns of table "applications" */
 export type Applications_Stddev_Samp_Order_By = {
   match_score?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -469,6 +734,7 @@ export type Applications_Stream_Cursor_Value_Input = {
   relevant_skills?: InputMaybe<Array<Scalars['String']['input']>>;
   resume_url?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']>>;
+  stage?: InputMaybe<Scalars['Int']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
   years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -477,12 +743,14 @@ export type Applications_Stream_Cursor_Value_Input = {
 export type Applications_Sum_Fields = {
   __typename?: 'applications_sum_fields';
   match_score?: Maybe<Scalars['Int']['output']>;
+  stage?: Maybe<Scalars['Int']['output']>;
   years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by sum() on columns of table "applications" */
 export type Applications_Sum_Order_By = {
   match_score?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -511,6 +779,8 @@ export enum Applications_Update_Column {
   /** column name */
   Skills = 'skills',
   /** column name */
+  Stage = 'stage',
+  /** column name */
   Website = 'website',
   /** column name */
   YearsOfExperience = 'years_of_experience',
@@ -529,12 +799,14 @@ export type Applications_Updates = {
 export type Applications_Var_Pop_Fields = {
   __typename?: 'applications_var_pop_fields';
   match_score?: Maybe<Scalars['Float']['output']>;
+  stage?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_pop() on columns of table "applications" */
 export type Applications_Var_Pop_Order_By = {
   match_score?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -542,12 +814,14 @@ export type Applications_Var_Pop_Order_By = {
 export type Applications_Var_Samp_Fields = {
   __typename?: 'applications_var_samp_fields';
   match_score?: Maybe<Scalars['Float']['output']>;
+  stage?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_samp() on columns of table "applications" */
 export type Applications_Var_Samp_Order_By = {
   match_score?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -555,12 +829,14 @@ export type Applications_Var_Samp_Order_By = {
 export type Applications_Variance_Fields = {
   __typename?: 'applications_variance_fields';
   match_score?: Maybe<Scalars['Float']['output']>;
+  stage?: Maybe<Scalars['Float']['output']>;
   years_of_experience?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by variance() on columns of table "applications" */
 export type Applications_Variance_Order_By = {
   match_score?: InputMaybe<Order_By>;
+  stage?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
 
@@ -3623,6 +3899,10 @@ export type Files_Variance_Order_By = {
 export type Jobs = {
   __typename?: 'jobs';
   /** An array relationship */
+  application_stages: Array<Application_Stages>;
+  /** An aggregate relationship */
+  application_stages_aggregate: Application_Stages_Aggregate;
+  /** An array relationship */
   applications: Array<Applications>;
   /** An aggregate relationship */
   applications_aggregate: Applications_Aggregate;
@@ -3635,7 +3915,27 @@ export type Jobs = {
   location: Scalars['String']['output'];
   title: Scalars['String']['output'];
   updated_at: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid']['output'];
+};
+
+/** columns and relationships of "jobs" */
+export type JobsApplication_StagesArgs = {
+  distinct_on?: InputMaybe<Array<Application_Stages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Application_Stages_Order_By>>;
+  where?: InputMaybe<Application_Stages_Bool_Exp>;
+};
+
+/** columns and relationships of "jobs" */
+export type JobsApplication_Stages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Application_Stages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Application_Stages_Order_By>>;
+  where?: InputMaybe<Application_Stages_Bool_Exp>;
 };
 
 /** columns and relationships of "jobs" */
@@ -3707,6 +4007,8 @@ export type Jobs_Bool_Exp = {
   _and?: InputMaybe<Array<Jobs_Bool_Exp>>;
   _not?: InputMaybe<Jobs_Bool_Exp>;
   _or?: InputMaybe<Array<Jobs_Bool_Exp>>;
+  application_stages?: InputMaybe<Application_Stages_Bool_Exp>;
+  application_stages_aggregate?: InputMaybe<Application_Stages_Aggregate_Bool_Exp>;
   applications?: InputMaybe<Applications_Bool_Exp>;
   applications_aggregate?: InputMaybe<Applications_Aggregate_Bool_Exp>;
   company?: InputMaybe<Companies_Bool_Exp>;
@@ -3717,6 +4019,7 @@ export type Jobs_Bool_Exp = {
   location?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
@@ -3728,6 +4031,7 @@ export enum Jobs_Constraint {
 
 /** input type for inserting data into table "jobs" */
 export type Jobs_Insert_Input = {
+  application_stages?: InputMaybe<Application_Stages_Arr_Rel_Insert_Input>;
   applications?: InputMaybe<Applications_Arr_Rel_Insert_Input>;
   company?: InputMaybe<Companies_Obj_Rel_Insert_Input>;
   company_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -3737,6 +4041,7 @@ export type Jobs_Insert_Input = {
   location?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
@@ -3815,6 +4120,7 @@ export type Jobs_On_Conflict = {
 
 /** Ordering options when selecting data from "jobs". */
 export type Jobs_Order_By = {
+  application_stages_aggregate?: InputMaybe<Application_Stages_Aggregate_Order_By>;
   applications_aggregate?: InputMaybe<Applications_Aggregate_Order_By>;
   company?: InputMaybe<Companies_Order_By>;
   company_id?: InputMaybe<Order_By>;
@@ -3824,6 +4130,7 @@ export type Jobs_Order_By = {
   location?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -3990,6 +4297,10 @@ export type Mutation_Root = {
   deleteVirus?: Maybe<Virus>;
   /** delete data from the table: "storage.virus" */
   deleteViruses?: Maybe<Virus_Mutation_Response>;
+  /** delete data from the table: "application_stages" */
+  delete_application_stages?: Maybe<Application_Stages_Mutation_Response>;
+  /** delete single row from the table: "application_stages" */
+  delete_application_stages_by_pk?: Maybe<Application_Stages>;
   /** delete data from the table: "applications" */
   delete_applications?: Maybe<Applications_Mutation_Response>;
   /** delete single row from the table: "applications" */
@@ -4054,6 +4365,10 @@ export type Mutation_Root = {
   insertVirus?: Maybe<Virus>;
   /** insert data into the table: "storage.virus" */
   insertViruses?: Maybe<Virus_Mutation_Response>;
+  /** insert data into the table: "application_stages" */
+  insert_application_stages?: Maybe<Application_Stages_Mutation_Response>;
+  /** insert a single row into the table: "application_stages" */
+  insert_application_stages_one?: Maybe<Application_Stages>;
   /** insert data into the table: "applications" */
   insert_applications?: Maybe<Applications_Mutation_Response>;
   /** insert a single row into the table: "applications" */
@@ -4118,6 +4433,12 @@ export type Mutation_Root = {
   updateVirus?: Maybe<Virus>;
   /** update data of the table: "storage.virus" */
   updateViruses?: Maybe<Virus_Mutation_Response>;
+  /** update data of the table: "application_stages" */
+  update_application_stages?: Maybe<Application_Stages_Mutation_Response>;
+  /** update single row of the table: "application_stages" */
+  update_application_stages_by_pk?: Maybe<Application_Stages>;
+  /** update multiples rows of table: "application_stages" */
+  update_application_stages_many?: Maybe<Array<Maybe<Application_Stages_Mutation_Response>>>;
   /** update data of the table: "applications" */
   update_applications?: Maybe<Applications_Mutation_Response>;
   /** update single row of the table: "applications" */
@@ -4286,6 +4607,16 @@ export type Mutation_RootDeleteVirusArgs = {
 /** mutation root */
 export type Mutation_RootDeleteVirusesArgs = {
   where: Virus_Bool_Exp;
+};
+
+/** mutation root */
+export type Mutation_RootDelete_Application_StagesArgs = {
+  where: Application_Stages_Bool_Exp;
+};
+
+/** mutation root */
+export type Mutation_RootDelete_Application_Stages_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 /** mutation root */
@@ -4470,6 +4801,18 @@ export type Mutation_RootInsertVirusArgs = {
 export type Mutation_RootInsertVirusesArgs = {
   objects: Array<Virus_Insert_Input>;
   on_conflict?: InputMaybe<Virus_On_Conflict>;
+};
+
+/** mutation root */
+export type Mutation_RootInsert_Application_StagesArgs = {
+  objects: Array<Application_Stages_Insert_Input>;
+  on_conflict?: InputMaybe<Application_Stages_On_Conflict>;
+};
+
+/** mutation root */
+export type Mutation_RootInsert_Application_Stages_OneArgs = {
+  object: Application_Stages_Insert_Input;
+  on_conflict?: InputMaybe<Application_Stages_On_Conflict>;
 };
 
 /** mutation root */
@@ -4721,6 +5064,23 @@ export type Mutation_RootUpdateVirusesArgs = {
 };
 
 /** mutation root */
+export type Mutation_RootUpdate_Application_StagesArgs = {
+  _set?: InputMaybe<Application_Stages_Set_Input>;
+  where: Application_Stages_Bool_Exp;
+};
+
+/** mutation root */
+export type Mutation_RootUpdate_Application_Stages_By_PkArgs = {
+  _set?: InputMaybe<Application_Stages_Set_Input>;
+  pk_columns: Application_Stages_Pk_Columns_Input;
+};
+
+/** mutation root */
+export type Mutation_RootUpdate_Application_Stages_ManyArgs = {
+  updates: Array<Application_Stages_Updates>;
+};
+
+/** mutation root */
 export type Mutation_RootUpdate_ApplicationsArgs = {
   _inc?: InputMaybe<Applications_Inc_Input>;
   _set?: InputMaybe<Applications_Set_Input>;
@@ -4869,6 +5229,12 @@ export enum Order_By {
 export type Query_Root = {
   __typename?: 'query_root';
   /** An array relationship */
+  application_stages: Array<Application_Stages>;
+  /** An aggregate relationship */
+  application_stages_aggregate: Application_Stages_Aggregate;
+  /** fetch data from the table: "application_stages" using primary key columns */
+  application_stages_by_pk?: Maybe<Application_Stages>;
+  /** An array relationship */
   applications: Array<Applications>;
   /** An aggregate relationship */
   applications_aggregate: Applications_Aggregate;
@@ -4964,6 +5330,26 @@ export type Query_Root = {
   viruses: Array<Virus>;
   /** fetch aggregated fields from the table: "storage.virus" */
   virusesAggregate: Virus_Aggregate;
+};
+
+export type Query_RootApplication_StagesArgs = {
+  distinct_on?: InputMaybe<Array<Application_Stages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Application_Stages_Order_By>>;
+  where?: InputMaybe<Application_Stages_Bool_Exp>;
+};
+
+export type Query_RootApplication_Stages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Application_Stages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Application_Stages_Order_By>>;
+  where?: InputMaybe<Application_Stages_Bool_Exp>;
+};
+
+export type Query_RootApplication_Stages_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 export type Query_RootApplicationsArgs = {
@@ -5289,6 +5675,14 @@ export type Query_RootVirusesAggregateArgs = {
 export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** An array relationship */
+  application_stages: Array<Application_Stages>;
+  /** An aggregate relationship */
+  application_stages_aggregate: Application_Stages_Aggregate;
+  /** fetch data from the table: "application_stages" using primary key columns */
+  application_stages_by_pk?: Maybe<Application_Stages>;
+  /** fetch data from the table in a streaming manner: "application_stages" */
+  application_stages_stream: Array<Application_Stages>;
+  /** An array relationship */
   applications: Array<Applications>;
   /** An aggregate relationship */
   applications_aggregate: Applications_Aggregate;
@@ -5416,6 +5810,32 @@ export type Subscription_Root = {
   viruses: Array<Virus>;
   /** fetch aggregated fields from the table: "storage.virus" */
   virusesAggregate: Virus_Aggregate;
+};
+
+export type Subscription_RootApplication_StagesArgs = {
+  distinct_on?: InputMaybe<Array<Application_Stages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Application_Stages_Order_By>>;
+  where?: InputMaybe<Application_Stages_Bool_Exp>;
+};
+
+export type Subscription_RootApplication_Stages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Application_Stages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Application_Stages_Order_By>>;
+  where?: InputMaybe<Application_Stages_Bool_Exp>;
+};
+
+export type Subscription_RootApplication_Stages_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+export type Subscription_RootApplication_Stages_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Application_Stages_Stream_Cursor_Input>>;
+  where?: InputMaybe<Application_Stages_Bool_Exp>;
 };
 
 export type Subscription_RootApplicationsArgs = {
@@ -6805,6 +7225,18 @@ export type CreateApplicationMutation = {
   insert_applications_one?: { __typename?: 'applications'; id: any; resume_url: string } | null;
 };
 
+export type CreateApplicationStageMutationVariables = Exact<{
+  job_id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+export type CreateApplicationStageMutation = {
+  __typename?: 'mutation_root';
+  insert_application_stages_one?: { __typename?: 'application_stages'; id: any } | null;
+};
+
 export type CreateCompanyMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -6849,6 +7281,16 @@ export type UpdateApplicationMutationVariables = Exact<{
 }>;
 
 export type UpdateApplicationMutation = {
+  __typename?: 'mutation_root';
+  update_applications_by_pk?: { __typename?: 'applications'; id: any } | null;
+};
+
+export type UpdateApplicationStageMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  stage?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type UpdateApplicationStageMutation = {
   __typename?: 'mutation_root';
   update_applications_by_pk?: { __typename?: 'applications'; id: any } | null;
 };
@@ -7002,9 +7444,17 @@ export type GetPostedJobByIdQuery = {
     description: string;
     created_at: any;
     company: { __typename?: 'companies'; id: any; name?: string | null };
+    application_stages: Array<{
+      __typename?: 'application_stages';
+      id: any;
+      name: string;
+      description?: string | null;
+    }>;
     applications: Array<{
       __typename?: 'applications';
       id: any;
+      stage?: number | null;
+      job_id: any;
       resume_url: string;
       created_at: any;
       linkedin?: string | null;
@@ -7138,6 +7588,89 @@ export const CreateApplicationDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateApplicationMutation, CreateApplicationMutationVariables>;
+export const CreateApplicationStageDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateApplicationStage' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'job_id' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'user_id' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'insert_application_stages_one' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'object' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'job_id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'job_id' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'description' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'user_id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'user_id' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateApplicationStageMutation,
+  CreateApplicationStageMutationVariables
+>;
 export const CreateCompanyDocument = {
   kind: 'Document',
   definitions: [
@@ -7485,6 +8018,76 @@ export const UpdateApplicationDocument = {
     },
   ],
 } as unknown as DocumentNode<UpdateApplicationMutation, UpdateApplicationMutationVariables>;
+export const UpdateApplicationStageDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateApplicationStage' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'stage' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '10' },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'update_applications_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'pk_columns' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: '_set' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'stage' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'stage' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateApplicationStageMutation,
+  UpdateApplicationStageMutationVariables
+>;
 export const UpdateJobDocument = {
   kind: 'Document',
   definitions: [
@@ -8062,11 +8665,25 @@ export const GetPostedJobByIdDocument = {
                 },
                 {
                   kind: 'Field',
+                  name: { kind: 'Name', value: 'application_stages' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
                   name: { kind: 'Name', value: 'applications' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'stage' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'job_id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'resume_url' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'linkedin' } },

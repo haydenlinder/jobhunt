@@ -12,8 +12,15 @@ export const GET_POSTED_JOB_BY_ID = gql`
         id
         name
       }
+      application_stages {
+        id
+        name
+        description
+      }
       applications {
         id
+        stage
+        job_id
         resume_url
         created_at
         linkedin
