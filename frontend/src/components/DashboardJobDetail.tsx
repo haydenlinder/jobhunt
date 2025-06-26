@@ -9,6 +9,7 @@ import { JobEditForm } from './JobEditForm';
 import { JobApplicationsList } from './JobApplicationsList';
 import { GET_POSTED_JOB_BY_ID } from '@/graphql/queries/getPostedJobById';
 import { CREATE_APPLICATION_STAGE } from '@/graphql/mutations/createApplicationStage';
+import { DELETE_APPLICATION_STAGE } from '@/graphql/mutations/deleteApplicationStage';
 import { useAuth } from './AuthContext';
 
 interface DashboardJobDetailProps {
@@ -44,6 +45,14 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
     },
   });
 
+  const deleteStageMutation = useMutation({
+    mutationFn: (stageId: string) =>
+      graphqlRequest(DELETE_APPLICATION_STAGE.loc?.source.body || '', { id: stageId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['job', jobId] });
+    },
+  });
+
   const handleAddStage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!stageName.trim() || !userData?.id) return;
@@ -54,6 +63,12 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
       description: stageDescription.trim(),
       user_id: userData.id,
     });
+  };
+
+  const handleDeleteStage = (stageId: string, stageName: string) => {
+    if (window.confirm(`Are you sure you want to delete the "${stageName}" stage?`)) {
+      deleteStageMutation.mutate(stageId);
+    }
   };
 
   const job = data?.jobs_by_pk;
@@ -162,18 +177,48 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
             {job.application_stages.length > 0 ? (
               <ul className="space-y-2">
                 {job.application_stages.map((stage, index) => (
-                  <li key={stage.id} className="flex items-center text-gray-700 dark:text-gray-300">
-                    <span className="inline-flex items-center justify-center w-6 h-6 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full mr-3">
-                      {index + 1}
-                    </span>
-                    <div>
-                      <div className="font-medium">{stage.name}</div>
-                      {stage.description && (
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                          {stage.description}
-                        </div>
-                      )}
+                  <li
+                    key={stage.id}
+                    className="flex items-center justify-between text-gray-700 dark:text-gray-300 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                  >
+                    <div className="flex items-center">
+                      <span className="inline-flex items-center justify-center w-6 h-6 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full mr-3">
+                        {index + 1}
+                      </span>
+                      <div>
+                        <div className="font-medium">{stage.name}</div>
+                        {stage.description && (
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {stage.description}
+                          </div>
+                        )}
+                      </div>
+                      <div className="ml-2">
+                        {job.applications.filter(a => a.stage === index + 1).length} candidate
+                        {job.applications.filter(a => a.stage === index + 1).length > 1 ? 's' : ''}
+                      </div>
                     </div>
+                    <button
+                      onClick={() => handleDeleteStage(stage.id, stage.name)}
+                      disabled={deleteStageMutation.isPending}
+                      className="inline-flex items-center p-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Delete stage"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </button>
                   </li>
                 ))}
               </ul>
