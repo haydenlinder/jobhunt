@@ -30,6 +30,7 @@ export const GET_POSTED_JOB_BY_ID = gql`
         skills
         relevant_skills
         match_score
+        stage_id
       }
     }
   }

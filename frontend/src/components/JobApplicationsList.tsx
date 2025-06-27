@@ -3,7 +3,13 @@
 import { ApplicationDetail } from './ApplicationDetail';
 import { Applications } from '@/gql/graphql';
 
-export function JobApplicationsList({ applications }: { applications: Partial<Applications>[] }) {
+export function JobApplicationsList({
+  applications,
+  applicationStages = [],
+}: {
+  applications: Partial<Applications>[];
+  applicationStages?: Array<{ id: string; name: string; description?: string | null }>;
+}) {
   if (!applications || applications.length === 0) {
     return (
       <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">
@@ -23,7 +29,7 @@ export function JobApplicationsList({ applications }: { applications: Partial<Ap
           <div key={application.id} className="overflow-hidden">
             <div className="text-sm">
               {/* Parsed Resume Information */}
-              <ApplicationDetail application={application} />
+              <ApplicationDetail application={application} applicationStages={applicationStages} />
             </div>
           </div>
         ))}

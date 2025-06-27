@@ -2,6 +2,9 @@ table:
   name: applications
   schema: public
 object_relationships:
+  - name: application_stage
+    using:
+      foreign_key_constraint_on: stage_id
   - name: company
     using:
       foreign_key_constraint_on: company_id
@@ -38,6 +41,7 @@ select_permissions:
         - id
         - job_id
         - resume_url
+        - stage_id
       filter: {}
     comment: ""
   - role: user
@@ -55,6 +59,7 @@ select_permissions:
         - resume_url
         - skills
         - stage
+        - stage_id
         - website
         - years_of_experience
       filter:
@@ -69,6 +74,7 @@ update_permissions:
     permission:
       columns:
         - stage
+        - stage_id
       filter:
         company:
           company_users:

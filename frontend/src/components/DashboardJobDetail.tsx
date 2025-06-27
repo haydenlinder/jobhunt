@@ -62,7 +62,10 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
           />
 
           {/* Applications list */}
-          <JobApplicationsList applications={job.applications || []} />
+          <JobApplicationsList
+            applications={job.applications || []}
+            applicationStages={job.application_stages || []}
+          />
 
           <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
             <div className="flex justify-between items-center">

@@ -109,8 +109,8 @@ export function JobStagesManager({ jobId, stages, applications }: JobStagesManag
                     )}
                   </div>
                   <div className="ml-2">
-                    {applications.filter(a => a.stage === index + 1).length} candidate
-                    {applications.filter(a => a.stage === index + 1).length === 1 ? '' : 's'}
+                    {applications.filter(a => a.stage_id === stage.id).length} candidate
+                    {applications.filter(a => a.stage_id === stage.id).length === 1 ? '' : 's'}
                   </div>
                 </div>
                 <button

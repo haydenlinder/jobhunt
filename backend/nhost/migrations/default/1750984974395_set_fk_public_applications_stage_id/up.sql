@@ -1,0 +1,5 @@
+alter table "public"."applications" drop constraint "applications_stage_id_fkey",
+  add constraint "applications_stage_id_fkey"
+  foreign key ("stage_id")
+  references "public"."application_stages"
+  ("id") on update restrict on delete set null;

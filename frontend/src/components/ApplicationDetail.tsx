@@ -22,11 +22,13 @@ export function ApplicationDetail({
     relevant_skills,
     match_score,
     created_at,
-    stage,
     job_id,
+    stage_id,
   },
+  applicationStages = [],
 }: {
   application: Partial<Applications>;
+  applicationStages?: Array<{ id: string; name: string; description?: string | null }>;
 }) {
   const [parsedData, setParsedData] = useState<null | Partial<Applications>>({
     resume_url,
@@ -42,28 +44,28 @@ export function ApplicationDetail({
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const nextStage = (stage || 0) + 1;
   const client = useQueryClient();
 
-  const { mutate: moveToNextStage, isPending } = useMutation<
+  const { mutate: updateApplicationStage, isPending } = useMutation<
     UpdateApplicationStageMutation,
     Error,
     UpdateApplicationStageMutationVariables
   >({
-    mutationFn: () =>
-      graphqlRequest(UPDATE_APPLICATION_STAGE.loc?.source.body || '', {
-        id: id,
-        stage: nextStage,
-      }),
+    mutationFn: (variables: UpdateApplicationStageMutationVariables) =>
+      graphqlRequest(UPDATE_APPLICATION_STAGE.loc?.source.body || '', variables),
     onSuccess: () => {
       client.refetchQueries({ queryKey: ['job', job_id] });
     },
     onError: err => {
       setError(
-        `Failed to submit application: ${err instanceof Error ? err.message : 'Unknown error'}`
+        `Failed to update application stage: ${err instanceof Error ? err.message : 'Unknown error'}`
       );
     },
   });
+
+  const handleStageChange = (newStageId: string) => {
+    updateApplicationStage({ id, stage_id: newStageId });
+  };
 
   useEffect(() => {
     const parseResume = async () => {
@@ -152,13 +154,26 @@ export function ApplicationDetail({
         </p>
         <div className="flex justify-between">
           <Resume url={resume_url || ''} />
-          <button
-            disabled={isPending}
-            onClick={() => moveToNextStage({ id, stage: nextStage })}
-            className="border rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-50/5"
-          >
-            Move to stage {nextStage}
-          </button>
+          {applicationStages.length > 0 && (
+            <div className="flex flex-col">
+              <label className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                Move to stage:
+              </label>
+              <select
+                disabled={isPending}
+                value={stage_id || ''}
+                onChange={e => handleStageChange(e.target.value)}
+                className="border rounded-lg px-2 py-1 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="">Select stage...</option>
+                {applicationStages.map(stage => (
+                  <option key={stage.id} value={stage.id}>
+                    {stage.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
 
         {parsedData.name && (

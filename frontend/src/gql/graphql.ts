@@ -250,6 +250,13 @@ export type Application_Stages_Mutation_Response = {
   returning: Array<Application_Stages>;
 };
 
+/** input type for inserting object relation for remote table "application_stages" */
+export type Application_Stages_Obj_Rel_Insert_Input = {
+  data: Application_Stages_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Application_Stages_On_Conflict>;
+};
+
 /** on_conflict condition type for table "application_stages" */
 export type Application_Stages_On_Conflict = {
   constraint: Application_Stages_Constraint;
@@ -351,6 +358,8 @@ export type Application_Stages_Updates = {
 export type Applications = {
   __typename?: 'applications';
   /** An object relationship */
+  application_stage?: Maybe<Application_Stages>;
+  /** An object relationship */
   company: Companies;
   company_id: Scalars['uuid']['output'];
   created_at: Scalars['timestamptz']['output'];
@@ -366,6 +375,7 @@ export type Applications = {
   resume_url: Scalars['String']['output'];
   skills?: Maybe<Array<Scalars['String']['output']>>;
   stage?: Maybe<Scalars['Int']['output']>;
+  stage_id?: Maybe<Scalars['uuid']['output']>;
   website?: Maybe<Scalars['String']['output']>;
   years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
@@ -452,6 +462,7 @@ export type Applications_Bool_Exp = {
   _and?: InputMaybe<Array<Applications_Bool_Exp>>;
   _not?: InputMaybe<Applications_Bool_Exp>;
   _or?: InputMaybe<Array<Applications_Bool_Exp>>;
+  application_stage?: InputMaybe<Application_Stages_Bool_Exp>;
   company?: InputMaybe<Companies_Bool_Exp>;
   company_id?: InputMaybe<Uuid_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -466,6 +477,7 @@ export type Applications_Bool_Exp = {
   resume_url?: InputMaybe<String_Comparison_Exp>;
   skills?: InputMaybe<String_Array_Comparison_Exp>;
   stage?: InputMaybe<Int_Comparison_Exp>;
+  stage_id?: InputMaybe<Uuid_Comparison_Exp>;
   website?: InputMaybe<String_Comparison_Exp>;
   years_of_experience?: InputMaybe<Int_Comparison_Exp>;
 };
@@ -485,6 +497,7 @@ export type Applications_Inc_Input = {
 
 /** input type for inserting data into table "applications" */
 export type Applications_Insert_Input = {
+  application_stage?: InputMaybe<Application_Stages_Obj_Rel_Insert_Input>;
   company?: InputMaybe<Companies_Obj_Rel_Insert_Input>;
   company_id?: InputMaybe<Scalars['uuid']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -499,6 +512,7 @@ export type Applications_Insert_Input = {
   resume_url?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']>>;
   stage?: InputMaybe<Scalars['Int']['input']>;
+  stage_id?: InputMaybe<Scalars['uuid']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
   years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -518,6 +532,7 @@ export type Applications_Max_Fields = {
   resume_url?: Maybe<Scalars['String']['output']>;
   skills?: Maybe<Array<Scalars['String']['output']>>;
   stage?: Maybe<Scalars['Int']['output']>;
+  stage_id?: Maybe<Scalars['uuid']['output']>;
   website?: Maybe<Scalars['String']['output']>;
   years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
@@ -536,6 +551,7 @@ export type Applications_Max_Order_By = {
   resume_url?: InputMaybe<Order_By>;
   skills?: InputMaybe<Order_By>;
   stage?: InputMaybe<Order_By>;
+  stage_id?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
@@ -555,6 +571,7 @@ export type Applications_Min_Fields = {
   resume_url?: Maybe<Scalars['String']['output']>;
   skills?: Maybe<Array<Scalars['String']['output']>>;
   stage?: Maybe<Scalars['Int']['output']>;
+  stage_id?: Maybe<Scalars['uuid']['output']>;
   website?: Maybe<Scalars['String']['output']>;
   years_of_experience?: Maybe<Scalars['Int']['output']>;
 };
@@ -573,6 +590,7 @@ export type Applications_Min_Order_By = {
   resume_url?: InputMaybe<Order_By>;
   skills?: InputMaybe<Order_By>;
   stage?: InputMaybe<Order_By>;
+  stage_id?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
@@ -595,6 +613,7 @@ export type Applications_On_Conflict = {
 
 /** Ordering options when selecting data from "applications". */
 export type Applications_Order_By = {
+  application_stage?: InputMaybe<Application_Stages_Order_By>;
   company?: InputMaybe<Companies_Order_By>;
   company_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
@@ -609,6 +628,7 @@ export type Applications_Order_By = {
   resume_url?: InputMaybe<Order_By>;
   skills?: InputMaybe<Order_By>;
   stage?: InputMaybe<Order_By>;
+  stage_id?: InputMaybe<Order_By>;
   website?: InputMaybe<Order_By>;
   years_of_experience?: InputMaybe<Order_By>;
 };
@@ -645,6 +665,8 @@ export enum Applications_Select_Column {
   /** column name */
   Stage = 'stage',
   /** column name */
+  StageId = 'stage_id',
+  /** column name */
   Website = 'website',
   /** column name */
   YearsOfExperience = 'years_of_experience',
@@ -664,6 +686,7 @@ export type Applications_Set_Input = {
   resume_url?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']>>;
   stage?: InputMaybe<Scalars['Int']['input']>;
+  stage_id?: InputMaybe<Scalars['uuid']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
   years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -735,6 +758,7 @@ export type Applications_Stream_Cursor_Value_Input = {
   resume_url?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<Array<Scalars['String']['input']>>;
   stage?: InputMaybe<Scalars['Int']['input']>;
+  stage_id?: InputMaybe<Scalars['uuid']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
   years_of_experience?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -780,6 +804,8 @@ export enum Applications_Update_Column {
   Skills = 'skills',
   /** column name */
   Stage = 'stage',
+  /** column name */
+  StageId = 'stage_id',
   /** column name */
   Website = 'website',
   /** column name */
@@ -7296,7 +7322,7 @@ export type UpdateApplicationMutation = {
 
 export type UpdateApplicationStageMutationVariables = Exact<{
   id?: InputMaybe<Scalars['uuid']['input']>;
-  stage?: InputMaybe<Scalars['Int']['input']>;
+  stage_id?: InputMaybe<Scalars['uuid']['input']>;
 }>;
 
 export type UpdateApplicationStageMutation = {
@@ -7473,6 +7499,7 @@ export type GetPostedJobByIdQuery = {
       skills?: Array<string> | null;
       relevant_skills?: Array<string> | null;
       match_score?: number | null;
+      stage_id?: any | null;
     }>;
   } | null;
 };
@@ -8086,9 +8113,9 @@ export const UpdateApplicationStageDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'stage' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
-          defaultValue: { kind: 'IntValue', value: '10' },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'stage_id' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
         },
       ],
       selectionSet: {
@@ -8120,8 +8147,8 @@ export const UpdateApplicationStageDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'stage' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'stage' } },
+                      name: { kind: 'Name', value: 'stage_id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'stage_id' } },
                     },
                   ],
                 },
@@ -8745,6 +8772,7 @@ export const GetPostedJobByIdDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'skills' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'relevant_skills' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'match_score' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'stage_id' } },
                     ],
                   },
                 },
