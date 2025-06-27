@@ -9,6 +9,7 @@ import { UPDATE_APPLICATION_STAGE } from '@/graphql/mutations/updateApplicationS
 import { graphqlRequest } from '@/lib/nhost-client';
 import { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AddStageModal } from './AddStageModal';
 
 export function ApplicationDetail({
   application: {
@@ -154,7 +155,7 @@ export function ApplicationDetail({
         </p>
         <div className="flex justify-between">
           <Resume url={resume_url || ''} />
-          {applicationStages.length > 0 && (
+          {applicationStages.length > 0 ? (
             <div className="flex flex-col">
               <label className="text-xs text-gray-500 dark:text-gray-400 mb-1">Stage:</label>
               <select
@@ -173,6 +174,12 @@ export function ApplicationDetail({
                 ))}
               </select>
             </div>
+          ) : (
+            <AddStageModal
+              jobId={job_id}
+              text="Invite to Interview"
+              onComplete={handleStageChange}
+            />
           )}
         </div>
 

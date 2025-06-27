@@ -18,6 +18,7 @@ interface DashboardJobDetailProps {
 export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [filter, setFilter] = useState('');
+  const [isAddStageModalOpen, setIsAddStageModalOpen] = useState(false);
 
   const { data, isLoading, error } = useQuery<GetPostedJobByIdQuery>({
     queryKey: ['job', jobId],
@@ -57,6 +58,8 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
           <JobInfo job={job} showEditButton={true} onEdit={() => setIsEditing(true)} />
 
           <JobStagesManager
+            isAddStageModalOpen={isAddStageModalOpen}
+            setIsAddStageModalOpen={setIsAddStageModalOpen}
             jobId={jobId}
             filter={filter}
             stages={job.application_stages || []}
@@ -64,17 +67,19 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
             onClickFilter={stage => setFilter(s => (s === stage.id ? '' : stage.id))}
           />
           {/* Applications list */}
-          <JobApplicationsList
-            applications={
-              filter
-                ? job.applications.filter(ap =>
-                    filter === 'applied' ? !ap.stage_id : ap.stage_id === filter
-                  )
-                : job.applications || []
-            }
-            applicationStages={job.application_stages || []}
-          />
-
+          {filter && (
+            <JobApplicationsList
+              setIsAddStageModalOpen={setIsAddStageModalOpen}
+              applications={
+                filter
+                  ? job.applications.filter(ap =>
+                      filter === 'applied' ? !ap.stage_id : ap.stage_id === filter
+                    )
+                  : job.applications || []
+              }
+              applicationStages={job.application_stages || []}
+            />
+          )}
           <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
             <div className="flex justify-between items-center">
               <Link
