@@ -165,7 +165,9 @@ export function ApplicationDetail({
                 onChange={e => handleStageChange(e.target.value)}
                 className="border rounded-lg px-2 py-1 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               >
-                <option disabled={stage_id} value="">Select stage...</option>
+                <option disabled={stage_id} value="">
+                  Select stage...
+                </option>
                 {applicationStages.map(stage => (
                   <option key={stage.id} value={stage.id}>
                     {stage.name}

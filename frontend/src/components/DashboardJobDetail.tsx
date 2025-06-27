@@ -17,6 +17,7 @@ interface DashboardJobDetailProps {
 
 export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const [filter, setFilter] = useState('');
 
   const { data, isLoading, error } = useQuery<GetPostedJobByIdQuery>({
     queryKey: ['job', jobId],
@@ -57,13 +58,18 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
 
           <JobStagesManager
             jobId={jobId}
+            filter={filter}
             stages={job.application_stages || []}
             applications={job.applications || []}
+            onClickFilter={stage => setFilter(s => (s === stage.id ? '' : stage.id))}
           />
-
           {/* Applications list */}
           <JobApplicationsList
-            applications={job.applications || []}
+            applications={
+              filter
+                ? job.applications.filter(ap => ap.stage_id === filter)
+                : job.applications || []
+            }
             applicationStages={job.application_stages || []}
           />
 
