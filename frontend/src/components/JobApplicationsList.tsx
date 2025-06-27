@@ -1,17 +1,14 @@
 'use client';
 
-import { Dispatch, SetStateAction } from 'react';
 import { ApplicationDetail } from './ApplicationDetail';
 import { Applications } from '@/gql/graphql';
 
 export function JobApplicationsList({
   applications,
   applicationStages = [],
-  setIsAddStageModalOpen,
 }: {
   applications: Partial<Applications>[];
   applicationStages?: Array<{ id: string; name: string; description?: string | null }>;
-  setIsAddStageModalOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   if (!applications || applications.length === 0) {
     return (
@@ -28,11 +25,7 @@ export function JobApplicationsList({
           <div key={application.id} className="overflow-hidden">
             <div className="text-sm">
               {/* Parsed Resume Information */}
-              <ApplicationDetail
-                setIsAddStageModalOpen={setIsAddStageModalOpen}
-                application={application}
-                applicationStages={applicationStages}
-              />
+              <ApplicationDetail application={application} applicationStages={applicationStages} />
             </div>
           </div>
         ))}
