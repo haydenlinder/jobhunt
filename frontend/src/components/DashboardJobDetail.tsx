@@ -67,7 +67,9 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
           <JobApplicationsList
             applications={
               filter
-                ? job.applications.filter(ap => ap.stage_id === filter)
+                ? job.applications.filter(ap =>
+                    filter === 'applied' ? !ap.stage_id : ap.stage_id === filter
+                  )
                 : job.applications || []
             }
             applicationStages={job.application_stages || []}

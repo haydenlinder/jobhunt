@@ -97,38 +97,46 @@ export function JobStagesManager({
             Add Stage
           </button>
         </div>
-        {stages.length > 0 ? (
-          <ul className="space-y-2">
-            {stages.map((stage, index) => {
-              return (
-                <li
-                  key={stage.id}
-                  className={`flex items-center justify-between ${!filter ? '' : filter === stage.id ? '' : 'opacity-15'} text-gray-300 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg`}
-                >
-                  <div className="flex items-center">
-                    <span className="inline-flex items-center justify-center w-6 h-6 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full mr-3">
-                      {index + 1}
-                    </span>
-                    <div>
-                      <div className="flex items-baseline">
-                        <div className="font-medium">{stage.name}</div>
-                        <button
-                          className="ml-2 text-sm text-blue-400 cursor-pointer hover:underline"
-                          onClick={() => onClickFilter(stage)}
-                        >
-                          {applications.filter(a => a.stage_id === stage.id).length} candidate
-                          {applications.filter(a => a.stage_id === stage.id).length === 1
-                            ? ''
-                            : 's'}
-                        </button>
-                      </div>
-                      {stage.description && (
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                          {stage.description}
-                        </div>
-                      )}
+
+        <ul className="space-y-2">
+          {[{ id: 'applied', name: 'Applied' }, ...stages].map((stage, index) => {
+            return (
+              <li
+                key={stage.id}
+                className={`flex items-center justify-between ${!filter ? '' : filter === stage.id ? '' : 'opacity-15'} text-gray-300 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg`}
+              >
+                <div className="flex items-center">
+                  <span className="inline-flex items-center justify-center w-6 h-6 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full mr-3">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <div className="flex items-baseline">
+                      <div className="font-medium">{stage.name}</div>
+                      <button
+                        className="ml-2 text-sm text-blue-400 cursor-pointer hover:underline"
+                        onClick={() => onClickFilter(stage)}
+                      >
+                        {
+                          applications.filter(
+                            a => (!a.stage_id && stage.id === 'applied') || a.stage_id === stage.id
+                          ).length
+                        }{' '}
+                        candidate
+                        {applications.filter(
+                          a => (!a.stage_id && stage.id === 'applied') || a.stage_id === stage.id
+                        ).length === 1
+                          ? ''
+                          : 's'}
+                      </button>
                     </div>
+                    {stage.description && (
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        {stage.description}
+                      </div>
+                    )}
                   </div>
+                </div>
+                {stage.id !== 'applied' && (
                   <button
                     onClick={() => handleDeleteStage(stage.id, stage.name || '')}
                     disabled={deleteStageMutation.isPending}
@@ -150,13 +158,11 @@ export function JobStagesManager({
                       />
                     </svg>
                   </button>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className="text-gray-500 dark:text-gray-400 italic">No stages defined yet.</p>
-        )}
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </div>
 
       {/* Add Stage Modal */}

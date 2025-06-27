@@ -156,9 +156,7 @@ export function ApplicationDetail({
           <Resume url={resume_url || ''} />
           {applicationStages.length > 0 && (
             <div className="flex flex-col">
-              <label className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-                Move to stage:
-              </label>
+              <label className="text-xs text-gray-500 dark:text-gray-400 mb-1">Stage:</label>
               <select
                 disabled={isPending}
                 value={stage_id || ''}
