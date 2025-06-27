@@ -19,6 +19,7 @@ type Documents = {
   '\n  mutation createCompany($name: String = "") {\n    insert_companies_one(object: { name: $name }) {\n      id\n      name\n    }\n  }\n': typeof types.CreateCompanyDocument;
   '\n  mutation createCompanyUser($company_id: uuid = "", $user_id: uuid = "") {\n    insert_company_users_one(object: { company_id: $company_id, user_id: $user_id }) {\n      id\n    }\n  }\n': typeof types.CreateCompanyUserDocument;
   '\n  mutation createJob(\n    $company_id: uuid = ""\n    $description: String = ""\n    $location: String = ""\n    $title: String = ""\n    $user_id: uuid = ""\n  ) {\n    insert_jobs_one(\n      object: {\n        company_id: $company_id\n        description: $description\n        location: $location\n        title: $title\n        user_id: $user_id\n      }\n    ) {\n      id\n    }\n  }\n': typeof types.CreateJobDocument;
+  '\n  mutation DeleteApplicationStage($id: uuid!) {\n    delete_application_stages_by_pk(id: $id) {\n      id\n    }\n  }\n': typeof types.DeleteApplicationStageDocument;
   '\n  mutation UpdateApplication(\n    $id: uuid = ""\n    $email: String = ""\n    $linkedin: String = ""\n    $website: String = ""\n    $skills: [String!] = ""\n    $relevant_skills: [String!] = ""\n    $years_of_experience: Int = 10\n    $match_score: Int = 0\n  ) {\n    update_applications_by_pk(\n      pk_columns: { id: $id }\n      _set: {\n        email: $email\n        linkedin: $linkedin\n        website: $website\n        skills: $skills\n        years_of_experience: $years_of_experience\n        relevant_skills: $relevant_skills\n        match_score: $match_score\n      }\n    ) {\n      id\n    }\n  }\n': typeof types.UpdateApplicationDocument;
   '\n  mutation UpdateApplicationStage($id: uuid = "", $stage: Int = 10) {\n    update_applications_by_pk(pk_columns: { id: $id }, _set: { stage: $stage }) {\n      id\n    }\n  }\n': typeof types.UpdateApplicationStageDocument;
   '\n  mutation updateJob($id: uuid!, $title: String, $location: String, $description: String) {\n    update_jobs_by_pk(\n      pk_columns: { id: $id }\n      _set: { title: $title, location: $location, description: $description }\n    ) {\n      id\n      title\n      location\n      description\n      created_at\n      company {\n        id\n        name\n      }\n    }\n  }\n': typeof types.UpdateJobDocument;
@@ -44,6 +45,8 @@ const documents: Documents = {
     types.CreateCompanyUserDocument,
   '\n  mutation createJob(\n    $company_id: uuid = ""\n    $description: String = ""\n    $location: String = ""\n    $title: String = ""\n    $user_id: uuid = ""\n  ) {\n    insert_jobs_one(\n      object: {\n        company_id: $company_id\n        description: $description\n        location: $location\n        title: $title\n        user_id: $user_id\n      }\n    ) {\n      id\n    }\n  }\n':
     types.CreateJobDocument,
+  '\n  mutation DeleteApplicationStage($id: uuid!) {\n    delete_application_stages_by_pk(id: $id) {\n      id\n    }\n  }\n':
+    types.DeleteApplicationStageDocument,
   '\n  mutation UpdateApplication(\n    $id: uuid = ""\n    $email: String = ""\n    $linkedin: String = ""\n    $website: String = ""\n    $skills: [String!] = ""\n    $relevant_skills: [String!] = ""\n    $years_of_experience: Int = 10\n    $match_score: Int = 0\n  ) {\n    update_applications_by_pk(\n      pk_columns: { id: $id }\n      _set: {\n        email: $email\n        linkedin: $linkedin\n        website: $website\n        skills: $skills\n        years_of_experience: $years_of_experience\n        relevant_skills: $relevant_skills\n        match_score: $match_score\n      }\n    ) {\n      id\n    }\n  }\n':
     types.UpdateApplicationDocument,
   '\n  mutation UpdateApplicationStage($id: uuid = "", $stage: Int = 10) {\n    update_applications_by_pk(pk_columns: { id: $id }, _set: { stage: $stage }) {\n      id\n    }\n  }\n':
@@ -116,6 +119,12 @@ export function graphql(
 export function graphql(
   source: '\n  mutation createJob(\n    $company_id: uuid = ""\n    $description: String = ""\n    $location: String = ""\n    $title: String = ""\n    $user_id: uuid = ""\n  ) {\n    insert_jobs_one(\n      object: {\n        company_id: $company_id\n        description: $description\n        location: $location\n        title: $title\n        user_id: $user_id\n      }\n    ) {\n      id\n    }\n  }\n'
 ): (typeof documents)['\n  mutation createJob(\n    $company_id: uuid = ""\n    $description: String = ""\n    $location: String = ""\n    $title: String = ""\n    $user_id: uuid = ""\n  ) {\n    insert_jobs_one(\n      object: {\n        company_id: $company_id\n        description: $description\n        location: $location\n        title: $title\n        user_id: $user_id\n      }\n    ) {\n      id\n    }\n  }\n'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation DeleteApplicationStage($id: uuid!) {\n    delete_application_stages_by_pk(id: $id) {\n      id\n    }\n  }\n'
+): (typeof documents)['\n  mutation DeleteApplicationStage($id: uuid!) {\n    delete_application_stages_by_pk(id: $id) {\n      id\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
