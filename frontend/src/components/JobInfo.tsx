@@ -9,7 +9,13 @@ interface JobInfoProps {
   isDuplicating?: boolean;
 }
 
-export function JobInfo({ job, showEditButton = false, onEdit, onDuplicate, isDuplicating = false }: JobInfoProps) {
+export function JobInfo({
+  job,
+  showEditButton = false,
+  onEdit,
+  onDuplicate,
+  isDuplicating = false,
+}: JobInfoProps) {
   return (
     <>
       <div className="mb-6">

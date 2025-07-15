@@ -67,9 +67,9 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
         />
       ) : (
         <>
-          <JobInfo 
-            job={job} 
-            showEditButton={true} 
+          <JobInfo
+            job={job}
+            showEditButton={true}
             onEdit={() => setIsEditing(true)}
             onDuplicate={handleDuplicateJob}
           />
