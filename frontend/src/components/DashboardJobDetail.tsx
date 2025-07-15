@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { GetPostedJobByIdQuery } from '@/gql/graphql';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { graphqlRequest } from '@/lib/nhost-client';
 import { JobEditForm } from './JobEditForm';
 import { JobApplicationsList } from './JobApplicationsList';
 import { JobInfo } from './JobInfo';
 import { JobStagesManager } from './JobStagesManager';
+import { JobCreation } from './JobCreation';
 import { GET_POSTED_JOB_BY_ID } from '@/graphql/queries/getPostedJobById';
 
 interface DashboardJobDetailProps {
@@ -18,11 +19,23 @@ interface DashboardJobDetailProps {
 export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [filter, setFilter] = useState('');
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery<GetPostedJobByIdQuery>({
     queryKey: ['job', jobId],
     queryFn: () => graphqlRequest(GET_POSTED_JOB_BY_ID.loc?.source.body || '', { id: jobId }),
   });
+
+  const handleDuplicateJob = () => {
+    setShowDuplicateModal(true);
+  };
+
+  const handleDuplicateSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ['jobs'] });
+    setShowDuplicateModal(false);
+  };
 
   const job = data?.jobs_by_pk;
 
@@ -54,7 +67,12 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
         />
       ) : (
         <>
-          <JobInfo job={job} showEditButton={true} onEdit={() => setIsEditing(true)} />
+          <JobInfo 
+            job={job} 
+            showEditButton={true} 
+            onEdit={() => setIsEditing(true)}
+            onDuplicate={handleDuplicateJob}
+          />
 
           <JobStagesManager
             jobId={jobId}
@@ -96,6 +114,18 @@ export function DashboardJobDetail({ jobId }: DashboardJobDetailProps) {
           </div>
         </>
       )}
+
+      <JobCreation
+        isOpen={showDuplicateModal}
+        onClose={() => setShowDuplicateModal(false)}
+        onSuccess={handleDuplicateSuccess}
+        initialData={{
+          title: `${job?.title || ''} (Copy)`,
+          description: job?.description || '',
+          location: job?.location || '',
+          companyId: job?.company?.id || '',
+        }}
+      />
     </div>
   );
 }

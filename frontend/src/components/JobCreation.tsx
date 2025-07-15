@@ -17,6 +17,12 @@ interface JobCreationProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
+  initialData?: {
+    title?: string;
+    description?: string;
+    location?: string;
+    companyId?: string;
+  };
 }
 
 interface Company {
@@ -24,7 +30,7 @@ interface Company {
   name: string;
 }
 
-export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
+export function JobCreation({ isOpen, onClose, onSuccess, initialData }: JobCreationProps) {
   const { user: authUser } = useAuth();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -61,6 +67,30 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
       }
     }
   }, [companiesData, companyId]);
+
+  // Populate form with initial data when provided (for duplication)
+  useEffect(() => {
+    if (initialData && isOpen) {
+      setTitle(initialData.title || '');
+      setDescription(initialData.description || '');
+      setLocation(initialData.location || '');
+      if (initialData.companyId) {
+        setCompanyId(initialData.companyId);
+      }
+    }
+  }, [initialData, isOpen]);
+
+  // Reset form when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      setTitle('');
+      setDescription('');
+      setLocation('');
+      setCompanyId('');
+      setError('');
+      setSuccessMessage('');
+    }
+  }, [isOpen]);
 
   // Define job creation mutation
   const createJobMutation = useMutation({
@@ -119,7 +149,9 @@ export function JobCreation({ isOpen, onClose, onSuccess }: JobCreationProps) {
 
       <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full p-6 z-10">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white">Create Job Posting</h3>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+            {initialData ? 'Duplicate Job Posting' : 'Create Job Posting'}
+          </h3>
           <button type="button" className="text-gray-400 hover:text-gray-500" onClick={onClose}>
             <span className="sr-only">Close</span>
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
